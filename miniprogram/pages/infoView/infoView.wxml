@@ -1,0 +1,14 @@
+<view class="infoViewWrapper">
+  <div class="headerWrapper">
+    <di class="headerTitle">
+        <image
+            slot="icon"
+            src="../../assets/imgs/fan.png"
+            mode="aspectFit"
+        />
+        X3
+    </di>
+  </div>
+  xxx
+  <bottom-tabbar />
+</view>

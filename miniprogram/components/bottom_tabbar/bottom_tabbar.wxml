@@ -1,0 +1,31 @@
+<van-tabbar
+    active="{{ active }}"
+    active-color="#3AAB47"
+    inactive-color="#999999"
+    bind:change="onChange">
+    <!-- <van-tabbar-item name="home" icon="home-o">标签</van-tabbar-item>
+    <van-tabbar-item name="search" icon="search">标签</van-tabbar-item>
+    <van-tabbar-item name="friends" icon="friends-o">标签</van-tabbar-item>
+    <van-tabbar-item name="setting" icon="setting-o">标签</van-tabbar-item> -->
+    <van-tabbar-item
+        wx:for="{{tabbar_data_list}}"
+        wx:for-item="item"
+        wx:key="value"
+        name="{{item.value}}"
+    >
+        <image
+            slot="icon"
+            src="{{item.img_src}}"
+            mode="aspectFit"
+            style="width: 30px; height: 18px;"
+        />
+        <image
+            slot="icon-active"
+            src="{{item.img_src}}"
+            mode="aspectFit"
+            style="width: 30px; height: 18px;filter: drop-shadow(0 -160px 0 #3AAB47);position: relative;top: 160px;"
+        />
+        {{item.name}}
+    </van-tabbar-item>
+</van-tabbar>
+

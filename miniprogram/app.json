@@ -1,12 +1,15 @@
 {
   "pages": [
+    "pages/infoView/infoView",
     "pages/index/index",
+    
+    
     "pages/logs/logs"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "Weixin",
+    "navigationBarTitleText": "UY充电",
     "navigationBarTextStyle": "black"
   },
   "usingComponents": {

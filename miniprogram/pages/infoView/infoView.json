@@ -1,0 +1,8 @@
+{
+    "navigationBarBackgroundColor": "#41b478",
+    "navigationBarTitleText": "UY充电",
+    "navigationBarTextStyle": "white",
+    "usingComponents": {
+        "bottom-tabbar": "/components/bottom_tabbar/bottom_tabbar"
+    }
+}
