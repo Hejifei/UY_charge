@@ -1,3 +1,5 @@
+import {REQUEST_URL} from '../common/index'
+
 export const formatTime = (date: Date) => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -16,4 +18,17 @@ export const formatTime = (date: Date) => {
 const formatNumber = (n: number) => {
   const s = n.toString()
   return s[1] ? s : '0' + s
+}
+
+export const getUserToken = () => {
+    return wx.getStorageSync('token')
+}
+
+export const setUserToken = (info: string) => {
+    return wx.setStorageSync('token', info)
+}
+
+export const parseApiUrl = (url: string): string => {
+    const api = REQUEST_URL
+    return `${api}${url}`
 }
