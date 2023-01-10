@@ -1,0 +1,81 @@
+.testDataWrapper {
+    display: flex;
+    flex-direction: column;
+
+    .infoWrapper {
+        flex: 1;
+        // position: relative;
+        box-sizing: border-box;
+        padding: 8px 8px 0 8px;
+        .title {
+            display: flex;
+            line-height: 30px;
+            font-size: 16px;
+    
+            .titleRight {
+                margin-left: auto;
+                font-size: 12px;
+                color: #666;
+            }
+        }
+    
+        .baseInfoContent {
+            display: flex;
+            flex-flow: row wrap;
+            align-content: flex-start;
+            justify-content: space-between;
+    
+            .infoItem {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                box-sizing: border-box;
+                flex: 0 0 20%;
+                // background-color: #F6F8FA;
+                padding: 13px 0;
+                // height: 70px;
+                box-sizing: border-box;
+                // margin-bottom: 10px;
+    
+                .infoTitleWrapper {
+                    text-align: center;
+                    margin-bottom: 10px;
+                    font-size: 12px;
+                    color: #999999;
+                    line-height: 18px;
+                }
+
+                image {
+                    width: 27px;
+                    height: 27px;
+                    margin-bottom: 10px;
+                }
+    
+                .resultWrapper {
+                    line-height: 18px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: #28282C;
+    
+                    .unitWrapper {
+                        font-size: 12px;
+                        color: #28282C;
+                    }
+                }
+            }
+        }
+    }
+
+    .actionWrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 15px 0;
+
+        button {
+            border-radius: 5px;
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+    }
+}

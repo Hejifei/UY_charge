@@ -3,6 +3,9 @@
     "navigationBarTitleText": "UY充电",
     "navigationBarTextStyle": "white",
     "usingComponents": {
-        "bottom-tabbar": "/components/bottom_tabbar/bottom_tabbar"
+        "bottom-tabbar": "/components/bottom_tabbar/bottom_tabbar",
+        "circle-progress": "/components/circle_progress/circle_progress",
+        "blank": "/components/blank/blank",
+        "test-data": "./test_data/test_data"
     }
 }

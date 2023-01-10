@@ -8,7 +8,79 @@
         />
         X3
     </di>
+    <circle-progress
+
+    />
   </div>
-  xxx
+  <div class="infoWrapper">
+    <div class="title">
+        常规信息
+        <div class="titleRight">固件版本号: 20230110</div>
+    </div>
+    <div class="baseInfoContent">
+        <div class="infoItem">
+            <div class="infoTitleWrapper">
+                <image src="../../assets/imgs/base_info_icons/work_model.png" />
+                启动模式
+            </div>
+            <div class="resultWrapper">
+                充电模式
+                <div class="unitWrapper"></div>
+            </div>
+        </div>
+        <div class="infoItem">
+            <div class="infoTitleWrapper">
+                <image src="../../assets/imgs/base_info_icons/regular_charge.png" />
+                充电定时
+            </div>
+            <div class="resultWrapper">
+                360
+                <div class="unitWrapper">min</div>
+            </div>
+        </div>
+        <div class="infoItem">
+            <div class="infoTitleWrapper">
+                <image src="../../assets/imgs/base_info_icons/time_left.png" />
+                定时剩余
+            </div>
+            <div class="resultWrapper">
+                120
+                <div class="unitWrapper">min</div>
+            </div>
+        </div>
+        <div class="infoItem">
+            <div class="infoTitleWrapper">
+                <image src="../../assets/imgs/base_info_icons/battery_capacity.png" />
+                电池容量
+            </div>
+            <div class="resultWrapper">
+                520
+                <div class="unitWrapper">AH</div>
+            </div>
+        </div>
+        <div class="infoItem">
+            <div class="infoTitleWrapper">
+                <image src="../../assets/imgs/base_info_icons/battery_voltage.png" />
+                电池电压
+            </div>
+            <div class="resultWrapper">
+                4.8
+                <div class="unitWrapper">V</div>
+            </div>
+        </div>
+        <div class="infoItem">
+            <div class="infoTitleWrapper">
+                <image src="../../assets/imgs/base_info_icons/charge_temperature.png" />
+                充电温度
+            </div>
+            <div class="resultWrapper">
+                42
+                <div class="unitWrapper">°C</div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <blank height="10" />
+  <test-data />
   <bottom-tabbar />
 </view>

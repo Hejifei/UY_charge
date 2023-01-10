@@ -1,0 +1,85 @@
+<div class="testDataWrapper">
+    <div class="infoWrapper">
+        <div class="title">
+            测试数据
+        </div>
+        <div class="baseInfoContent">
+            <div class="infoItem">
+                <div class="infoTitleWrapper">极限电压</div>
+                <image src="../../../assets/imgs/test_data/voltage.png" />
+                <div class="resultWrapper">
+                    11 <div class="unitWrapper">V</div>
+                </div>
+            </div>
+            <div class="infoItem">
+                <div class="infoTitleWrapper">极限电流</div>
+                <image src="../../../assets/imgs/test_data/electric_current.png" />
+                <div class="resultWrapper">
+                    11 <div class="unitWrapper">A</div>
+                </div>
+            </div>
+            <div class="infoItem">
+                <div class="infoTitleWrapper">累计开机</div>
+                <image src="../../../assets/imgs/test_data/start_up.png" />
+                <div class="resultWrapper">
+                    52 <div class="unitWrapper"></div>
+                </div>
+            </div>
+            <div class="infoItem">
+                <div class="infoTitleWrapper">累计工作</div>
+                <image src="../../../assets/imgs/test_data/start_up.png" />
+                <div class="resultWrapper">
+                    520 <div class="unitWrapper">H</div>
+                </div>
+            </div>
+            <div class="infoItem">
+                <div class="infoTitleWrapper">累计开机</div>
+                <image src="../../../assets/imgs/test_data/count_of_fault.png" />
+                <div class="resultWrapper">
+                    36
+                </div>
+            </div>
+
+            <div class="infoItem">
+                <div class="infoTitleWrapper">累计过热</div>
+                <image src="../../../assets/imgs/test_data/count_of_too_hot.png" />
+                <div class="resultWrapper">
+                    36
+                </div>
+            </div>
+            <div class="infoItem">
+                <div class="infoTitleWrapper">累计过压</div>
+                <image src="../../../assets/imgs/test_data/count_of_overvoltage.png" />
+                <div class="resultWrapper">36</div>
+            </div>
+            <div class="infoItem">
+                <div class="infoTitleWrapper">累计过流</div>
+                <image src="../../../assets/imgs/test_data/count_of_overcurrent.png" />
+                <div class="resultWrapper">36</div>
+            </div>
+            <div class="infoItem">
+                <div class="infoTitleWrapper">累计短路</div>
+                <image src="../../../assets/imgs/test_data/count_of_short_circuit.png" />
+                <div class="resultWrapper">36</div>
+            </div>
+            <div class="infoItem">
+                <div class="infoTitleWrapper">累计反馈</div>
+                <image src="../../../assets/imgs/test_data/count_of_short_circuit.png" />
+                <div class="resultWrapper">36</div>
+            </div>
+        </div>
+    </div>
+    <div class="actionWrapper">
+        <van-button
+            type="primary"
+            size="small"
+            style="margin-right: 25px;"
+        >读取数据</van-button>
+        <van-button
+            type="primary"
+            size="small"
+            color="#ECC057"
+        >擦除数据</van-button>
+    </div>
+    <blank height="10" />
+</div>
