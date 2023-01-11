@@ -1,0 +1,14 @@
+{
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "参数设置",
+    "navigationBarTextStyle": "black",
+    "usingComponents": {
+        "van-field": "@vant/weapp/field/index",
+        "van-cell": "@vant/weapp/cell/index",
+        "van-cell-group": "@vant/weapp/cell-group/index",
+        "van-switch": "@vant/weapp/switch/index",
+        "bottom-tabbar": "/components/bottom_tabbar/bottom_tabbar",
+        "blank": "/components/blank/blank",
+        "charge-line-setting": "./charge_line_setting/charge_line_setting"
+    }
+}

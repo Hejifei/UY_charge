@@ -1,4 +1,4 @@
-<view class="infoViewWrapper">
+<view class="infoViewWrapper" style="padding-bottom: {{barhHeight}}px;">
   <div class="headerWrapper">
     <di class="headerTitle">
         <image

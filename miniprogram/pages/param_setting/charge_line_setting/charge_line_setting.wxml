@@ -1,0 +1,69 @@
+<view class="chargeLineSettingWrapper">
+    <view class="titleWrapper">
+        充电曲线设置
+        <span>(间隔10min)</span>
+    </view>
+
+    <div class="settingContent">
+        <div class="settingItem">
+            <div class="label">节点</div>
+            <div class="voltageTitle">电压<span class="unit">(V)</span></div>
+            <div class="electricCurrentTitle">节点<span class="unit">(A)</span></div>
+        </div>
+        <van-cell-group
+            class="settingItem"
+            inset
+            wx:for="{{chargeLineSettingDataList}}"
+            wx:for-index="idx"
+            wx:for-item="item"
+            wx:key="idx"
+        >
+            <div class="label">节点{{idx + 1}}</div>
+            <div class="voltageInput">
+                <van-field
+                    center
+                    data-name="voltage"
+                    data-index="{{idx}}"
+                    type="number"
+                    model:value="{{item.voltage}}"
+                    placeholder=""
+                    border="{{ false }}"
+                    bind:change="onInputChange"
+                />
+            </div>
+            <div class="electricCurrentInput">
+                <van-field
+                    center
+                    data-name="eleCurrent"
+                    data-index="{{idx}}"
+                    type="number"
+                    model:value="{{ item.eleCurrent }}"
+                    placeholder=""
+                    border="{{ false }}"
+                    bind:change="onInputChange"
+                />
+            </div>
+        </van-cell-group>
+    </div>
+
+    <div class="actionWrapper">
+        <van-button
+            type="primary"
+            size="small"
+            color="#2497D8"
+            style="margin-right: 25px;"
+        >读取曲线</van-button>
+        <van-button
+            type="primary"
+            size="small"
+            style="margin-right: 25px;"
+            bindtap="handleLineWrite"
+        >曲线写入</van-button>
+        <van-button
+            type="primary"
+            size="small"
+            color="#ECC057"
+        >曲线重置</van-button>
+    </div>
+    <blank height="10" />
+</view>

@@ -27,7 +27,7 @@
             </div>
             <div class="infoItem">
                 <div class="infoTitleWrapper">累计工作</div>
-                <image src="../../../assets/imgs/test_data/start_up.png" />
+                <image src="../../../assets/imgs/test_data/count_of_work.png" />
                 <div class="resultWrapper">
                     520 <div class="unitWrapper">H</div>
                 </div>
@@ -64,7 +64,7 @@
             </div>
             <div class="infoItem">
                 <div class="infoTitleWrapper">累计反馈</div>
-                <image src="../../../assets/imgs/test_data/count_of_short_circuit.png" />
+                <image src="../../../assets/imgs/test_data/count_of_back.png" />
                 <div class="resultWrapper">36</div>
             </div>
         </div>

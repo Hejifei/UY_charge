@@ -1,0 +1,85 @@
+<view
+    class="paramSettingWrapper"
+    style="padding-bottom: {{barhHeight}}px;"
+>
+    <blank height="10" />
+    <div class="settingWrapper">
+        <van-cell-group border="{{ false }}">
+            <van-cell title="充电开关" center border="{{ false }}">
+                <van-switch
+                    slot="right-icon"
+                    checked="{{chargeSwitch}}"
+                    bind:change="onChargeSwitchChange"
+                />
+            </van-cell>
+            <van-field
+                value="{{electric_current_max}}"
+                center
+                clearable
+                border="{{ false }}"
+                label="最大输出电流(A)"
+                placeholder="请输入最大输出电流(A)"
+                title-width="105"
+                type="number"
+                use-button-slot
+            >
+                <van-button
+                    icon="replay"
+                    slot="button"
+                    size="small"
+                    color="#ECC057"
+                    bindtap="resetElectricCurrent">
+                </van-button>
+            </van-field>
+            <van-field
+                value="{{voltage_max}}"
+                center
+                clearable
+                border="{{ false }}"
+                label="最大输出电压(V)"
+                placeholder="请输入最大输出电压(V)"
+                title-width="105"
+                type="number"
+                use-button-slot
+            >
+                <van-button
+                    icon="replay"
+                    slot="button"
+                    size="small"
+                    color="#ECC057"
+                    bindtap="resetVoltage">
+                </van-button>
+            </van-field>
+            <van-field
+                value="{{charge_time}}"
+                center
+                clearable
+                border="{{ false }}"
+                label="充电定时(min)"
+                placeholder="请输入充电定时(min)"
+                title-width="105"
+                type="number"
+                use-button-slot
+            >
+                <van-button
+                    icon="replay"
+                    slot="button"
+                    size="small"
+                    color="#ECC057"
+                    bindtap="resetChargeTime">
+                </van-button>
+            </van-field>
+            <van-cell wx:if="{{storeDetail != null}}" center title="{{storeDetail.name}}" label="{{storeDetail.contact.address}}"> <van-switch slot="right-icon" checked="{{ checked }}" active-color="#07c160" inactive-color="#ee0a24" active-value="take_out" inactive-value="self"  bind:change="onChange"/> </van-cell>
+        </van-cell-group>
+        <div class="actionWrapper">
+            <van-button
+                type="primary"
+                size="small"
+                bindtap="handleParamSettingSave"
+            >保存</van-button>
+        </div>
+    </div>
+    <blank height="10" />
+    <charge-line-setting />
+    <bottom-tabbar />
+</view>
