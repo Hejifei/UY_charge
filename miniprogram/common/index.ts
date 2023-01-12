@@ -8,26 +8,40 @@ export const tabbar_param_set_value = "param_set"   //  参数设置
 export const tabbar_charge_line_value = "charge_line"   //  充电曲线
 export const tabbar_setting_center_value = "settring_center"   //  设置中心
 
-export const tabbar_data_list = [
+export const tabbar_data_list: {
+    name: string
+    value: string
+    img_src: string
+    url: string
+    router: string
+}[] = [
     {
         name: '信息展示',
         value: tabbar_info_view_value,
-        img_src: '../../assets/imgs/info_view.png',
+        img_src: '../assets/imgs/info_view.png',
+        url: 'pages/infoView/infoView',
+        router: '../infoView/infoView',
     },
     {
         name: '参数设置',
         value: tabbar_param_set_value,
-        img_src: '../../assets/imgs/param_setting.png',
+        img_src: '../assets/imgs/param_setting.png',
+        url: 'pages/param_setting/param_setting',
+        router: '../param_setting/param_setting',
     },
     {
         name: '充电曲线',
         value: tabbar_charge_line_value,
-        img_src: '../../assets/imgs/charge_line.png',
+        img_src: '../assets/imgs/charge_line.png',
+        url: 'pages/charge_line/charge_line',
+        router: '../charge_line/charge_line',
     },
     {
         name: '设置中心',
         value: tabbar_setting_center_value,
-        img_src: '../../assets/imgs/setting_center.png',
+        img_src: '../assets/imgs/setting_center.png',
+        url: 'pages/charge_line/charge_line',
+        router: '../charge_line/charge_line',
     },
 ]
 

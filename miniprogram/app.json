@@ -1,7 +1,9 @@
 {
   "pages": [
-    "pages/param_setting/param_setting",
     "pages/infoView/infoView",
+    "pages/charge_line/charge_line",
+    "pages/param_setting/param_setting",
+    
     "pages/index/index",
     "pages/logs/logs"
   ],
@@ -15,5 +17,32 @@
     "van-button": "@vant/weapp/button/index",
     "van-toast": "@vant/weapp/toast/index"
   },
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+      "color": "#999",
+      "selectedColor": "#3AAB47",
+      "borderStyle": "black",
+      "backgroundColor": "#ffffff",
+      "custom": true,
+      "list": [
+          {
+            "pagePath": "pages/infoView/infoView",
+            "text": "信息展示",
+            "iconPath": "assets/imgs/info_view.png",
+            "selectedIconPath": "assets/imgs/info_view_active.png"
+          },
+          {
+            "pagePath": "pages/param_setting/param_setting",
+            "text": "参数设置",
+            "iconPath": "assets/imgs/param_setting.png",
+            "selectedIconPath": "assets/imgs/param_setting_active.png"
+          },
+          {
+            "pagePath": "pages/charge_line/charge_line",
+            "text": "充电曲线",
+            "iconPath": "assets/imgs/charge_line.png",
+            "selectedIconPath": "assets/imgs/charge_line_active.png"
+          }
+      ]
+  }
 }

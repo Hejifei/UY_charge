@@ -81,5 +81,4 @@
     </div>
     <blank height="10" />
     <charge-line-setting />
-    <bottom-tabbar />
 </view>

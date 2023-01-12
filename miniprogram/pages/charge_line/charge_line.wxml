@@ -1,0 +1,18 @@
+<view
+    class="chargeLineWrapper"
+    style="padding-bottom: {{barhHeight}}px;"
+>
+    <!-- <blank height="10" /> -->
+    <div class="chartWrapper">
+        111
+
+        <div class="actionWrapper">
+            <van-button
+                type="primary"
+                size="small"
+                bindtap="getChargeData"
+            >读取数据</van-button>
+        </div>
+    </div>
+    
+</view>

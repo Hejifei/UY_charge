@@ -1,0 +1,8 @@
+{
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "参数设置",
+    "navigationBarTextStyle": "black",
+    "usingComponents": {
+        "blank": "/components/blank/blank"
+    }
+}

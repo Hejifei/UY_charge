@@ -1,4 +1,7 @@
-<view class="infoViewWrapper" style="padding-bottom: {{barhHeight}}px;">
+<view
+    class="infoViewWrapper"
+    style="padding-bottom: {{barhHeight}}px;"
+>
   <div class="headerWrapper">
     <di class="headerTitle">
         <image
@@ -82,5 +85,4 @@
   </div>
   <blank height="10" />
   <test-data />
-  <bottom-tabbar />
 </view>

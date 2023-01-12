@@ -1,5 +1,4 @@
 
-
 Page({
   data: {
     barhHeight: 0,
@@ -21,13 +20,6 @@ Page({
             })
         }
     })
-        // wx
-        //     .createSelectorQuery()
-        //     .in(this)
-        //     .select(".van-tabbar")
-        //     .boundingClientRect(function(res) {
-        //         console.log({res}, 'xxx')
-        //     }).exec()
   },
   onChargeSwitchChange({ detail }: {detail: boolean}) {
     // 需要手动对 checked 状态进行更新
