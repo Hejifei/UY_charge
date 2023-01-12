@@ -4,7 +4,9 @@
 >
     <!-- <blank height="10" /> -->
     <div class="chartWrapper">
-        111
+        <view class="chartContainer">
+            <f2 class="f2-chart" onInit="{{onInitChart}}" />
+        </view>
 
         <div class="actionWrapper">
             <van-button

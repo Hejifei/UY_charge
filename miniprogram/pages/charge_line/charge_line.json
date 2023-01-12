@@ -3,6 +3,7 @@
     "navigationBarTitleText": "参数设置",
     "navigationBarTextStyle": "black",
     "usingComponents": {
+        "f2": "@antv/wx-f2",
         "blank": "/components/blank/blank"
     }
 }

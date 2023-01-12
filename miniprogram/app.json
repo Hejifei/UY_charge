@@ -1,9 +1,8 @@
 {
   "pages": [
-    "pages/infoView/infoView",
     "pages/charge_line/charge_line",
     "pages/param_setting/param_setting",
-    
+    "pages/infoView/infoView",
     "pages/index/index",
     "pages/logs/logs"
   ],
