@@ -1,4 +1,4 @@
-import { createElement } from '@antv/f2';
+import {ModBusCRC16} from '../../utils/crc'
 
 Page({
   data: {
@@ -108,6 +108,7 @@ Page({
       },
   },
   onLoad() {
+    // console.log(ModBusCRC16('55590A293000'))
   },
   onReady() {
     const that = this
