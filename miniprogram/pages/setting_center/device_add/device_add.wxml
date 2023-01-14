@@ -10,22 +10,35 @@
         <div class="titleWrapper">可用设备</div>
     </div>
     <div class="historyListWrapper">
+        <!-- <view wx:for="{{devices}}" wx:key="index"
+            data-device-id="{{item.deviceId}}"
+            data-name="{{item.name || item.localName}}"
+            bindtap="createBLEConnection" 
+            class="device_item"
+            hover-class="device_item_hover">
+            <view style="font-size: 16px; color: #333;">{{item.name}}</view>
+            <view style="font-size: 10px">信号强度: {{item.RSSI}}dBm ({{utils.max(0, item.RSSI + 100)}}%)</view>
+            <view style="font-size: 10px">UUID: {{item.deviceId}}</view>
+            <view style="font-size: 10px">Service数量: {{utils.len(item.advertisServiceUUIDs)}}</view>
+        </view> -->
         <div
-            class="historyItem {{item.id === connected ? 'conndecteditem' : ''}}"
+            class="historyItem {{item.deviceId === connected ? 'conndecteditem' : ''}}"
             wx:for="{{deviceList}}"
             wx:for-index="idx"
             wx:for-item="item"
-            wx:key="id"
-            data-id="{{item.id}}"
+            wx:key="deviceId"
+            data-id="{{item.deviceId}}"
+            data-device-id="{{item.deviceId}}"
+            data-name="{{item.name || item.localName}}"
             bindtap="changeBluetoothConnect"
         >
             <div class="nameWrapper">
-                <image src="{{item.id === connected ? '/assets/imgs/device_manage/icon_bluetooth_connected.png' : '/assets/imgs/device_manage/icon_bluetooth_unconnect.png'}}" />
+                <image src="{{item.deviceId === connected ? '/assets/imgs/device_manage/icon_bluetooth_connected.png' : '/assets/imgs/device_manage/icon_bluetooth_unconnect.png'}}" />
                 {{item.name}}
             </div>
             <div
                 class="connectedText"
-                wx:if="{{item.id === connected}}"
+                wx:if="{{item.deviceId === connected}}"
             >已连接</div>
         </div>
         <van-empty

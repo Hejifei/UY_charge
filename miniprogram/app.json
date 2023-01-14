@@ -1,12 +1,12 @@
 {
   "pages": [
+    "pages/setting_center/device_add/device_add",
     "pages/setting_center/setting_center",
     "pages/infoView/infoView",
     "pages/param_setting/param_setting",
     "pages/charge_line/charge_line",
-    
     "pages/setting_center/device_manage/device_manage",
-    "pages/setting_center/device_add/device_add",
+    
     "pages/setting_center/about_us/about_us",
     "pages/index/index",
     "pages/logs/logs"
