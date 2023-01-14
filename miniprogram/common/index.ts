@@ -40,8 +40,8 @@ export const tabbar_data_list: {
         name: '设置中心',
         value: tabbar_setting_center_value,
         img_src: '../assets/imgs/setting_center.png',
-        url: 'pages/charge_line/charge_line',
-        router: '../charge_line/charge_line',
+        url: 'pages/setting_center/setting_center',
+        router: '../setting_center/setting_center',
     },
 ]
 

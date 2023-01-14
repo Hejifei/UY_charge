@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/setting_center/setting_center",
     "pages/charge_line/charge_line",
     "pages/param_setting/param_setting",
     "pages/infoView/infoView",
@@ -41,6 +42,12 @@
             "text": "充电曲线",
             "iconPath": "assets/imgs/charge_line.png",
             "selectedIconPath": "assets/imgs/charge_line_active.png"
+          },
+          {
+              "pagePath": "pages/setting_center/setting_center",
+              "text": "设置中心",
+              "iconPath": "assets/imgs/setting_center.png",
+              "selectedIconPath": "assets/imgs/setting_center.png"
           }
       ]
   }

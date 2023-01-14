@@ -1,0 +1,141 @@
+.infoViewWrapper {
+    position: relative;
+    min-height: 100vh;
+    box-sizing: border-box;
+    background-color: #F6F8FA;
+    display: flex;
+    flex-direction: column;
+
+    .headerWrapper {
+        box-sizing: border-box;
+        position: relative;
+        height: 170px;
+        width: 100%;
+        color: #fff;
+
+        .headerBG {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+
+        .barTitleWrapper {
+            position: absolute;
+            // top: 44px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 17px;
+            font-weight: 700;
+        }
+    }
+
+    .userInfoWrapper {
+        box-sizing: border-box;
+        position: absolute;
+        left: 17px;
+        bottom: 24px;
+        width: 80%;
+        // height: 50px;
+        display: flex;
+        flex-direction: row;
+
+
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid #fff;
+            position: relative;
+        }
+
+        .userInfoContent {
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 5px 12px;
+            
+
+            .nicknameLine {
+                font-size: 15px;
+                display: flex;
+                align-items: center;
+
+                .nickname {
+                    max-width: 150px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                .editIcon {
+                    padding: 0 6px;
+
+                    image {
+                        width: 13px;
+                        height: 13px;
+                    }
+                }
+            }
+
+            .roleLine {
+                margin-top: 4px;
+
+                .roleContent {
+                    background-color: #B2EDB9;
+                    border-radius: 2px;
+                    padding: 0 3px;
+                    line-height: 16px;
+                    font-size: 12px;
+                    font-weight: 500;
+                    color: #3AAB47;
+                }
+            }
+            
+
+        }
+
+        .takePhotoIconContent {
+            position: absolute;
+            top: 35px;
+            left: 35px;
+            width: 19px;
+            height: 19px;
+            background-color: #D8EEDA;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .takePhotoIcon {
+                width: 10px;
+                height: 8px;
+            }
+        }
+        
+    }
+
+    .cellWrapper {
+        .iconImg {
+            width: 15px;
+            height: 15px;
+            margin-top: 4px;
+            margin-right: 10px;
+        }
+
+        .van-cell-text {
+            color: #28282C;
+            font-size: 15px;
+            // font-weight: 700;
+        }
+
+        .connectedText {
+            // font-size: 12px;
+            color: #3AAB47;
+        }
+    }
+}

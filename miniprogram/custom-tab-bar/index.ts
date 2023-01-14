@@ -29,6 +29,7 @@ Component({
         // console.log('ready', {
         //     getCurrentPages: getCurrentPages(),
         //     url,
+        //     active,
         // })
     },
     // attached() {
