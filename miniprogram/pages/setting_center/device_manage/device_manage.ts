@@ -7,26 +7,26 @@ Page({
     titlePositionTop: 0,
     connected: 1,   //  已连蓝牙的id
     historyDeviceList: [
-        {
-            id: 1,
-            name: 'UY0001',
-        },
-        {
-            id: 2,
-            name: 'UY0002',
-        },
-        {
-            id: 3,
-            name: 'UY0003',
-        },
-        {
-            id: 4,
-            name: 'UY0004',
-        },
-        {
-            id: 5,
-            name: 'UY0005',
-        },
+        // {
+        //     id: 1,
+        //     name: 'UY0001',
+        // },
+        // {
+        //     id: 2,
+        //     name: 'UY0002',
+        // },
+        // {
+        //     id: 3,
+        //     name: 'UY0003',
+        // },
+        // {
+        //     id: 4,
+        //     name: 'UY0004',
+        // },
+        // {
+        //     id: 5,
+        //     name: 'UY0005',
+        // },
     ]
   },
   onLoad() {

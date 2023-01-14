@@ -49,13 +49,13 @@
             <!-- <div class="connectedText">已连接</div> -->
             <div>未连接</div>
         </van-cell>
-        <van-cell class="cellWrapper" is-link>
+        <van-cell class="cellWrapper" is-link bindtap="handleDebugCodeModalVisible">
             <image
                 slot="icon"
                 class="iconImg"
                 src="../../assets/imgs/setting_center/icon_debug_mode.png"
             />
-            <view slot="title" class="van-cell-text">设备管理</view>
+            <view slot="title" class="van-cell-text">调试模式</view>
             <div class="connectedText">已连接</div>
         </van-cell>
         <van-cell
@@ -74,4 +74,32 @@
     </van-cell-group>
   
   <blank height="10" />
+
+  <van-dialog
+    use-slot
+    title="调试码"
+    show="{{isDebugModeVisible}}"
+    bind:close="onClose"
+    showConfirmButton="{{false}}"
+    customStyle="border-radius: 2px;"
+    >
+        <div class="debugCodeWrapper">
+            <van-cell-group>
+                <van-field
+                    center
+                    input-align="center"
+                    model:value="{{debugCode}}"
+                    placeholder="请输入调试码"
+                    border="{{true}}"
+                />
+            </van-cell-group>
+            <div class="actionWrapper">
+                <van-button
+                    type="primary"
+                    size="small"
+                    bindtap="handleDebugCodeSave"
+                >验证</van-button>
+            </div>
+        </div>
+    </van-dialog>
 </view>

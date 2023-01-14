@@ -5,6 +5,8 @@ Page({
   data: {
     barhHeight: 0,
     titlePositionTop: 0,
+    isDebugModeVisible: false,
+    debugCode: undefined,
   },
   onLoad() {
   },
@@ -24,7 +26,19 @@ Page({
         }
     })
   },
-  xxx() {
-    
+  getUserInfo(event: any) {
+    console.log(event.detail, 'getUserInfo');
   },
+  handleDebugCodeModalVisible() {
+    this.setData({ isDebugModeVisible: true });
+  },
+  onClose() {
+    this.setData({ isDebugModeVisible: false });
+  },
+  handleDebugCodeSave() {
+      console.log({
+        debugCode: this.data.debugCode,
+      })
+      this.onClose()
+  }
 })

@@ -28,6 +28,10 @@
                 wx:if="{{item.id === connected}}"
             >已连接</div>
         </div>
+        <van-empty
+            wx:if="{{deviceList.length === 0}}"
+            description="暂无可连接设备"
+        />
     </div>
     <blank height="10" />
     <div class="descInfoWrapper">
