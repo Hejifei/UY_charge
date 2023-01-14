@@ -3,11 +3,16 @@
     style="padding-bottom: {{barhHeight}}px;"
 >
     <div class="headerWrapper {{connected ? '' : 'disConnectHeaderWrapper'}}">
-        <div class="barTitleWrapper" style="top: {{titlePositionTop}}px;">设备管理</div>
+        <div class="barTitleWrapper" style="top: {{titlePositionTop}}px;">
+            <div class="backIcon" bindtap="backPageToSettingCenter">
+                <van-icon name="arrow-left" size="20px" />
+            </div>
+            设备管理
+        </div>
         <div class="connectStatusWrapper" bindtap="handleUnConnect">
             <image
                 class="{{connected ? 'rotateImage' : ''}}"
-                src="{{connected ? '../../assets/imgs/device_manage/linked_BG.png' : '../../assets/imgs/device_manage/unlink_BG.png'}}"
+                src="{{connected ? '/assets/imgs/device_manage/linked_BG.png' : '/assets/imgs/device_manage/unlink_BG.png'}}"
             />
             <div wx:if="{{connected}}" class="statusConnectedText">
                 断开连接
@@ -19,8 +24,8 @@
     </div>
     <div class="historyTitle">
         <div class="titleWrapper">历史设备</div>
-        <div class="actionWrapper">
-            <image src="../../assets/imgs/device_manage/icon_add.png" />
+        <div class="actionWrapper" bindtap="changePageToAddDevice">
+            <image src="/assets/imgs/device_manage/icon_add.png" />
             添加新设备
         </div>
     </div>
@@ -35,7 +40,7 @@
             bindtap="changeBluetoothConnect"
         >
             <div class="nameWrapper">
-                <image src="../../assets/imgs/device_manage/icon_bluetooth_connected.png" />
+                <image src="{{item.id === connected ? '/assets/imgs/device_manage/icon_bluetooth_connected.png' : '/assets/imgs/device_manage/icon_bluetooth_unconnect.png'}}" />
                 {{item.name}}
             </div>
             <div

@@ -1,6 +1,7 @@
 {
-    "navigationBarTitleText": "设置中心",
-    "navigationStyle": "custom",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "添加设备",
+    "navigationBarTextStyle": "black",
     "usingComponents": {
         "blank": "/components/blank/blank",
         "van-cell": "@vant/weapp/cell/index",

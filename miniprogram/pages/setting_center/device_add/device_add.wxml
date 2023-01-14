@@ -1,0 +1,45 @@
+<view
+    class="deviceAddViewWrapper"
+>
+    <blank height="10" />
+    <van-cell-group>
+        <van-cell title="已连接设备名称" value="UY充电器0001" />
+    </van-cell-group>
+    <blank height="10" />
+    <div class="historyTitle">
+        <div class="titleWrapper">可用设备</div>
+    </div>
+    <div class="historyListWrapper">
+        <div
+            class="historyItem {{item.id === connected ? 'conndecteditem' : ''}}"
+            wx:for="{{deviceList}}"
+            wx:for-index="idx"
+            wx:for-item="item"
+            wx:key="id"
+            data-id="{{item.id}}"
+            bindtap="changeBluetoothConnect"
+        >
+            <div class="nameWrapper">
+                <image src="{{item.id === connected ? '/assets/imgs/device_manage/icon_bluetooth_connected.png' : '/assets/imgs/device_manage/icon_bluetooth_unconnect.png'}}" />
+                {{item.name}}
+            </div>
+            <div
+                class="connectedText"
+                wx:if="{{item.id === connected}}"
+            >已连接</div>
+        </div>
+    </div>
+    <blank height="10" />
+    <div class="descInfoWrapper">
+        <div class="title">
+            连接说明
+        </div>
+        <p
+            wx:for="{{descList}}"
+            wx:for-index="idx"
+            wx:for-item="item"
+            wx:key="idx"
+        >{{idx + 1}}、{{item}}</p>
+    </div>
+  
+</view>

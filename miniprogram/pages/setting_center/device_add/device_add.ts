@@ -5,8 +5,8 @@ Page({
   data: {
     barhHeight: 0,
     titlePositionTop: 0,
-    connected: 1,   //  已连蓝牙的id
-    historyDeviceList: [
+    connected: undefined,   //  已连蓝牙的id
+    deviceList: [
         {
             id: 1,
             name: 'UY0001',
@@ -27,6 +27,11 @@ Page({
             id: 5,
             name: 'UY0005',
         },
+    ],
+    descList: [
+        '请确定设备以及开启连接模式;',
+        '请确定设备以及开启连接模式;',
+        '请确定设备以及开启连接模式;',
     ]
   },
   onLoad() {
@@ -45,15 +50,6 @@ Page({
                 titlePositionTop: navTopHeight,
             })
         }
-    })
-  },
-  handleUnConnect() {
-    if (!this.data.connected) {
-        return
-    }
-      console.log('断开连接')
-    this.setData({
-        connected: 0,
     })
   },
   changeBluetoothConnect(event: any) {

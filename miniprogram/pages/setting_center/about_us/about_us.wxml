@@ -1,0 +1,6 @@
+<view
+    class="chargeLineWrapper"
+    style="padding-bottom: {{barhHeight}}px;"
+>
+    关于我们xxx
+</view>

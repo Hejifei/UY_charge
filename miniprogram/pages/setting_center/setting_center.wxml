@@ -39,7 +39,7 @@
         </div>
     </div>
     <van-cell-group>
-        <van-cell class="cellWrapper" is-link>
+        <van-cell class="cellWrapper" is-link url="/pages/setting_center/device_manage/device_manage">
             <image
                 slot="icon"
                 class="iconImg"
@@ -63,7 +63,7 @@
             title="关于我们"
             class="cellWrapper"
             link-type="navigateTo"
-            url="/pages/dashboard/index"
+            url="/pages/setting_center/about_us/about_us"
         >
             <image
                 slot="icon"
