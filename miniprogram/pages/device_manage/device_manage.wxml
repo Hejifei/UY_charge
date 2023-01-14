@@ -6,7 +6,7 @@
         <div class="barTitleWrapper" style="top: {{titlePositionTop}}px;">设备管理</div>
         <div class="connectStatusWrapper" bindtap="handleUnConnect">
             <image
-                class="iconImg"
+                class="{{connected ? 'rotateImage' : ''}}"
                 src="{{connected ? '../../assets/imgs/device_manage/linked_BG.png' : '../../assets/imgs/device_manage/unlink_BG.png'}}"
             />
             <div wx:if="{{connected}}" class="statusConnectedText">
