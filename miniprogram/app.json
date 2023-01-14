@@ -1,9 +1,10 @@
 {
   "pages": [
-    "pages/setting_center/setting_center",
-    "pages/charge_line/charge_line",
-    "pages/param_setting/param_setting",
+    "pages/device_manage/device_manage",
     "pages/infoView/infoView",
+    "pages/param_setting/param_setting",
+    "pages/charge_line/charge_line",
+    "pages/setting_center/setting_center",
     "pages/index/index",
     "pages/logs/logs"
   ],

@@ -1,7 +1,6 @@
 {
-    "navigationBarBackgroundColor": "#41b478",
     "navigationBarTitleText": "UY充电",
-    "navigationBarTextStyle": "white",
+    "navigationStyle": "custom",
     "usingComponents": {
         "circle-progress": "/components/circle_progress/circle_progress",
         "blank": "/components/blank/blank",

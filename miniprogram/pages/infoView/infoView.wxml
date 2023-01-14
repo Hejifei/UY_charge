@@ -3,7 +3,12 @@
     style="padding-bottom: {{barhHeight}}px;"
 >
   <div class="headerWrapper">
-    <di class="headerTitle">
+    <image
+        class="headerBG"
+        src="../../assets/imgs/info_view_bg.png"
+    />
+    <div class="barTitleWrapper" style="top: {{titlePositionTop}}px;">UY充电</div>
+    <di class="headerTitle" style="top: {{titlePositionTop + 30}}px;">
         <image
             slot="icon"
             src="../../assets/imgs/fan.png"
@@ -11,9 +16,9 @@
         />
         X3
     </di>
-    <circle-progress
+    <!-- <circle-progress
 
-    />
+    /> -->
   </div>
   <div class="infoWrapper">
     <div class="title">

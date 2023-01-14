@@ -13,20 +13,13 @@ Page({
     wx.getSystemInfo({
         success(res) {
             const {windowHeight, screenHeight, statusBarHeight} = res
+            const barhHeight = screenHeight - windowHeight
             let menu = wx.getMenuButtonBoundingClientRect()
             let navBarHeight = menu.height + (menu.top - statusBarHeight) * 2
-            // let navStatusBarHeight = statusBarHeight + menu.height + (menu.top - navBarHeight * 2)
-            console.log({
-                statusBarHeight,
-                navBarHeight,
-                // navStatusBarHeight,
-                res,
-                menu,
-            })
-            const barhHeight = screenHeight - windowHeight
+            const navTopHeight = statusBarHeight + navBarHeight / 2 - 12
             that.setData({
                 barhHeight,
-                titlePositionTop: statusBarHeight + navBarHeight / 2 - 12,
+                titlePositionTop: navTopHeight,
             })
         }
     })

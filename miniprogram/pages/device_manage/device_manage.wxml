@@ -1,0 +1,49 @@
+<view
+    class="infoViewWrapper"
+    style="padding-bottom: {{barhHeight}}px;"
+>
+    <div class="headerWrapper {{connected ? '' : 'disConnectHeaderWrapper'}}">
+        <div class="barTitleWrapper" style="top: {{titlePositionTop}}px;">设备管理</div>
+        <div class="connectStatusWrapper" bindtap="handleUnConnect">
+            <image
+                class="iconImg"
+                src="{{connected ? '../../assets/imgs/device_manage/linked_BG.png' : '../../assets/imgs/device_manage/unlink_BG.png'}}"
+            />
+            <div wx:if="{{connected}}" class="statusConnectedText">
+                断开连接
+            </div>
+            <div wx:else class="statusUnConnectedText">
+                未连接
+            </div>
+        </div>
+    </div>
+    <div class="historyTitle">
+        <div class="titleWrapper">历史设备</div>
+        <div class="actionWrapper">
+            <image src="../../assets/imgs/device_manage/icon_add.png" />
+            添加新设备
+        </div>
+    </div>
+    <div class="historyListWrapper">
+        <div
+            class="historyItem {{item.id === connected ? 'conndecteditem' : ''}}"
+            wx:for="{{historyDeviceList}}"
+            wx:for-index="idx"
+            wx:for-item="item"
+            wx:key="id"
+            data-id="{{item.id}}"
+            bindtap="changeBluetoothConnect"
+        >
+            <div class="nameWrapper">
+                <image src="../../assets/imgs/device_manage/icon_bluetooth_connected.png" />
+                {{item.name}}
+            </div>
+            <div
+                class="connectedText"
+                wx:if="{{item.id === connected}}"
+            >已连接</div>
+        </div>
+    </div>
+  
+  <blank height="10" />
+</view>

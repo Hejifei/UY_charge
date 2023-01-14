@@ -47,7 +47,7 @@
             />
             <view slot="title" class="van-cell-text">设备管理</view>
             <!-- <div class="connectedText">已连接</div> -->
-            未连接
+            <div>未连接</div>
         </van-cell>
         <van-cell class="cellWrapper" is-link>
             <image
