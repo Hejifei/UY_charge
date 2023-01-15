@@ -102,4 +102,5 @@
             </div>
         </div>
     </van-dialog>
+    <van-toast id="van-toast" />
 </view>

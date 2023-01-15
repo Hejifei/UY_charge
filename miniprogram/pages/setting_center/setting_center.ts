@@ -1,4 +1,8 @@
-
+import {
+    bluetoothInit,
+    getBluetoothAdapterState,
+} from '../../utils/bluetooth_util'
+import Toast from '@vant/weapp/toast/toast';
 // const app = getApp<IAppOption>()
 
 Page({
@@ -24,6 +28,23 @@ Page({
                 titlePositionTop: navTopHeight,
             })
         }
+    })
+
+    // bluetoothInit().then(res => {
+    //     Toast.success('蓝牙初始化成功!')
+    //     console.log({
+    //         success:res
+    //     })
+    // }).catch((res) => {
+    //     Toast.fail(res.errMsg);
+    //     console.log({
+    //         fail:res
+    //     })
+    // })
+    getBluetoothAdapterState().then(res => {
+        console.log('蓝牙可用')
+    }).catch((res) => {
+        console.log('蓝牙不可用')
     })
   },
   getUserInfo(event: any) {

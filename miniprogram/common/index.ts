@@ -1,5 +1,10 @@
 export const REQUEST_URL = 'https://gmap.dev.zhangxinkeji.com'
 
+//  serviceId
+export const SERVICE_ID_VALUE = 'serviceId'
+//  characteristicId
+export const CHARACTERISTIC_ID_VALUE = 'characteristicId'
+
 
 export const ERROR_CODE_NEED_LOGIN = 401  //  错误码,需要重新登录
 
