@@ -1,6 +1,17 @@
+import store from './store/index'
+import action from './store/actions/index'
+import Provider from './weapp-redux/provider/index'
 import { bluetoothInit } from './utils/bluetooth_util'
 import { Request } from './utils/request'
 import { setUserInfo, setUserToken } from './utils/util'
+import {
+    add,
+    minus,
+    asyncAdd,
+    setNumHandleInitValue,
+  } from './store/actions/numHandle';
+let { Page, Component } = Provider(store, action)
+
 
 // app.ts
 App<IAppOption>({
@@ -8,6 +19,10 @@ App<IAppOption>({
       userInfo: undefined
     },
     onLaunch() {
+        setNumHandleInitValue(999)
+        setTimeout(() => {
+            setNumHandleInitValue(666)
+        }, 2000);
         // 展示本地存储能力
         // const logs = wx.getStorageSync('logs') || []
         // logs.unshift(Date.now())

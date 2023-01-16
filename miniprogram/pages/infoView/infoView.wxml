@@ -20,6 +20,7 @@
 
     /> -->
   </div>
+  <view>{{numHandle.count}}</view>
   <div class="infoWrapper">
     <div class="title">
         常规信息

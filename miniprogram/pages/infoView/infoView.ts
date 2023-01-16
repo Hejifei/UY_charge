@@ -2,6 +2,7 @@ import {getIsDebugModel} from '../../utils/util'
 // const app = getApp<IAppOption>()
 
 Page({
+    storeTypes: ['numHandle'],
   data: {
     barhHeight: 0,
     titlePositionTop: 0,
