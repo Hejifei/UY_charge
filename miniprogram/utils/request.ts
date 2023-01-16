@@ -24,7 +24,7 @@ import {
       method,
       header: {
         'content-type': 'application/json', // 默认值
-        token: getUserToken()
+        // token: getUserToken()
       },
       success (res: any) {
         const data = res.data
@@ -32,15 +32,15 @@ import {
           Toast.fail(data.msg)
           return
         }
-        if (data.code === ERROR_CODE_NEED_LOGIN) {
-          Toast.fail(data.msg)
-          setTimeout(() => {
-            // wx.navigateTo({
-            //   url: '/pages/login/login',
-            // })
-          }, 1000)
-          return
-        }
+        // if (data.code === ERROR_CODE_NEED_LOGIN) {
+        //   Toast.fail(data.msg)
+        //   setTimeout(() => {
+        //     // wx.navigateTo({
+        //     //   url: '/pages/login/login',
+        //     // })
+        //   }, 1000)
+        //   return
+        // }
         if (res.data.code === 1) {
           successCallBack(res.data)
         } else {

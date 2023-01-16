@@ -1,4 +1,4 @@
-export const REQUEST_URL = 'https://gmap.dev.zhangxinkeji.com'
+export const REQUEST_URL = 'http://bluetooth.dev.zhangxinkeji.com'
 
 //  serviceId
 export const SERVICE_ID_VALUE = 'serviceId'
