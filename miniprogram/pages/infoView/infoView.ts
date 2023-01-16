@@ -1,10 +1,11 @@
-
+import {getIsDebugModel} from '../../utils/util'
 // const app = getApp<IAppOption>()
 
 Page({
   data: {
     barhHeight: 0,
     titlePositionTop: 0,
+    isDebugModel: getIsDebugModel(),
   },
   onLoad() {
   },

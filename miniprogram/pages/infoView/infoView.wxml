@@ -89,5 +89,5 @@
     </div>
   </div>
   <blank height="10" />
-  <test-data />
+  <test-data wx:if="{{isDebugModel}}" />
 </view>

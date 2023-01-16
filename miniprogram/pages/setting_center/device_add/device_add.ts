@@ -1,5 +1,5 @@
 import { inArray, ab2hex } from '../../../utils/util'
-import {SERVICE_ID_VALUE, CHARACTERISTIC_ID_VALUE} from '../../../common'
+import {SERVICE_ID_VALUE, CHARACTERISTIC_ID_VALUE} from '../../../common/index'
 import {
     bluetoothInit,
     getBluetoothAdapterState,

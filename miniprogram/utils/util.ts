@@ -38,7 +38,13 @@ export const ab2hex = (buffer: number) => {
       }
     )
     return hexArr.join('');
-  }
+}
+
+
+export const parseApiUrl = (url: string): string => {
+    const api = REQUEST_URL
+    return `${api}${url}`
+}
 
 export const getUserToken = () => {
     return wx.getStorageSync('token')
@@ -48,7 +54,20 @@ export const setUserToken = (info: string) => {
     return wx.setStorageSync('token', info)
 }
 
-export const parseApiUrl = (url: string): string => {
-    const api = REQUEST_URL
-    return `${api}${url}`
+//  是否调试模式
+export const getIsDebugModel: () => boolean = () => {
+    // todo 默认值修改
+    return wx.getStorageSync('IS_DEBUG_MODEL') || false
+}
+export const setIsDebugModel = (value: boolean) => {
+    return wx.setStorageSync('IS_DEBUG_MODEL', value)
+}
+
+
+//  历史设备记录
+export const getHistoryDeviceList: () => object[] = () => {
+    return wx.getStorageSync('history_device_list') || []
+}
+export const setHistoryDeviceList = (value: object[]) => {
+    return wx.setStorageSync('history_device_list', value)
 }
