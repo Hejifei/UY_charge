@@ -92,7 +92,7 @@ Page({
             const that = this
             const {data} = res
             try {
-                const {url, code} = JSON.parse(data) as {
+                const {path, code} = JSON.parse(data) as {
                     code: number
                     message: string
                     url: string
@@ -103,7 +103,7 @@ Page({
                         url: '/api/user/perfectInformation',
                         data: {
                             nickname: that.data.userInfo.nickname,
-                            headimgurl: url,
+                            headimgurl: path,
                         },
                         method: 'POST',
                         successCallBack: (res) => {
