@@ -1,107 +1,74 @@
-<view
-    class="infoViewWrapper"
-    style="padding-bottom: {{barhHeight}}px;"
->
-    <div class="headerWrapper">
-        <image
-            class="headerBG"
-            src="../../assets/imgs/setting_center/setting_center_bg.png"
-        />
-        <div class="barTitleWrapper" style="top: {{titlePositionTop}}px;">设置中心</div>
-        <div class="userInfoWrapper">
-            <image
-                bindtap="chooseImage"
-                class="avatar"
-                src="{{userInfo.headimgurl}}"
-            />
-            <div class="userInfoContent">
-                <div class="nicknameLine">
-                    <div class="nickname">
-                        {{userInfo.nickname}}
-                    </div>
-                    <span class="editIcon">
-                        <image
-                            src="../../assets/imgs/setting_center/icon_edit.png"
-                        />
-                    </span>
-                    
-                </div>
-                <div class="roleLine">
-                    <div class="roleContent">管理员</div>
-                </div>
-            </div>
-            <div class="takePhotoIconContent">
-                <image
-                    class="takePhotoIcon"
-                    src="../../assets/imgs/setting_center/icon_take_photo.png"
-                />
-            </div>
-            
+<view class="infoViewWrapper" style="padding-bottom: {{barhHeight}}px;">
+  <div class="headerWrapper">
+    <image class="headerBG" src="../../assets/imgs/setting_center/setting_center_bg.png" />
+    <div class="barTitleWrapper" style="top: {{titlePositionTop}}px;">设置中心</div>
+    <div class="userInfoWrapper">
+      <image bindtap="chooseImage" class="avatar" src="{{userInfo.headimgurl}}" />
+      <div class="userInfoContent">
+        <div class="nicknameLine" bindtap="handleNickNameChangeModalVisible">
+          <div class="nickname">
+            {{userInfo.nickname}}
+          </div>
+          <span class="editIcon">
+            <image src="../../assets/imgs/setting_center/icon_edit.png" />
+          </span>
+
         </div>
+        <div class="roleLine">
+          <div class="roleContent">管理员</div>
+        </div>
+      </div>
+      <div class="takePhotoIconContent" bindtap="chooseImage">
+        <image class="takePhotoIcon" src="../../assets/imgs/setting_center/icon_take_photo.png" />
+      </div>
+
     </div>
-    <van-cell-group>
-        <van-cell class="cellWrapper" is-link url="/pages/setting_center/device_manage/device_manage">
-            <image
-                slot="icon"
-                class="iconImg"
-                src="../../assets/imgs/setting_center/icon_device_manage.png"
-            />
-            <view slot="title" class="van-cell-text">设备管理</view>
-            <!-- <div class="connectedText">已连接</div> -->
-            <div>未连接</div>
-        </van-cell>
-        <van-cell class="cellWrapper" is-link bindtap="handleDebugCodeModalVisible">
-            <image
-                slot="icon"
-                class="iconImg"
-                src="../../assets/imgs/setting_center/icon_debug_mode.png"
-            />
-            <view slot="title" class="van-cell-text">调试模式</view>
-            <div class="connectedText">已连接</div>
-        </van-cell>
-        <van-cell
-            is-link
-            title="关于我们"
-            class="cellWrapper"
-            link-type="navigateTo"
-            url="/pages/setting_center/about_us/about_us"
-        >
-            <image
-                slot="icon"
-                class="iconImg"
-                src="../../assets/imgs/setting_center/icon_about_us.png"
-            />
-        </van-cell>
-    </van-cell-group>
-  
+  </div>
+  <van-cell-group>
+    <van-cell class="cellWrapper" is-link url="/pages/setting_center/device_manage/device_manage">
+      <image slot="icon" class="iconImg" src="../../assets/imgs/setting_center/icon_device_manage.png" />
+      <view slot="title" class="van-cell-text">设备管理</view>
+      <!-- <div class="connectedText">已连接</div> -->
+      <div>未连接</div>
+    </van-cell>
+    <van-cell class="cellWrapper" is-link bindtap="handleDebugCodeModalVisible">
+      <image slot="icon" class="iconImg" src="../../assets/imgs/setting_center/icon_debug_mode.png" />
+      <view slot="title" class="van-cell-text">调试模式</view>
+      <div class="connectedText">已连接</div>
+    </van-cell>
+    <van-cell is-link title="关于我们" class="cellWrapper" link-type="navigateTo" url="/pages/setting_center/about_us/about_us">
+      <image slot="icon" class="iconImg" src="../../assets/imgs/setting_center/icon_about_us.png" />
+    </van-cell>
+  </van-cell-group>
+
   <blank height="10" />
 
-  <van-dialog
-    use-slot
-    title="调试码"
-    show="{{isDebugModeVisible}}"
-    bind:close="onClose"
-    showConfirmButton="{{false}}"
-    customStyle="border-radius: 2px;"
-    >
-        <div class="debugCodeWrapper">
-            <van-cell-group>
-                <van-field
-                    center
-                    input-align="center"
-                    model:value="{{debugCode}}"
-                    placeholder="请输入调试码"
-                    border="{{true}}"
-                />
-            </van-cell-group>
-            <div class="actionWrapper">
-                <van-button
-                    type="primary"
-                    size="small"
-                    bindtap="handleDebugCodeSave"
-                >验证</van-button>
-            </div>
-        </div>
-    </van-dialog>
-    <van-toast id="van-toast" />
+  <van-dialog use-slot title="调试码" show="{{isDebugModeVisible}}" bind:close="closeDebugCodeModal" showConfirmButton="{{false}}" customStyle="border-radius: 2px;">
+    <div class="debugCodeWrapper">
+      <div class="closeWrapper" bindtap="closeDebugCodeModal">
+        <van-icon name="close" size="30px" />
+      </div>
+      <van-cell-group>
+        <van-field center input-align="center" model:value="{{debugCode}}" placeholder="请输入调试码" border="{{true}}" />
+      </van-cell-group>
+      <div class="actionWrapper">
+        <van-button type="primary" size="small" bindtap="handleDebugCodeSave">验证</van-button>
+      </div>
+    </div>
+  </van-dialog>
+
+  <van-dialog use-slot title="修改昵称" show="{{isNickNameChangeVisible}}" bind:close="closeNickNameChangeModal" showConfirmButton="{{false}}" customStyle="border-radius: 2px;">
+    <div class="debugCodeWrapper">
+      <div class="closeWrapper" bindtap="closeNickNameChangeModal">
+        <van-icon name="close" size="30px" />
+      </div>
+      <van-cell-group>
+        <van-field center input-align="center" model:value="{{nickName}}" placeholder="请输入新昵称" border="{{true}}" />
+      </van-cell-group>
+      <div class="actionWrapper">
+        <van-button type="primary" size="small" bindtap="handleNickNameChangeCodeSave">确认</van-button>
+      </div>
+    </div>
+  </van-dialog>
+  <van-toast id="van-toast" />
 </view>

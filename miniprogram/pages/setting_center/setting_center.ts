@@ -3,28 +3,29 @@ import {
     getBluetoothAdapterState,
 } from '../../utils/bluetooth_util'
 import { Request } from '../../utils/request'
-import {getUserInfo, parseApiUrl, setUserInfo} from '../../utils/util'
+import {parseApiUrl} from '../../utils/util'
 import Toast from '@vant/weapp/toast/toast';
-// const app = getApp<IAppOption>()
+const app = getApp<IAppOption>()
 
 Page({
   data: {
     barhHeight: 0,
     titlePositionTop: 0,
     isDebugModeVisible: false,
+    isNickNameChangeVisible: false,
     debugCode: undefined,
-    userInfo: getUserInfo(),
+    userInfo: app.globalData.userInfo,
+    nickName: '',
   },
   onLoad() {
   },
   onReady() {
     
     this.setData({
-        userInfo: getUserInfo(),
+        userInfo: app.globalData.userInfo,
     })
     console.log({
-        getUserInfo: getUserInfo(),
-        userInfo: this.data.userInfo,
+      userInfo: this.data.userInfo,
     })
     const that = this
     wx.getSystemInfo({
@@ -58,20 +59,56 @@ Page({
         console.log('蓝牙不可用')
     })
   },
-  getUserInfo(event: any) {
-    console.log(event.detail, 'getUserInfo');
-  },
   handleDebugCodeModalVisible() {
     this.setData({ isDebugModeVisible: true });
   },
-  onClose() {
+  closeDebugCodeModal() {
     this.setData({ isDebugModeVisible: false });
   },
   handleDebugCodeSave() {
       console.log({
         debugCode: this.data.debugCode,
       })
-      this.onClose()
+      this.closeDebugCodeModal()
+  },
+  handleNickNameChangeModalVisible() {
+    this.setData({ isNickNameChangeVisible: true });
+  },
+  closeNickNameChangeModal() {
+    this.setData({ isNickNameChangeVisible: false });
+  },
+  handleNickNameChangeCodeSave() {
+      // console.log({
+      //   nickName: this.data.nickName,
+      // })
+      const that = this
+      Request({
+        url: '/api/user/perfectInformation',
+        data: {
+            nickname: that.data.nickName,
+            headimgurl: that.data.userInfo.headimgurl,
+        },
+        method: 'POST',
+        successCallBack: (res) => {
+            // console.log({ res }, '/api/user/perfectInformation')
+            //  @ts-ignore
+            getApp().globalData.userInfo = {
+                ...app.globalData.userInfo,
+                nickname: res.data.nickname,
+            }
+            this.setData({
+                userInfo: app.globalData.userInfo,
+            })
+            wx.hideLoading();
+            wx.showToast({
+                title: "昵称更新成功!",
+                icon: "success",
+                duration: 3000
+            });
+            this.closeNickNameChangeModal()
+        },
+      })
+      
   },
   upload_file(filePath: string) {
     wx.showLoading({
@@ -92,7 +129,7 @@ Page({
             const that = this
             const {data} = res
             try {
-                const {path, code} = JSON.parse(data) as {
+                const {path, url, code} = JSON.parse(data) as {
                     code: number
                     message: string
                     url: string
@@ -108,13 +145,20 @@ Page({
                         method: 'POST',
                         successCallBack: (res) => {
                             // console.log({ res }, '/api/user/perfectInformation')
-                            setUserInfo({
-                                ...getUserInfo(),
-                                ...res.data,
-                            })
+                            getApp().globalData.userInfo = {
+                              ...app.globalData.userInfo,
+                              ...res.data,
+                              headimgurl: url,
+                            }
                             this.setData({
-                                userInfo: getUserInfo(),
+                                userInfo: app.globalData.userInfo,
                             })
+                            wx.hideLoading();
+                            wx.showToast({
+                                title: "头像更新成功!",
+                                icon: "success",
+                                duration: 3000
+                            });
                         },
                     })
                 }
@@ -124,12 +168,7 @@ Page({
             // console.log({
             //     uploadSuccessRes: res,
             // })
-            wx.hideLoading();
-            wx.showToast({
-                title: "上传成功",
-                icon: "success",
-                duration: 3000
-            });
+            
         },
         fail: function(res) {
             console.log({

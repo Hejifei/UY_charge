@@ -5,6 +5,7 @@ import { setUserInfo, setUserToken } from './utils/util'
 // app.ts
 App<IAppOption>({
     globalData: {
+      userInfo: undefined
     },
     onLaunch() {
         // 展示本地存储能力
@@ -35,7 +36,12 @@ App<IAppOption>({
                                 method: 'POST',
                                 successCallBack: (res) => {
                                     // console.log({ res }, '/api/ssoauth/')
-                                    setUserInfo(res.data)
+                                    // setUserInfo(res.data)
+                                    this.globalData.userInfo = res.data
+                                    console.log({
+                                      res: res.data,
+                                      globaluserInfo: this.globalData.userInfo
+                                    })
                                     setUserToken(res.data.token)
                                 },
                             })

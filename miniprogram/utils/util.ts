@@ -59,7 +59,7 @@ export const getUserInfo: () => {
     uid: number
     group_id: number
 } = () => {
-    return wx.getStorageSync('userInfo')
+  return wx.getStorageSync('userInfo')
 }
 
 export const setUserInfo = (info: {
@@ -75,18 +75,15 @@ export const setUserInfo = (info: {
     uid: number
     group_id: number
 }) => {
-    console.log({
-        info,
-    })
-    return wx.setStorageSync('userInfo', info)
+  return wx.setStorageSync('userInfo', info)
 }
 
 export const getUserToken = () => {
-    return wx.getStorageSync('token')
+  return wx.getStorageSync('token')
 }
 
-export const setUserToken = (info: string) => {
-    return wx.setStorageSync('token', info)
+export const setUserToken = (token: string) => {
+  return wx.setStorageSync('token', token)
 }
 
 //  是否调试模式

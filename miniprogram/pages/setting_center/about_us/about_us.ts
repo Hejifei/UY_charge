@@ -1,7 +1,8 @@
-
+import { Request } from '../../../utils/request'
 Page({
   data: {
     barhHeight: 0,
+    content: '',
   },
   onLoad() {
     // console.log(ModBusCRC16('55590A293000'))
@@ -17,5 +18,21 @@ Page({
             })
         }
     })
+    this.getInitData()
+  },
+  getInitData() {
+    const that = this
+      Request({
+        url: '/api/common/aboutus',
+        data: {},
+        method: 'GET',
+        successCallBack: (res) => {
+            console.log({ res }, '关于我们')
+            const content = res.data.content
+            this.setData({
+              content,
+            })
+        },
+      })
   }
 })

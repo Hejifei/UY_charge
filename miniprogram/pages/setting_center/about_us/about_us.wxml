@@ -1,6 +1,5 @@
 <view
-    class="chargeLineWrapper"
-    style="padding-bottom: {{barhHeight}}px;"
+    class="aboutUsWrapper"
 >
-    关于我们xxx
+  <rich-text nodes="{{content}}" />
 </view>
