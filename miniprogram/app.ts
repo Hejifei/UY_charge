@@ -1,6 +1,6 @@
 import { bluetoothInit } from './utils/bluetooth_util'
 import { Request } from './utils/request'
-import { parseApiUrl, setUserInfo } from './utils/util'
+import { setUserInfo, setUserToken } from './utils/util'
 
 // app.ts
 App<IAppOption>({
@@ -20,6 +20,10 @@ App<IAppOption>({
                 } = res
                 wx.login({
                     success: res => {
+                        // console.log({
+                        //     wxLoginSuccessRes: res,
+                        //     if: !!res.code,
+                        // })
                         if (!!res.code) {
                             Request({
                                 url: '/api/ssoauth/',
@@ -30,13 +34,12 @@ App<IAppOption>({
                                 },
                                 method: 'POST',
                                 successCallBack: (res) => {
-                                    console.log({ res }, '/api/ssoauth/')
-                                    // todo
-                                    // setUserInfo(res)
+                                    // console.log({ res }, '/api/ssoauth/')
+                                    setUserInfo(res.data)
+                                    setUserToken(res.data.token)
                                 },
                             })
                         }
-        
                         // 发送 res.code 到后台换取 openId, sessionKey, unionId
                     },
                     fail: res => {

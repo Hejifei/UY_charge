@@ -24,7 +24,7 @@ import {
       method,
       header: {
         'content-type': 'application/json', // 默认值
-        // token: getUserToken()
+        'Authorization': getUserToken()
       },
       success (res: any) {
         const data = res.data
@@ -41,7 +41,7 @@ import {
         //   }, 1000)
         //   return
         // }
-        if (res.data.code === 1) {
+        if (res.data.code === 200) {
           successCallBack(res.data)
         } else {
           Toast.fail(res.data.msg)

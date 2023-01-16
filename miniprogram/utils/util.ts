@@ -46,11 +46,38 @@ export const parseApiUrl = (url: string): string => {
     return `${api}${url}`
 }
 
-export const getUserInfo = () => {
+export const getUserInfo: () => {
+    city: string
+    country: string
+    gender: number
+    headimgurl: string
+    language: string
+    nickname: string
+    openid: string
+    province: string
+    token: string
+    uid: number
+    group_id: number
+} = () => {
     return wx.getStorageSync('userInfo')
 }
 
-export const setUserInfo = (info: object) => {
+export const setUserInfo = (info: {
+    city: string
+    country: string
+    gender: number
+    headimgurl: string
+    language: string
+    nickname: string
+    openid: string
+    province: string
+    token: string
+    uid: number
+    group_id: number
+}) => {
+    console.log({
+        info,
+    })
     return wx.setStorageSync('userInfo', info)
 }
 

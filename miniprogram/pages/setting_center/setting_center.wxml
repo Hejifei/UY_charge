@@ -10,20 +10,21 @@
         <div class="barTitleWrapper" style="top: {{titlePositionTop}}px;">设置中心</div>
         <div class="userInfoWrapper">
             <image
+                bindtap="chooseImage"
                 class="avatar"
-                src="../../assets/imgs/setting_center/setting_center_bg.png"
+                src="{{userInfo.headimgurl}}"
             />
             <div class="userInfoContent">
                 <div class="nicknameLine">
                     <div class="nickname">
-                        会飞的鱼会飞的鱼会飞的鱼会飞的鱼会飞的鱼会飞的鱼会飞的鱼会飞的鱼会飞的鱼会飞的鱼
+                        {{userInfo.nickname}}
                     </div>
-                    
                     <span class="editIcon">
                         <image
                             src="../../assets/imgs/setting_center/icon_edit.png"
                         />
                     </span>
+                    
                 </div>
                 <div class="roleLine">
                     <div class="roleContent">管理员</div>
