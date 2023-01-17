@@ -53,10 +53,10 @@ App<IAppOption>({
                                     // console.log({ res }, '/api/ssoauth/')
                                     // setUserInfo(res.data)
                                     this.globalData.userInfo = res.data
-                                    console.log({
-                                      res: res.data,
-                                      globaluserInfo: this.globalData.userInfo
-                                    })
+                                    // console.log({
+                                    //   res: res.data,
+                                    //   globaluserInfo: this.globalData.userInfo
+                                    // })
                                     setUserToken(res.data.token)
                                 },
                             })

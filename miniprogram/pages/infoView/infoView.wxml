@@ -1,94 +1,102 @@
-<view
-    class="infoViewWrapper"
-    style="padding-bottom: {{barhHeight}}px;"
->
-  <div class="headerWrapper">
-    <image
-        class="headerBG"
-        src="../../assets/imgs/info_view_bg.png"
-    />
-    <div class="barTitleWrapper" style="top: {{titlePositionTop}}px;">UY充电</div>
-    <di class="headerTitle" style="top: {{titlePositionTop + 30}}px;">
-        <image
-            slot="icon"
-            src="../../assets/imgs/fan.png"
-            mode="aspectFit"
-        />
-        X3
-    </di>
-    <!-- <circle-progress
+<view class="infoViewWrapper" style="padding-bottom: {{barhHeight}}px;">
+    <div class="headerWrapper">
+        <image class="headerBG" src="../../assets/imgs/info_view_bg.png" />
+        <div class="barTitleWrapper" style="top: {{titlePositionTop}}px;">UY充电</div>
+        <di class="headerTitle" style="top: {{titlePositionTop + 30}}px;">
+            <image slot="icon" src="../../assets/imgs/fan.png" mode="aspectFit" />
+            X3
+        </di>
+        <!-- <circle-progress
 
     /> -->
-  </div>
-  <view>{{numHandle.count}}</view>
-  <div class="infoWrapper">
-    <div class="title">
-        常规信息
-        <div class="titleRight">固件版本号: 20230110</div>
     </div>
-    <div class="baseInfoContent">
-        <div class="infoItem">
-            <div class="infoTitleWrapper">
-                <image src="../../assets/imgs/base_info_icons/work_model.png" />
-                启动模式
-            </div>
-            <div class="resultWrapper">
-                充电模式
-                <div class="unitWrapper"></div>
-            </div>
+    <view>{{numHandle.count}}</view>
+    <!-- <svg width="420px" height="316px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="strokeGradient">
+                <stop offset="0%" stop-color="#8FEAE9" />
+                <stop offset="100%" stop-color="#26A7DE" />
+            </linearGradient>
+        </defs>
+        <circle transform="translate(210, 158)" fill="#F2FDFF" cx="0" cy="0" r="124" />
+        <path transform="translate(210, 158)" d="M-124 0 A 124 124, 0, 0, 1, {{x}} {{-y}}" stroke-width="18" stroke="url(#strokeGradient)" stroke-linecap="round" fill="transparent" />
+        <circle transform="translate(210, 158)" stroke="#00D3CA" fill="#fff" cx="{{x}}" cy="{{-y}}" r="10" />
+        <path transform="translate(210, 158)" d="{{path}}" stroke="#98E1DE" />
+        <path transform="translate(210, 158)" d="M{{n*-32.5}} {{n*-17.03}} Q{{n*0}} {{n*-64.12}} {{n*32.5}} {{n*-17.03}} Q{{n*59}} {{n*34.06}} {{n*0}} {{n*34.06}}  Q{{n*-59}} {{n*34.06}} {{n*-32.5}} {{n*-17.03}}" fill="rgba(0,211,202,0.23)" />
+        <path transform="translate(210, 158)" d="M{{-n*-32.5}} {{-n*-17.03}} Q{{-n*0}} {{-n*-64.12}} {{-n*32.5}} {{-n*-17.03}} Q{{-n*59}} {{-n*34.06}} {{-n*0}} {{-n*34.06}}  Q{{-n*-59}} {{-n*34.06}} {{-n*-32.5}} {{-n*-17.03}}" fill="rgba(0,147,211,0.19)" />
+        <text x="0" y="10" transform="translate(210, 158)" fontSize="20" text-anchor="middle" fill="black">
+            {{m}}%
+        </text>
+    </svg> -->
+
+    <div class="infoWrapper">
+        <div class="title">
+            常规信息
+            <div class="titleRight">固件版本号: 20230110</div>
         </div>
-        <div class="infoItem">
-            <div class="infoTitleWrapper">
-                <image src="../../assets/imgs/base_info_icons/regular_charge.png" />
-                充电定时
+        <div class="baseInfoContent">
+            <div class="infoItem">
+                <div class="infoTitleWrapper">
+                    <image src="../../assets/imgs/base_info_icons/work_model.png" />
+                    启动模式
+                </div>
+                <div class="resultWrapper">
+                    充电模式
+                    <div class="unitWrapper"></div>
+                </div>
             </div>
-            <div class="resultWrapper">
-                360
-                <div class="unitWrapper">min</div>
+            <div class="infoItem">
+                <div class="infoTitleWrapper">
+                    <image src="../../assets/imgs/base_info_icons/regular_charge.png" />
+                    充电定时
+                </div>
+                <div class="resultWrapper">
+                    360
+                    <div class="unitWrapper">min</div>
+                </div>
             </div>
-        </div>
-        <div class="infoItem">
-            <div class="infoTitleWrapper">
-                <image src="../../assets/imgs/base_info_icons/time_left.png" />
-                定时剩余
+            <div class="infoItem">
+                <div class="infoTitleWrapper">
+                    <image src="../../assets/imgs/base_info_icons/time_left.png" />
+                    定时剩余
+                </div>
+                <div class="resultWrapper">
+                    120
+                    <div class="unitWrapper">min</div>
+                </div>
             </div>
-            <div class="resultWrapper">
-                120
-                <div class="unitWrapper">min</div>
+            <div class="infoItem">
+                <div class="infoTitleWrapper">
+                    <image src="../../assets/imgs/base_info_icons/battery_capacity.png" />
+                    电池容量
+                </div>
+                <div class="resultWrapper">
+                    520
+                    <div class="unitWrapper">AH</div>
+                </div>
             </div>
-        </div>
-        <div class="infoItem">
-            <div class="infoTitleWrapper">
-                <image src="../../assets/imgs/base_info_icons/battery_capacity.png" />
-                电池容量
+            <div class="infoItem">
+                <div class="infoTitleWrapper">
+                    <image src="../../assets/imgs/base_info_icons/battery_voltage.png" />
+                    电池电压
+                </div>
+                <div class="resultWrapper">
+                    4.8
+                    <div class="unitWrapper">V</div>
+                </div>
             </div>
-            <div class="resultWrapper">
-                520
-                <div class="unitWrapper">AH</div>
-            </div>
-        </div>
-        <div class="infoItem">
-            <div class="infoTitleWrapper">
-                <image src="../../assets/imgs/base_info_icons/battery_voltage.png" />
-                电池电压
-            </div>
-            <div class="resultWrapper">
-                4.8
-                <div class="unitWrapper">V</div>
-            </div>
-        </div>
-        <div class="infoItem">
-            <div class="infoTitleWrapper">
-                <image src="../../assets/imgs/base_info_icons/charge_temperature.png" />
-                充电温度
-            </div>
-            <div class="resultWrapper">
-                42
-                <div class="unitWrapper">°C</div>
+            <div class="infoItem">
+                <div class="infoTitleWrapper">
+                    <image src="../../assets/imgs/base_info_icons/charge_temperature.png" />
+                    充电温度
+                </div>
+                <div class="resultWrapper">
+                    42
+                    <div class="unitWrapper">°C</div>
+                </div>
             </div>
         </div>
     </div>
-  </div>
-  <blank height="10" />
-  <test-data wx:if="{{isDebugModel}}" />
+    <blank height="10" />
+    <test-data wx:if="{{isDebugModel}}" />
 </view>
