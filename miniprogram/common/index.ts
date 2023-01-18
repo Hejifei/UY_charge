@@ -49,4 +49,3 @@ export const tabbar_data_list: {
         router: '../setting_center/setting_center',
     },
 ]
-
