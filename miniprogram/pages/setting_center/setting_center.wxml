@@ -34,7 +34,7 @@
     <van-cell class="cellWrapper" is-link bindtap="handleDebugCodeModalVisible">
       <image slot="icon" class="iconImg" src="../../assets/imgs/setting_center/icon_debug_mode.png" />
       <view slot="title" class="van-cell-text">调试模式</view>
-      <div class="connectedText">已连接</div>
+      <div class="connectedText" wx:if="{{isDebugModel}}">已连接</div>
     </van-cell>
     <van-cell is-link title="关于我们" class="cellWrapper" link-type="navigateTo" url="/pages/setting_center/about_us/about_us">
       <image slot="icon" class="iconImg" src="../../assets/imgs/setting_center/icon_about_us.png" />

@@ -16,7 +16,8 @@ let { Page, Component } = Provider(store, action)
 // app.ts
 App<IAppOption>({
     globalData: {
-      userInfo: undefined
+      userInfo: undefined,
+      isDebugModel: false,
     },
     onLaunch() {
         setNumHandleInitValue(999)

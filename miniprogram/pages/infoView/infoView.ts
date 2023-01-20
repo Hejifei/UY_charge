@@ -1,5 +1,6 @@
 import { getIsDebugModel } from '../../utils/util'
 import {writeBLECharacteristicValue,} from '../../utils/bluetooth_util'
+const app = getApp<IAppOption>()
 
 import {
     parseProtocolCodeMessage,
@@ -9,11 +10,11 @@ import {
 // const app = getApp<IAppOption>()
 
 Page({
-    storeTypes: ['numHandle'],
+    storeTypes: ['numHandle', 'protocolInfo'],
     data: {
         barhHeight: 0,
         titlePositionTop: 0,
-        isDebugModel: getIsDebugModel(),
+        isDebugModel: app.globalData.isDebugModel || false,
         // n: 1.5,     // 不规则三角形放大比例
         // m: 90,      // 得分
         // path: '',   // 表盘刻度线路径
@@ -21,9 +22,10 @@ Page({
         // y: 0,       // 得分进度条起点y
         // timer: 0,    
     },
-    onLoad() {
-    },
-    onReady() {
+    onShow() {
+        this.setData({
+            isDebugModel: app.globalData.isDebugModel || false,
+        })
         // this.deawCircleProcess()
         const that = this
         wx.getSystemInfo({

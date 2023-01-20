@@ -4,7 +4,8 @@
         <div class="barTitleWrapper" style="top: {{titlePositionTop}}px;">UY充电</div>
         <di class="headerTitle" style="top: {{titlePositionTop + 30}}px;">
             <image slot="icon" src="../../assets/imgs/fan.png" mode="aspectFit" />
-            X3
+            <!-- X3 -->
+            {{protocolInfo.chargerInfo.fanLevel || '--'}}
         </di>
         <!-- <circle-progress
 
@@ -32,7 +33,7 @@
     <div class="infoWrapper">
         <div class="title">
             常规信息
-            <div class="titleRight">固件版本号: 20230110</div>
+            <div class="titleRight">固件版本号: {{protocolInfo.chargerInfo.firmwareVersion || '--'}}</div>
         </div>
         <div class="baseInfoContent">
             <div class="infoItem">
@@ -41,7 +42,8 @@
                     启动模式
                 </div>
                 <div class="resultWrapper">
-                    充电模式
+                    <!-- 充电模式 -->
+                    {{protocolInfo.chargerInfo.chargingMode || '--'}}
                     <div class="unitWrapper"></div>
                 </div>
             </div>
@@ -51,7 +53,8 @@
                     充电定时
                 </div>
                 <div class="resultWrapper">
-                    360
+                    <!-- 360 -->
+                    {{protocolInfo.chargerInfo.chargingTiming || '--'}}
                     <div class="unitWrapper">min</div>
                 </div>
             </div>
@@ -61,7 +64,8 @@
                     定时剩余
                 </div>
                 <div class="resultWrapper">
-                    120
+                    <!-- 120 -->
+                    {{protocolInfo.chargerInfo.timingRemaining || '--'}}
                     <div class="unitWrapper">min</div>
                 </div>
             </div>
@@ -71,7 +75,8 @@
                     电池容量
                 </div>
                 <div class="resultWrapper">
-                    520
+                    <!-- 520 -->
+                    {{protocolInfo.chargerInfo.chargingCapacity || '--'}}
                     <div class="unitWrapper">AH</div>
                 </div>
             </div>
@@ -81,7 +86,8 @@
                     电池电压
                 </div>
                 <div class="resultWrapper">
-                    4.8
+                    <!-- 4.8 -->
+                    {{protocolInfo.chargerInfo.batteryVoltage || '--'}}
                     <div class="unitWrapper">V</div>
                 </div>
             </div>
@@ -91,7 +97,8 @@
                     充电温度
                 </div>
                 <div class="resultWrapper">
-                    42
+                    <!-- 42 -->
+                    {{protocolInfo.chargerInfo.chargerTemperature || '--'}}
                     <div class="unitWrapper">°C</div>
                 </div>
             </div>

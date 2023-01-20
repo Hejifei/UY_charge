@@ -15,6 +15,7 @@ Page({
     isNickNameChangeVisible: false,
     debugCode: undefined,
     userInfo: app.globalData.userInfo,
+    isDebugModel: app.globalData.isDebugModel || false,
     nickName: '',
   },
   onLoad() {
@@ -23,6 +24,7 @@ Page({
     
     this.setData({
         userInfo: app.globalData.userInfo,
+        isDebugModel: app.globalData.isDebugModel || false,
     })
     console.log({
       userInfo: this.data.userInfo,
@@ -70,6 +72,12 @@ Page({
         debugCode: this.data.debugCode,
       })
       this.closeDebugCodeModal()
+      if (true) {
+        getApp().globalData.isDebugModel = true
+        this.setData({
+            isDebugModel: app.globalData.isDebugModel,
+        })
+      }
   },
   handleNickNameChangeModalVisible() {
     this.setData({ isNickNameChangeVisible: true });

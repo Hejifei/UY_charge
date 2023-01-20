@@ -87,7 +87,7 @@ export const parseDateText = (value: string) => {
 
 //  充电器信息转换
 export const parseProtocolCodeToChargerInfo = (code: string) => {
-    const info = {
+    const info: IChargerInfo = {
         batteryVoltage: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(0, 2 * 2))),     //  电池电压
         chargeSwitch: switchValueMap[parse16To10(code.substr(4, 2 * 1))],           //  充电开关 
         // 保留 1byte
