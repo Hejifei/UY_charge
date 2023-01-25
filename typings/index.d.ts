@@ -30,3 +30,16 @@ interface IChargerInfo {
     chargingTiming: number
     timingRemaining: number
 }
+
+interface ITestData {
+  limitVoltage: number
+  limitCurrent: number
+  countOfStartup: number
+  countOfWork: number
+  faultCount: number
+  overheatingProtection: number
+  overvoltageProtection: number
+  overcurrentProtection: number
+  shortCircuitProtection: number
+  reversePolarityProtection: number
+}

@@ -107,13 +107,14 @@ export const parseProtocolCodeToChargerInfo = (code: string) => {
         chargingTiming: parse16To10(code.substr(52, 2 * 2)),                                  //  充电定时
         timingRemaining: parse16To10(code.substr(56, 2 * 2)),                                  //  定时剩余
     }
-    console.log({
-        parseProtocolCodeToChargerInfo: code,
-        info,
-    })
+    // console.log({
+    //     parseProtocolCodeToChargerInfo: code,
+    //     info,
+    // })
     return info
 }
 
+//  充电曲线
 export const parseProtocolCodeToChargeCountData = (code: string) => {
   const spaceMin = parse16To10(code.substr(0, 2 * 1))
   const data: {
@@ -140,5 +141,49 @@ export const parseProtocolCodeToChargeCountData = (code: string) => {
 //   console.log({
 //     data,
 //   })
+  return data
+}
+
+//  测试数据
+export const parseProtocolCodeToTestData = (code: string) => {
+  // 过热保护
+  const overheatingProtection = parse16To10(code.substr(16, 2 * 2)) || 0
+  // 过压保护
+  const overvoltageProtection = parse16To10(code.substr(20, 2 * 2)) || 0
+  // 过流保护
+  const overcurrentProtection = parse16To10(code.substr(24, 2 * 2)) || 0
+  // 短路保护
+  const shortCircuitProtection = parse16To10(code.substr(28, 2 * 2)) || 0
+  // 反接保护
+  const reversePolarityProtection = parse16To10(code.substr(32, 2 * 2)) || 0
+  const faultCount = [
+    overheatingProtection,
+    overvoltageProtection,
+    overcurrentProtection,
+    shortCircuitProtection,
+    reversePolarityProtection,
+  ].reduce((sum, current) => sum + current, 0)
+  const data: ITestData = {
+    // batteryVoltage: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(0, 2 * 2))),     //  电池电压
+    //  极限电压
+    limitVoltage: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(0, 2 * 2))),
+    //  极限电流
+    limitCurrent: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(4, 2 * 2))),
+    //  累计开机
+    countOfStartup: parse16To10(code.substr(8, 2 * 2)),
+    //  累计工作
+    countOfWork: parse16To10(code.substr(12, 2 * 2)),
+    faultCount,
+    // 过热保护
+    overheatingProtection,
+    // 过压保护
+    overvoltageProtection,
+    // 过流保护
+    overcurrentProtection,
+    // 短路保护
+    shortCircuitProtection,
+    // 反接保护
+    reversePolarityProtection,
+  }
   return data
 }
