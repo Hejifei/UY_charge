@@ -95,6 +95,11 @@ miniprogram-api-typings@^3.8.1:
   resolved "https://registry.yarnpkg.com/miniprogram-api-typings/-/miniprogram-api-typings-3.9.0.tgz#c04a6b7eae5585733b5f8787297f2b9f1b60abac"
   integrity sha512-QCXHHW9H4XYazb8J9EMiFyaOWHXhBG4oehkQqi+76FJpKKIlpgL0ZkXxzJ2L+6T/c5OxKm7iegovKIQGVkZDLQ==
 
+moment@^2.29.4:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
+
 regenerator-runtime@^0.13.11:
   version "0.13.11"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz#f6dca3e7ceec20590d07ada785636a90cdca17f9"

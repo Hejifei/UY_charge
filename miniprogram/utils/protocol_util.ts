@@ -5,6 +5,7 @@ import {
   fanLevelMap,
 } from '../common/protocol_common'
 import {ModBusCRC16} from './crc'
+import moment from 'moment'
 
 // 起始码、指令码、字节长度、起始地址、数据(写指令有效，读指令/擦除指令省略)、校验码组成。
 
@@ -113,4 +114,31 @@ export const parseProtocolCodeToChargerInfo = (code: string) => {
     return info
 }
 
-
+export const parseProtocolCodeToChargeCountData = (code: string) => {
+  const spaceMin = parse16To10(code.substr(0, 2 * 1))
+  const data: {
+    value: number
+    name: string
+    time: string
+  }[] = []
+  for (let i = 0; i < 10; i++) {
+    // const time = moment().subtract((9 - i) * spaceMin, 'minute').format('yy-mm-mm hh:mm:ss')
+    const time = moment().subtract((9 - i) * spaceMin, 'minute').format('hh:mm')
+    data.push(...[
+      {
+        value: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(2 + 4 * i, 2 * 2))),
+        name: '电压',
+        time,
+      },
+      {
+        value: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(42 + 4 * i, 2 * 2))),
+        name: '电流',
+        time,
+      }
+    ])
+  }
+//   console.log({
+//     data,
+//   })
+  return data
+}

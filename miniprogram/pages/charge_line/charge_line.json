@@ -1,6 +1,6 @@
 {
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "参数设置",
+    "navigationBarTitleText": "充电曲线",
     "navigationBarTextStyle": "black",
     "usingComponents": {
         "f2": "@antv/wx-f2",
