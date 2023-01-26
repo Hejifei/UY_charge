@@ -14,6 +14,7 @@ interface IProtocolInfo {
 
 interface IChargerInfo {
     batteryVoltage: number
+    chargeSwitchValue: number
     chargeSwitch: string
     maximumVoltage: number
     maximumCurrent: number

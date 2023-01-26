@@ -5,6 +5,10 @@ import {
   fanLevelMap,
 } from '../common/protocol_common'
 import {ModBusCRC16} from './crc'
+import './lodash_fix'
+import {
+    isString,
+} from 'lodash'
 import moment from 'moment'
 
 // 起始码、指令码、字节长度、起始地址、数据(写指令有效，读指令/擦除指令省略)、校验码组成。
@@ -61,14 +65,29 @@ export const parse16To10 = (value: string) => {
     return parseInt(value, 16)
 }
 
+const fillText = (str: string, length: number, fillText: string = '0') => {
+    str = (new Array(length)).fill(fillText).join(fillText) + str;
+    return str.substring(str.length - length, str.length);
+}
+
 //  10进制转16进制
-export const parse10To16 = (value: number) => {
-    return (value).toString(16)
+export const parse10To16 = (value: number | string, byteLength: number = 1) => {
+    let value16 = (isString(value) ? parseInt(value) : value).toString(16)
+    if (byteLength) {
+        const newVlaueLength = byteLength * 2
+        return fillText(value16, newVlaueLength, '0')
+    }
+    return value16
 }
 
 //  电压10mV转V
 export const parseVoltageOrCurrent10mVToV = (value: number) => {
     return value * 10 / 1000
+}
+
+//  电流电压V转10mV
+export const parseVoltageOrCurrentVTo10mV = (value: number) => {
+    return value * 1000 / 10
 }
 
 //  获取版本号
@@ -90,6 +109,7 @@ export const parseDateText = (value: string) => {
 export const parseProtocolCodeToChargerInfo = (code: string) => {
     const info: IChargerInfo = {
         batteryVoltage: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(0, 2 * 2))),     //  电池电压
+        chargeSwitchValue: parse16To10(code.substr(4, 2 * 1)),
         chargeSwitch: switchValueMap[parse16To10(code.substr(4, 2 * 1))],           //  充电开关 
         // 保留 1byte
         maximumVoltage: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(8, 2 * 2))),    //  最大电压

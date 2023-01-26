@@ -13,7 +13,7 @@
                 />
             </van-cell>
             <van-field
-                value="{{electric_current_max}}"
+                model:value="{{electric_current_max}}"
                 center
                 clearable
                 border="{{ false }}"
@@ -32,7 +32,7 @@
                 </van-button>
             </van-field>
             <van-field
-                value="{{voltage_max}}"
+                model:value="{{voltage_max}}"
                 center
                 clearable
                 border="{{ false }}"
@@ -51,7 +51,7 @@
                 </van-button>
             </van-field>
             <van-field
-                value="{{charge_time}}"
+                model:value="{{charge_time}}"
                 center
                 clearable
                 border="{{ false }}"

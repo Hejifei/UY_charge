@@ -11,9 +11,11 @@
   "dependencies": {
     "@antv/wx-f2": "^2.1.1",
     "@vant/weapp": "^1.10.11",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.191",
     "miniprogram-api-typings": "^3.8.1"
   }
 }
