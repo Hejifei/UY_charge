@@ -207,3 +207,40 @@ export const parseProtocolCodeToTestData = (code: string) => {
   }
   return data
 }
+
+//  解构充电曲线设置数据
+export const parseProtocolCodeToChargeLineSettingData = (code: string) => {
+    const length = parse16To10(code.substr(0, 2))
+    const settingDataList: IChargeLineSettingItem[] = []
+    for (let i = 0; i < length; i++) {
+        const startIndex = 2 + 8 * i
+        settingDataList.push({
+            voltage: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(startIndex, 2 * 2))),
+            eleCurrent: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(startIndex + 4, 2 * 2))),
+        })
+    }
+    // console.log({
+    //     length,
+    //     code,
+    //     settingDataList,
+    // }, 'parseProtocolCodeToChargeLineSettingData')
+    return settingDataList
+}
+
+//  充电曲线设置转换
+export const parseChargeLineSettingDataToProtocolCode = (settingDataList: IChargeLineSettingItem[]) => {
+    let code = parse10To16(settingDataList.length)
+    settingDataList.forEach(data => {
+        const {
+            voltage,
+            eleCurrent,
+        } = data
+        code = code + parse10To16(parseVoltageOrCurrentVTo10mV(voltage), 2)
+        code = code + parse10To16(parseVoltageOrCurrentVTo10mV(eleCurrent), 2)
+    })
+    console.log({
+        code,
+        settingDataList,
+    })
+    return code
+}

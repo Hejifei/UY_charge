@@ -44,3 +44,8 @@ interface ITestData {
   shortCircuitProtection: number
   reversePolarityProtection: number
 }
+
+interface IChargeLineSettingItem {
+    voltage: number
+    eleCurrent: number
+}

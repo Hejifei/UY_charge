@@ -80,5 +80,5 @@
         </div>
     </div>
     <blank height="10" />
-    <charge-line-setting />
+    <charge-line-setting  />
 </view>

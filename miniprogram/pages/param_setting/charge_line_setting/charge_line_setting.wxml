@@ -25,7 +25,7 @@
                     data-name="voltage"
                     data-index="{{idx}}"
                     type="number"
-                    model:value="{{item.voltage}}"
+                    value="{{item.voltage}}"
                     placeholder=""
                     border="{{ false }}"
                     bind:change="onInputChange"
@@ -37,7 +37,7 @@
                     data-name="eleCurrent"
                     data-index="{{idx}}"
                     type="number"
-                    model:value="{{ item.eleCurrent }}"
+                    value="{{ item.eleCurrent }}"
                     placeholder=""
                     border="{{ false }}"
                     bind:change="onInputChange"
@@ -52,17 +52,19 @@
             size="small"
             color="#2497D8"
             style="margin-right: 25px;"
+            bindtap="readChargeLine"
         >读取曲线</van-button>
         <van-button
             type="primary"
             size="small"
             style="margin-right: 25px;"
-            bindtap="handleLineWrite"
+            bindtap="writeChargeLine"
         >曲线写入</van-button>
         <van-button
             type="primary"
             size="small"
             color="#ECC057"
+            bindtap="clearChargeLine"
         >曲线重置</van-button>
     </div>
     <blank height="10" />
