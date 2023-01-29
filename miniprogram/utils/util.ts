@@ -103,3 +103,56 @@ export const getHistoryDeviceList: () => object[] = () => {
 export const setHistoryDeviceList = (value: object[]) => {
     return wx.setStorageSync('history_device_list', value)
 }
+
+//  uint8Array 转 string
+export const  uint8ArrayToString = (fileData: number[]) => {
+  var dataString = "";
+  for (var i = 0; i < fileData.length; i++) {
+    dataString += String.fromCharCode(fileData[i]);
+  }
+  return dataString
+}
+// var arr = [48,48,48,48]
+// uint8ArrayToString(arr)  //"0000"
+
+//  string 装 uint8Array 
+export const stringToUint8Array = (str: string) => {
+  var arr = [];
+  for (var i = 0, j = str.length; i < j; ++i) {
+    arr.push(str.charCodeAt(i));
+  }
+ 
+  var tmpUint8Array = new Uint8Array(arr);
+  return tmpUint8Array
+}
+// stringToUint8Array('12313132') // Uint8Array(8)   [49, 50, 51, 49, 51, 49, 51, 50]
+
+//  string 转 ArrayBuffer
+export const stringToArrayBuffer = (str: string) => {
+  var buf = new ArrayBuffer(str.length * 2); // 每个字符占用2个字节
+  var bufView = new Uint16Array(buf);
+  for (var i = 0, strLen = str.length; i < strLen; i++) {
+    bufView[i] = str.charCodeAt(i);
+  }
+  return buf;
+}
+// stringToArrayBuffer('00000')
+// 输出：ArrayBuffer(10) {}
+
+//  arrayBuffer 转 string
+export const arrayBufferToString = (buf: ArrayBuffer) => {
+  //  @ts-ignore
+  return String.fromCharCode.apply(null, new Uint8Array(buf));
+}
+
+
+//   int 转 byte []
+export const intTobytes = (n: number) => {
+  var bytes = [];
+  for (var i = 0; i < 2; i++) {
+    bytes[i] = n >> (8 - i * 8);
+  }
+  return bytes;
+}
+// intTobytes(10) // [0, 10]
+
