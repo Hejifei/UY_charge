@@ -49,3 +49,11 @@ interface IChargeLineSettingItem {
     voltage: number
     eleCurrent: number
 }
+
+interface IParamSettingDefaultValue {
+    charging_timing_default: string
+    output_current_default: string
+    output_current_ranage: string
+    output_voltage_default: string
+    output_voltage_ranage: string
+}
