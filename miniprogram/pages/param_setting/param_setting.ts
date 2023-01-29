@@ -68,7 +68,7 @@ Page({
             url: '/api/common/config',
             data: {},
             method: 'GET',
-            successCallBack: (res: IParamSettingDefaultValue) => {
+            successCallBack: (res: {data: IParamSettingDefaultValue}) => {
                 // console.log({ res }, '/api/common/config')
                 
                 // todo 设备未配置值的时候插入默认值
@@ -76,7 +76,7 @@ Page({
                     // voltage_max: res.output_voltage_default,
                     // electric_current_max: res.output_current_default,
                     // charge_time: res.charging_timing_default,
-                    configDefault: res,
+                    configDefault: res.data,
                 })
                 
                 wx.hideLoading();
@@ -206,7 +206,7 @@ Page({
         '02',
         '06',
         '0002',
-        parse10To16(chargeSwitch ? 1 : 2) +
+        parse10To16(chargeSwitch ? 1 : 2, 1) +
         '00' +
         parse10To16(parseVoltageOrCurrentVTo10mV(parseFloat(voltage_max)), 2) + 
         parse10To16(parseVoltageOrCurrentVTo10mV(parseFloat(electric_current_max)), 2)
