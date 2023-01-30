@@ -142,7 +142,7 @@ export const stringToArrayBuffer = (str: string) => {
 //  arrayBuffer 转 string
 export const arrayBufferToString = (buf: ArrayBuffer) => {
   //  @ts-ignore
-  return String.fromCharCode.apply(null, new Uint8Array(buf));
+  return String.fromCharCode.apply(null, new Uint8Array(buf)).replaceAll('\x00', '');
 }
 
 
