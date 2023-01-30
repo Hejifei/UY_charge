@@ -1,5 +1,8 @@
 import { getIsDebugModel } from '../../utils/util'
 import {writeBLECharacteristicValue,} from '../../utils/bluetooth_util'
+import Chart from './chart';
+import { createElement } from '@antv/f2';
+
 const app = getApp<IAppOption>()
 
 import {
@@ -8,6 +11,14 @@ import {
     parseProtocolCodeToChargerInfo,
 } from '../../utils/protocol_util'
 // const app = getApp<IAppOption>()
+
+const data = [
+    { genre: 'Sports', sold: 275 },
+    { genre: 'Strategy', sold: 115 },
+    { genre: 'Action', sold: 120 },
+    { genre: 'Shooter', sold: 350 },
+    { genre: 'Other', sold: 150 },
+];
 
 Page({
     storeTypes: ['numHandle', 'protocolInfo'],
@@ -20,11 +31,15 @@ Page({
         // path: '',   // 表盘刻度线路径
         // x: -124,    // 得分进度条起点x
         // y: 0,       // 得分进度条起点y
-        // timer: 0,    
+        // timer: 0,   
+        onRenderChart: () => {}, 
     },
     onShow() {
         this.setData({
             isDebugModel: app.globalData.isDebugModel || false,
+            onRenderChart: () => {
+                return this.renderChart(data)
+            },
         })
         // this.deawCircleProcess()
         const that = this
@@ -49,6 +64,11 @@ Page({
         // console.log({
         //     baseInfoResponseData,
         // })
+    },
+    renderChart(chartData: any) {
+        return createElement(Chart, {
+            data: chartData,
+          });
     },
     async getBaseInfoData() {
       const buffer = parseProtocolCodeMessage(

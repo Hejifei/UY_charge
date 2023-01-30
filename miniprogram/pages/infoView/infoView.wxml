@@ -29,7 +29,9 @@
             {{m}}%
         </text>
     </svg> -->
-
+    <view class="searchContainer">
+        <f2 onRender="{{onRenderChart}}" />
+    </view>
     <div class="infoWrapper">
         <div class="title">
             常规信息
@@ -105,5 +107,6 @@
         </div>
     </div>
     <blank height="10" />
+    
     <test-data wx:if="{{isDebugModel}}" />
 </view>

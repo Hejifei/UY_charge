@@ -4,6 +4,7 @@
     "usingComponents": {
         "circle-progress": "/components/circle_progress/circle_progress",
         "blank": "/components/blank/blank",
-        "test-data": "./test_data/test_data"
+        "test-data": "./test_data/test_data",
+        "f2": "@antv/f2-wx"
     }
 }
