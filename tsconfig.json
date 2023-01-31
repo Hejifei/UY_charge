@@ -19,6 +19,8 @@
       "lib": ["ES2020"],
       "baseUrl": ".",
       "types": ["miniprogram-api-typings"],
+      "jsxFactory": "jsx",
+      "jsxFragmentFactory": "Fragment",
       "typeRoots": [
         "./typings"
       ]

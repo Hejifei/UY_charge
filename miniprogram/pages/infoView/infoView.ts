@@ -12,19 +12,20 @@ import {
 } from '../../utils/protocol_util'
 // const app = getApp<IAppOption>()
 
-const data = [
-    { genre: 'Sports', sold: 275 },
-    { genre: 'Strategy', sold: 115 },
-    { genre: 'Action', sold: 120 },
-    { genre: 'Shooter', sold: 350 },
-    { genre: 'Other', sold: 150 },
-];
+const data = {
+    voltage: 5.8,
+    current: 6,
+    chargeTime: 240,
+    percent: 0.2,
+    status: '充电中', 
+};
 
 Page({
     storeTypes: ['numHandle', 'protocolInfo'],
     data: {
         barhHeight: 0,
         titlePositionTop: 0,
+        chargingTime: 0,
         isDebugModel: app.globalData.isDebugModel || false,
         // n: 1.5,     // 不规则三角形放大比例
         // m: 90,      // 得分
@@ -35,12 +36,7 @@ Page({
         onRenderChart: () => {}, 
     },
     onShow() {
-        this.setData({
-            isDebugModel: app.globalData.isDebugModel || false,
-            onRenderChart: () => {
-                return this.renderChart(data)
-            },
-        })
+        
         // this.deawCircleProcess()
         const that = this
         wx.getSystemInfo({
@@ -60,7 +56,28 @@ Page({
         this.getBaseInfoData()
 
         const baseInfoResponseData =  analyzeProtocolCodeMessage('5559011E00000B5401000B7C0BB80B2E0BB3033700F005007000121609130100007800667FA5', '011E0000')
-        parseProtocolCodeToChargerInfo(baseInfoResponseData)
+        const data = parseProtocolCodeToChargerInfo(baseInfoResponseData)
+        const {
+            chargingTime,
+            outputVoltage,
+            outputCurrent,
+            chargingMode,
+            chargingTiming,
+        } = data
+        this.setData({
+            isDebugModel: app.globalData.isDebugModel || false,
+            chargingTime,
+            onRenderChart: () => {
+                // return this.renderChart(data)
+                return this.renderChart({
+                    voltage: outputVoltage,
+                    current: outputCurrent,
+                    chargeTime: chargingTime,
+                    percent: chargingTime / chargingTiming,
+                    status: chargingMode, 
+                })
+            },
+        })
         // console.log({
         //     baseInfoResponseData,
         // })

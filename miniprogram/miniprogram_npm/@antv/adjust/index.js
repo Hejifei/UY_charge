@@ -4,7 +4,7 @@ var __DEFINE__ = function(modId, func, req) { var m = { exports: {}, _tempexport
 var __REQUIRE__ = function(modId, source) { if(!__MODS__[modId]) return require(source); if(!__MODS__[modId].status) { var m = __MODS__[modId].m; m._exports = m._tempexports; var desp = Object.getOwnPropertyDescriptor(m, "exports"); if (desp && desp.configurable) Object.defineProperty(m, "exports", { set: function (val) { if(typeof val === "object" && val !== m._exports) { m._exports.__proto__ = val.__proto__; Object.keys(val).forEach(function (k) { m._exports[k] = val[k]; }); } m._tempexports = val }, get: function () { return m._tempexports; } }); __MODS__[modId].status = 1; __MODS__[modId].func(__MODS__[modId].req, m, m.exports); } return __MODS__[modId].m.exports; };
 var __REQUIRE_WILDCARD__ = function(obj) { if(obj && obj.__esModule) { return obj; } else { var newObj = {}; if(obj != null) { for(var k in obj) { if (Object.prototype.hasOwnProperty.call(obj, k)) newObj[k] = obj[k]; } } newObj.default = obj; return newObj; } };
 var __REQUIRE_DEFAULT__ = function(obj) { return obj && obj.__esModule ? obj.default : obj; };
-__DEFINE__(1675087241922, function(require, module, exports) {
+__DEFINE__(1675170843545, function(require, module, exports) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Adjust = exports.registerAdjust = exports.getAdjust = void 0;
@@ -25,8 +25,8 @@ factory_1.registerAdjust('Stack', stack_1.default);
 factory_1.registerAdjust('Symmetric', symmetric_1.default);
 tslib_1.__exportStar(require("./interface"), exports);
 //# sourceMappingURL=index.js.map
-}, function(modId) {var map = {"./factory":1675087241923,"./adjusts/adjust":1675087241924,"./adjusts/dodge":1675087241927,"./adjusts/jitter":1675087241928,"./adjusts/stack":1675087241929,"./adjusts/symmetric":1675087241930,"./interface":1675087241926}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1675087241923, function(require, module, exports) {
+}, function(modId) {var map = {"./factory":1675170843546,"./adjusts/adjust":1675170843547,"./adjusts/dodge":1675170843550,"./adjusts/jitter":1675170843551,"./adjusts/stack":1675170843552,"./adjusts/symmetric":1675170843553,"./interface":1675170843549}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1675170843546, function(require, module, exports) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Adjust = exports.registerAdjust = exports.getAdjust = void 0;
@@ -58,8 +58,8 @@ var registerAdjust = function (type, ctor) {
 exports.registerAdjust = registerAdjust;
 tslib_1.__exportStar(require("./interface"), exports);
 //# sourceMappingURL=factory.js.map
-}, function(modId) { var map = {"./adjusts/adjust":1675087241924,"./interface":1675087241926}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1675087241924, function(require, module, exports) {
+}, function(modId) { var map = {"./adjusts/adjust":1675170843547,"./interface":1675170843549}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1675170843547, function(require, module, exports) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("@antv/util");
@@ -183,8 +183,8 @@ var Adjust = /** @class */ (function () {
 }());
 exports.default = Adjust;
 //# sourceMappingURL=adjust.js.map
-}, function(modId) { var map = {"../constant":1675087241925}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1675087241925, function(require, module, exports) {
+}, function(modId) { var map = {"../constant":1675170843548}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1675170843548, function(require, module, exports) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GAP = exports.DODGE_RATIO = exports.MARGIN_RATIO = exports.DEFAULT_Y = void 0;
@@ -196,12 +196,12 @@ exports.DODGE_RATIO = 1 / 2;
 exports.GAP = 0.05;
 //# sourceMappingURL=constant.js.map
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1675087241926, function(require, module, exports) {
+__DEFINE__(1675170843549, function(require, module, exports) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 //# sourceMappingURL=interface.js.map
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1675087241927, function(require, module, exports) {
+__DEFINE__(1675170843550, function(require, module, exports) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = require("tslib");
@@ -396,8 +396,8 @@ var Dodge = /** @class */ (function (_super) {
 }(adjust_1.default));
 exports.default = Dodge;
 //# sourceMappingURL=dodge.js.map
-}, function(modId) { var map = {"../constant":1675087241925,"./adjust":1675087241924}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1675087241928, function(require, module, exports) {
+}, function(modId) { var map = {"../constant":1675170843548,"./adjust":1675170843547}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1675170843551, function(require, module, exports) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = require("tslib");
@@ -455,8 +455,8 @@ var Jitter = /** @class */ (function (_super) {
 }(adjust_1.default));
 exports.default = Jitter;
 //# sourceMappingURL=jitter.js.map
-}, function(modId) { var map = {"../constant":1675087241925,"./adjust":1675087241924}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1675087241929, function(require, module, exports) {
+}, function(modId) { var map = {"../constant":1675170843548,"./adjust":1675170843547}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1675170843552, function(require, module, exports) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = require("tslib");
@@ -548,8 +548,8 @@ var Stack = /** @class */ (function (_super) {
 }(adjust_1.default));
 exports.default = Stack;
 //# sourceMappingURL=stack.js.map
-}, function(modId) { var map = {"./adjust":1675087241924}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1675087241930, function(require, module, exports) {
+}, function(modId) { var map = {"./adjust":1675170843547}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1675170843553, function(require, module, exports) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var tslib_1 = require("tslib");
@@ -604,8 +604,8 @@ var Symmetric = /** @class */ (function (_super) {
 }(adjust_1.default));
 exports.default = Symmetric;
 //# sourceMappingURL=symmetric.js.map
-}, function(modId) { var map = {"./adjust":1675087241924}; return __REQUIRE__(map[modId], modId); })
-return __REQUIRE__(1675087241922);
+}, function(modId) { var map = {"./adjust":1675170843547}; return __REQUIRE__(map[modId], modId); })
+return __REQUIRE__(1675170843545);
 })()
 //miniprogram-npm-outsideDeps=["tslib","@antv/util"]
 //# sourceMappingURL=index.js.map
