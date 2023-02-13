@@ -1,5 +1,8 @@
 import { getIsDebugModel } from '../../utils/util'
 import {writeBLECharacteristicValue,} from '../../utils/bluetooth_util'
+import Chart from './chart';
+import { createElement } from '@antv/f2';
+
 const app = getApp<IAppOption>()
 
 import {
@@ -9,23 +12,31 @@ import {
 } from '../../utils/protocol_util'
 // const app = getApp<IAppOption>()
 
+const data = {
+    voltage: 5.8,
+    current: 6,
+    chargeTime: 240,
+    percent: 0.2,
+    status: '充电中', 
+};
+
 Page({
     storeTypes: ['numHandle', 'protocolInfo'],
     data: {
         barhHeight: 0,
         titlePositionTop: 0,
+        chargingTime: 0,
         isDebugModel: app.globalData.isDebugModel || false,
         // n: 1.5,     // 不规则三角形放大比例
         // m: 90,      // 得分
         // path: '',   // 表盘刻度线路径
         // x: -124,    // 得分进度条起点x
         // y: 0,       // 得分进度条起点y
-        // timer: 0,    
+        // timer: 0,   
+        onRenderChart: () => {}, 
     },
     onShow() {
-        this.setData({
-            isDebugModel: app.globalData.isDebugModel || false,
-        })
+        
         // this.deawCircleProcess()
         const that = this
         wx.getSystemInfo({
@@ -45,10 +56,36 @@ Page({
         this.getBaseInfoData()
 
         const baseInfoResponseData =  analyzeProtocolCodeMessage('5559011E00000B5401000B7C0BB80B2E0BB3033700F005007000121609130100007800667FA5', '011E0000')
-        parseProtocolCodeToChargerInfo(baseInfoResponseData)
+        const data = parseProtocolCodeToChargerInfo(baseInfoResponseData)
+        const {
+            chargingTime,
+            outputVoltage,
+            outputCurrent,
+            chargingMode,
+            chargingTiming,
+        } = data
+        this.setData({
+            isDebugModel: app.globalData.isDebugModel || false,
+            chargingTime,
+            onRenderChart: () => {
+                // return this.renderChart(data)
+                return this.renderChart({
+                    voltage: outputVoltage,
+                    current: outputCurrent,
+                    chargeTime: chargingTime,
+                    percent: chargingTime / chargingTiming,
+                    status: chargingMode, 
+                })
+            },
+        })
         // console.log({
         //     baseInfoResponseData,
         // })
+    },
+    renderChart(chartData: any) {
+        return createElement(Chart, {
+            data: chartData,
+          });
     },
     async getBaseInfoData() {
       const buffer = parseProtocolCodeMessage(
