@@ -1,4 +1,4 @@
-
+import { Request } from '../../../utils/request'
 // const app = getApp<IAppOption>()
 
 Page({
@@ -45,6 +45,20 @@ Page({
                 titlePositionTop: navTopHeight,
             })
         }
+    })
+  },
+  //  记录设备连接记录
+  uploadConnectRecord(title: string) {
+    Request({
+      url: '/api/user/connect',
+      data: {
+        title,
+      },
+      method: 'POST',
+      successCallBack: (res: any) => {
+          console.log({ res }, '/api/user/connect')
+          
+      },
     })
   },
   handleUnConnect() {

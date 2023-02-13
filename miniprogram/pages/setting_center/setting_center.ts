@@ -68,16 +68,29 @@ Page({
     this.setData({ isDebugModeVisible: false });
   },
   handleDebugCodeSave() {
+      const code = this.data.debugCode
       console.log({
         debugCode: this.data.debugCode,
       })
       this.closeDebugCodeModal()
-      if (true) {
-        getApp().globalData.isDebugModel = true
-        this.setData({
-            isDebugModel: app.globalData.isDebugModel,
-        })
-      }
+      Request({
+        url: '/api/user/activeCode',
+        data: {
+          code,
+        },
+        method: 'POST',
+        successCallBack: (res: any) => {
+            console.log({ res }, '/api/user/activeCode')
+            // TODO
+            // if (true) {
+            //   getApp().globalData.isDebugModel = true
+            //   this.setData({
+            //       isDebugModel: app.globalData.isDebugModel,
+            //   })
+            // }
+        },
+      })
+      
   },
   handleNickNameChangeModalVisible() {
     this.setData({ isNickNameChangeVisible: true });

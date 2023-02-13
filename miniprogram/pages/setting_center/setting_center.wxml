@@ -15,7 +15,7 @@
 
         </div>
         <div class="roleLine">
-          <div class="roleContent">管理员</div>
+          <div class="roleContent">{{isDebugModel ? '管理员' : '普通用户'}}</div>
         </div>
       </div>
       <div class="takePhotoIconContent" bindtap="chooseImage">
