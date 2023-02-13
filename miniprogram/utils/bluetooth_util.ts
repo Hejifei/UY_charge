@@ -70,6 +70,7 @@ export const getBluetoothAdapterState = () => {
 
 //  蓝牙设备搜索初始化
 export const startBluetoothDevicesDiscovery = () => {
+    console.log('蓝牙设备搜索初始化 startBluetoothDevicesDiscovery ')
     return new Promise((resolve, reject) => {
         wx.startBluetoothDevicesDiscovery({
             allowDuplicatesKey: true,
@@ -93,16 +94,23 @@ export const getBluetoothDevices: () => Promise<WechatMiniprogram.OnBluetoothDev
     return new Promise((resolve, reject) => {
         wx.getBluetoothDevices({  //获取目前搜索到全部的蓝牙设备（只执行一次）
             success(res) {
-                console.log(res)
-                setTimeout(()=>{
-                    if(res.devices.length < 1) { //小于1台设备的时候关闭蓝牙和停止搜索
+                console.log({res}, 'getBluetoothDevices')
+                
+                if (res.devices.length > 0) {
+                    resolve(res)
+                } else {
+                    setTimeout(()=>{
+                        // if(res.devices.length < 1) { //小于1台设备的时候关闭蓝牙和停止搜索
+                            
+                        // }
                         // stopBluetoothDevicesDiscovery()
                         bluetoothClose()
+                        // console.log('长时间未扫描到设备,自动停止搜索')
                         reject({
                             errMsg: '长时间未扫描到设备,自动停止搜索'
                         })
-                    }
-                }, 15000)
+                    }, 15000)
+                }
             }
         })
         wx.onBluetoothDeviceFound(res => {  //监听搜索的蓝牙-不断的寻找新的设备
@@ -117,6 +125,9 @@ export const createBLEConnection = (deviceId: string) => {
         wx.createBLEConnection({
             deviceId,
             success(res) {
+                console.log({
+                    res,
+                }, '通过蓝牙设备Id连接低功耗蓝牙设备 createBLEConnection')
                 resolve(res)
             },
             fail(error) {
@@ -196,6 +207,9 @@ export const notifyBLECharacteristicValueChange = (
             characteristicId, //蓝牙特征值读的uuid
             state: true, //是否启用 notify
             success(res) {
+                console.log({
+                    res,
+                }, '启用蓝牙notify功能，用来监听蓝牙之间的数据传输 返回值')
                 resolve(res)
                 // that.onBLECharacteristicValueChange()
                 // setTimeout(()=>{

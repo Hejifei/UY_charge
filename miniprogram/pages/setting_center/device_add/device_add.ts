@@ -1,4 +1,4 @@
-import { inArray, ab2hex } from '../../../utils/util'
+import { inArray, ab2hex, stringToArrayBuffer, arrayBufferToString } from '../../../utils/util'
 import {SERVICE_ID_VALUE, CHARACTERISTIC_ID_VALUE} from '../../../common/index'
 import {
     bluetoothInit,
@@ -12,6 +12,7 @@ import {
     bluetoothClose,
     getBLEDeviceCharacteristics,
     notifyBLECharacteristicValueChange,
+    onBLECharacteristicValueChange,
 } from '../../../utils/bluetooth_util'
 import Toast from '@vant/weapp/toast/toast';
 // const app = getApp<IAppOption>()
@@ -137,7 +138,19 @@ Page({
     async onBluetoothDeviceFound() {
         try {
             const res = await getBluetoothDevices()
-            res.devices.forEach(device => {
+            if (res.devices.length >= 1) {
+                this.setData({
+                    _discoveryStarted: false,
+                })
+            }
+            // console.log({res,}, 'getBluetoothDevices')
+            res.devices
+                .filter(({name, connectable}) => {
+                    return name.startsWith('UY')
+                    // TODO
+                    return name.startsWith('UY') && connectable
+                })
+                .forEach(device => {
                 if (!device.name && !device.localName) {
                     return
                 }
@@ -162,8 +175,12 @@ Page({
                 })
             })
         } catch (err) {
-            // console.log({err})
+            this.setData({
+                _discoveryStarted: false,
+            })
+            console.log({err}, 'onBluetoothDeviceFound')
             Toast.fail(err.errMsg);
+            
         }
     },
     async createBLEConnection(e: any) {
@@ -177,7 +194,71 @@ Page({
         }
         try {
             await createBLEConnection(deviceId)
-            await notifyBLECharacteristicValueChange(deviceId, SERVICE_ID_VALUE, CHARACTERISTIC_ID_VALUE)
+            const {services} = await getBLEDeviceServices(deviceId)
+            console.log({
+                services,
+            })
+            onBLECharacteristicValueChange().then(res => {
+                console.log({
+                    res,
+                }, '接收蓝牙设备的推送')
+            })
+            for (let i = 0; i < services.length; i++) {
+                if (services[i].isPrimary) {
+                    const serviceId = services[i].uuid
+                    const {characteristics} = await getBLEDeviceCharacteristics(deviceId, serviceId)
+                    console.log({
+                        characteristics,
+                    }, 'getBLEDeviceCharacteristics')
+                    for (let j = 0; j < characteristics.length; j++) {
+                        let item = characteristics[j]
+                        const characteristicId = item.uuid
+                        if (item.properties.read) {
+                            console.log('read')
+                            // this.writeBLECharacteristicValue(
+                            //     deviceId,
+                            //     serviceId,
+                            //     characteristicId,
+                            // )
+                            // onBLECharacteristicValueChange().then(res => {
+                            //     console.log({
+                            //         res,
+                            //     }, '接收蓝牙设备的推送')
+                            // })
+                        //   wx.readBLECharacteristicValue({
+                        //     deviceId,
+                        //     serviceId,
+                        //     characteristicId: item.uuid,
+                        //   })
+                        }
+                        if (item.properties.write) {
+                            console.log({
+                                deviceId,
+                                serviceId,
+                                characteristicId,
+                            }, '可写')
+                            this.writeBLECharacteristicValue(
+                                deviceId,
+                                serviceId,
+                                characteristicId,
+                            )
+                        //   this.setData({
+                        //     canWrite: true
+                        //   })
+                        //   this.writeBLECharacteristicValue()
+                        }
+                        if (item.properties.notify || item.properties.indicate) {
+                            notifyBLECharacteristicValueChange(deviceId, serviceId, characteristicId)
+                            console.log('启用蓝牙notify功能')
+                        }
+                      }
+                //   return
+                }
+              }
+            console.log({
+                services,
+            })
+            // await notifyBLECharacteristicValueChange(deviceId, SERVICE_ID_VALUE, CHARACTERISTIC_ID_VALUE)
             this.setData({
                 connected: deviceId,
                 name,
@@ -274,20 +355,25 @@ Page({
     //         this.setData(data)
     //     })
     // },
-    async writeBLECharacteristicValue() {
+    async writeBLECharacteristicValue(
+        deviceId: string,
+        serviceId: string,
+        characteristicId: string,
+    ) {
         // 向蓝牙设备发送一个0x00的16进制数据
-        let buffer = new ArrayBuffer(1)
-        let dataView = new DataView(buffer)
-        dataView.setUint8(0, Math.random() * 255 | 0)
-        console.log('发送协议码')
+        // let buffer = new ArrayBuffer(1)
+        // let dataView = new DataView(buffer)
+        // dataView.setUint8(0, Math.random() * 255 | 0)
+        const buffer = stringToArrayBuffer('5559011E000071E9')
+        console.log('发送协议码', {
+            buffer,
+            value: arrayBufferToString(buffer),
+        })
         try {
             await writeBLECharacteristicValue(
-                //  @ts-ignore
-                this._deviceId,
-                //  @ts-ignore
-                this._serviceId,
-                //  @ts-ignore
-                this._characteristicId,
+                deviceId,
+                serviceId,
+                characteristicId,
                 buffer
             )
         } catch (err) {

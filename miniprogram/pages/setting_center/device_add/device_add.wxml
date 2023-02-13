@@ -3,11 +3,21 @@
 >
     <blank height="10" />
     <van-cell-group>
-        <van-cell title="已连接设备名称" value="UY充电器0001" />
+        <van-cell title="已连接设备名称" value="{{name || '暂无连接设备'}}" />
     </van-cell-group>
     <blank height="10" />
     <div class="historyTitle">
-        <div class="titleWrapper">可用设备</div>
+        <div class="titleWrapper">
+            可用设备 {{_discoveryStarted ? '扫描中...' : ''}}
+            <van-button
+                wx:if="{{!_discoveryStarted}}"
+                class="reloadBtn"
+                icon="replay"
+                size="small"
+                type="text"
+                bindtap="openBluetoothAdapter">
+            </van-button>
+        </div>
     </div>
     <div class="historyListWrapper">
         <!-- <view wx:for="{{devices}}" wx:key="index"
