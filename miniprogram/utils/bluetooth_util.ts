@@ -1,4 +1,5 @@
 import Toast from '@vant/weapp/toast/toast';
+import { arrayBufferToString } from './util';
 
 // documents: https://juejin.cn/post/6854573218788261902
 // 注意事项:
@@ -228,6 +229,10 @@ export const notifyBLECharacteristicValueChange = (
 export const onBLECharacteristicValueChange = () => {
     return new Promise((resolve, reject) => {
         wx.onBLECharacteristicValueChange(res => {
+            console.log({
+                res,
+                value: arrayBufferToString(res.value),
+            }, '接收蓝牙设备的推送 onBLECharacteristicValueChange')
             resolve(res)
         })
     }) as Promise<WechatMiniprogram.OnBLECharacteristicValueChangeListenerResult>
@@ -246,8 +251,9 @@ export const writeBLECharacteristicValue = (
             serviceId, //蓝牙特征值服务id
             characteristicId, //蓝牙特征值写的uuid
             value: buffer, 
+            writeType: 'write',
             success (res) {
-                console.log('蓝牙写成功', res.errMsg)
+                console.log('蓝牙写成功', {res})
                 resolve(res)
             },
             fail(error) {

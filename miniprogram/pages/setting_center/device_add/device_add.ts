@@ -189,7 +189,15 @@ Page({
         const deviceId = ds.deviceId
         const name = ds.name
         const { id } = e.target.dataset
+        console.log({
+            e,
+            id,
+            connected: this.data.connected,
+        })
         if (id === this.data.connected) {
+            this.setData({
+                connected: false,
+            })
             return
         }
         try {
@@ -198,12 +206,8 @@ Page({
             console.log({
                 services,
             })
-            onBLECharacteristicValueChange().then(res => {
-                console.log({
-                    res,
-                }, '接收蓝牙设备的推送')
-            })
-            for (let i = 0; i < services.length; i++) {
+            for (let i = (services.length - 1); i >= 0; i--) {
+            // for (let i = 0; i < services.length; i++) {
                 if (services[i].isPrimary) {
                     const serviceId = services[i].uuid
                     const {characteristics} = await getBLEDeviceCharacteristics(deviceId, serviceId)
@@ -213,8 +217,31 @@ Page({
                     for (let j = 0; j < characteristics.length; j++) {
                         let item = characteristics[j]
                         const characteristicId = item.uuid
+                        if (item.properties.notify || item.properties.indicate) {
+                            await notifyBLECharacteristicValueChange(
+                                deviceId,
+                                serviceId,
+                                characteristicId,
+                            )
+                            console.log('启用蓝牙notify功能', {
+                                deviceId, serviceId, characteristicId
+                            })
+                            onBLECharacteristicValueChange().then(res => {
+                                console.log({
+                                    res,
+                                }, '接收蓝牙设备的推送')
+                            })
+                        }
                         if (item.properties.read) {
                             console.log('read')
+                            wx.readBLECharacteristicValue({
+                                deviceId,
+                                serviceId,
+                                characteristicId,
+                                success (res) {
+                                  console.log('readBLECharacteristicValue:', {res})
+                                }
+                            })
                             // this.writeBLECharacteristicValue(
                             //     deviceId,
                             //     serviceId,
@@ -247,10 +274,7 @@ Page({
                         //   })
                         //   this.writeBLECharacteristicValue()
                         }
-                        if (item.properties.notify || item.properties.indicate) {
-                            notifyBLECharacteristicValueChange(deviceId, serviceId, characteristicId)
-                            console.log('启用蓝牙notify功能')
-                        }
+                        
                       }
                 //   return
                 }
