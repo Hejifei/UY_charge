@@ -1,5 +1,5 @@
 import Toast from '@vant/weapp/toast/toast';
-import { ab2hex, arrayBufferToString, uint8Array2Str, } from './util';
+import { ab2hex, arrayBufferToString, string2Buffer, uint8Array2Str, } from './util';
 
 // documents: https://juejin.cn/post/6854573218788261902
 // 注意事项:
@@ -48,6 +48,25 @@ export const bluetoothInit = async (
         })
     })
 }
+
+export const listenConnection = () => {
+    console.log("listenConnection")
+    wx.onBLEConnectionStateChange(function(res) {
+      console.log("connectState", res);
+      if (res.connected) {
+        Toast.success('连接成功!');
+        // that.showToast({
+        //   title: "连接成功",
+        // })
+      } else {
+        Toast.fail('连接断开')
+        // that.showToast({
+        //   title: "连接断开",
+        // })
+      }
+    })
+  }
+
 
 //  释放蓝牙模块资源
 export const bluetoothClose = () => {
@@ -208,9 +227,9 @@ export const notifyBLECharacteristicValueChange = (
             characteristicId, //蓝牙特征值读的uuid
             state: true, //是否启用 notify
             success(res) {
-                console.log({
-                    res,
-                }, '启用蓝牙notify功能，用来监听蓝牙之间的数据传输 返回值')
+                // console.log({
+                //     res,
+                // }, '启用蓝牙notify功能，用来监听蓝牙之间的数据传输 返回值')
                 resolve(res)
                 // that.onBLECharacteristicValueChange()
                 // setTimeout(()=>{
@@ -288,6 +307,35 @@ export const readBLECharacteristicValue = (
             }
         })
     }) as Promise<WechatMiniprogram.BluetoothError>
+}
+
+export const writeAndReadBLECharacteristicValue = async (
+    deviceId: string,
+    serviceId: string,
+    characteristicId: string,
+    value: string,
+) => {
+    // const buffer = string2Buffer('5559011E000071E9')
+    const buffer = string2Buffer(value)
+    // console.log('发送协议码', {
+    //     buffer,
+    // })
+    try {
+        await writeBLECharacteristicValue(
+            deviceId,
+            serviceId,
+            characteristicId,
+            buffer
+        )
+        await readBLECharacteristicValue(
+            deviceId,
+            serviceId,
+            characteristicId
+        )
+    } catch (err) {
+        console.log('writeAndReadBLECharacteristicValue', {err})
+        // Toast.fail(err.errMsg);
+    }
 }
 
 

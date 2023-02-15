@@ -4,6 +4,8 @@ interface IAppOption {
   globalData: {
     userInfo?: WechatMiniprogram.UserInfo,
     isDebugModel?: boolean
+    connected?: boolean
+    deviceName?: string
     deviceId?: string,
     serviceId?: string,
     characteristicId?: string,

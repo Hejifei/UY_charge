@@ -3,6 +3,7 @@ import action from './store/actions/index'
 import Provider from './weapp-redux/provider/index'
 import { bluetoothInit } from './utils/bluetooth_util'
 import { Request } from './utils/request'
+import Toast from '@vant/weapp/toast/toast';
 import { ab2hex, setUserInfo, setUserToken } from './utils/util'
 import {
     add,
@@ -18,6 +19,8 @@ App<IAppOption>({
     globalData: {
         userInfo: undefined,
         isDebugModel: false,
+        connected: false,
+        deviceName: undefined,
         deviceId: undefined,
         serviceId: undefined,
         characteristicId: undefined,
@@ -83,7 +86,7 @@ App<IAppOption>({
         
 
         bluetoothInit().then(res => {
-            // console.log('蓝牙初始化成功!')
+            console.log('蓝牙初始化成功!')
             // console.log({
             //     success:res
             // })
@@ -91,6 +94,48 @@ App<IAppOption>({
             console.log(res);
         })
 
+        const listenConnection = () => {
+            console.log("listenConnection")
+            wx.onBLEConnectionStateChange((res) => {
+              console.log("connectState", {res});
+            //   this.globalData.connected = res.connected
+              if (res.connected) {
+                // Toast.success('连接成功!');
+                
+                // that.showToast({
+                //   title: "连接成功",
+                // })
+              } else {
+                  if (this.globalData.deviceId) {
+                    const deviceId = this.globalData.deviceId;
+                    console.log({
+                        deviceId,
+                    })
+                    // bluetoothInit()
+                    wx.createBLEConnection({
+                        deviceId,
+                        success (res) {
+                        //   console.log(res)
+                            console.log('蓝牙重连成功!')
+                        }
+                    })
+                  }
+                
+                // this.globalData = {
+                //     ...this.globalData,
+                //     deviceName: undefined,
+                //     deviceId: undefined,
+                //     serviceId: undefined,
+                //     characteristicId: undefined,
+                // }
+                // Toast.fail('连接断开')
+                // that.showToast({
+                //   title: "连接断开",
+                // })
+              }
+            })
+          }
+        listenConnection();
         wx.onBLECharacteristicValueChange(res => {
             console.log({
                 res,
