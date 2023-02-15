@@ -156,7 +156,7 @@ export const intTobytes = (n: number) => {
 }
 // intTobytes(10) // [0, 10]
 
-const stringToHex = (str: string) => {
+export const stringToHex = (str: string) => {
   var val="";
   for(var i = 0; i < str.length; i++){
     if(val == "")
@@ -168,7 +168,7 @@ const stringToHex = (str: string) => {
   return val;
 }
 
-const hexToString = (str: string) => {
+export const hexToString = (str: string) => {
 
   var val="";
   
@@ -186,3 +186,63 @@ const hexToString = (str: string) => {
   return val;
   
 }
+
+
+//  tools
+
+/*
+  16进制字符串转整形数组
+*/
+export const str2Bytes = (str) => {
+    var len = str.length;
+    if (len % 2 != 0) {
+      return null;
+    }
+    var hexA = new Array();
+    for (var i = 0; i < len; i += 2) {
+      var s = str.substr(i, 2);
+      var v = parseInt(s, 16);
+      hexA.push(v);
+    }
+  
+    return hexA;
+  }
+  
+  /*
+    整形数组转buffer
+  */
+export const array2Buffer = (arr) => {
+    let buffer = new ArrayBuffer(arr.length)
+    let dataView = new DataView(buffer)
+    for (let i = 0; i < arr.length; i++) {
+      dataView.setUint8(i, arr[i])
+    }
+  
+    return buffer
+  }
+  
+  /*
+    16进制字符串转数组
+  */
+export const string2Buffer = (str: string) => {
+    let arr = str2Bytes(str);
+    return array2Buffer(arr)
+  }
+  
+  /*
+    ArrayBuffer转十六进制字符串
+  */
+  export const uint8Array2Str = (buffer) => {
+    var str = "";
+    let dataView = new DataView(buffer)
+    for (let i = 0; i < dataView.byteLength; i++) {
+      var tmp = dataView.getUint8(i).toString(16)
+      if (tmp.length == 1) {
+        tmp = "0" + tmp
+      }
+      str += tmp
+    }
+    return str;
+  }
+  
+

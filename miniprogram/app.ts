@@ -3,7 +3,7 @@ import action from './store/actions/index'
 import Provider from './weapp-redux/provider/index'
 import { bluetoothInit } from './utils/bluetooth_util'
 import { Request } from './utils/request'
-import { setUserInfo, setUserToken } from './utils/util'
+import { ab2hex, setUserInfo, setUserToken } from './utils/util'
 import {
     add,
     minus,
@@ -16,8 +16,11 @@ let { Page, Component } = Provider(store, action)
 // app.ts
 App<IAppOption>({
     globalData: {
-      userInfo: undefined,
-      isDebugModel: false,
+        userInfo: undefined,
+        isDebugModel: false,
+        deviceId: undefined,
+        serviceId: undefined,
+        characteristicId: undefined,
     },
     onLaunch() {
         setNumHandleInitValue(999)
@@ -86,6 +89,16 @@ App<IAppOption>({
             // })
         }).catch((res) => {
             console.log(res);
+        })
+
+        wx.onBLECharacteristicValueChange(res => {
+            console.log({
+                res,
+                // value: hexToString(arrayBufferToString(res.value))
+                // value: arrayBufferToString(res.value),
+                value2: ab2hex(res.value),
+                // uint8Array2Str: uint8Array2Str(res.value)
+            }, '收到数据 onBLECharacteristicValueChange -------')
         })
     },
 })

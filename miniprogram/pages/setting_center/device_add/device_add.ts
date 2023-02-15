@@ -1,4 +1,4 @@
-import { inArray, ab2hex, stringToArrayBuffer, arrayBufferToString } from '../../../utils/util'
+import { inArray, ab2hex, stringToArrayBuffer, arrayBufferToString, string2Buffer, } from '../../../utils/util'
 import {SERVICE_ID_VALUE, CHARACTERISTIC_ID_VALUE} from '../../../common/index'
 import {
     bluetoothInit,
@@ -13,6 +13,7 @@ import {
     getBLEDeviceCharacteristics,
     notifyBLECharacteristicValueChange,
     onBLECharacteristicValueChange,
+    readBLECharacteristicValue,
 } from '../../../utils/bluetooth_util'
 import Toast from '@vant/weapp/toast/toast';
 // const app = getApp<IAppOption>()
@@ -203,17 +204,23 @@ Page({
         try {
             await createBLEConnection(deviceId)
             const {services} = await getBLEDeviceServices(deviceId)
-            console.log({
-                services,
-            })
+            // console.log({
+            //     services,
+            // })
+            // onBLECharacteristicValueChange().then(res => {
+            //     console.log({
+            //         res,
+            //         value: ab2hex(res.value),
+            //     }, '接收蓝牙设备的推送')
+            // })
             for (let i = (services.length - 1); i >= 0; i--) {
             // for (let i = 0; i < services.length; i++) {
                 if (services[i].isPrimary) {
                     const serviceId = services[i].uuid
                     const {characteristics} = await getBLEDeviceCharacteristics(deviceId, serviceId)
-                    console.log({
-                        characteristics,
-                    }, 'getBLEDeviceCharacteristics')
+                    // console.log({
+                    //     characteristics,
+                    // }, 'getBLEDeviceCharacteristics')
                     for (let j = 0; j < characteristics.length; j++) {
                         let item = characteristics[j]
                         const characteristicId = item.uuid
@@ -226,11 +233,7 @@ Page({
                             console.log('启用蓝牙notify功能', {
                                 deviceId, serviceId, characteristicId
                             })
-                            onBLECharacteristicValueChange().then(res => {
-                                console.log({
-                                    res,
-                                }, '接收蓝牙设备的推送')
-                            })
+                            
                         }
                         if (item.properties.read) {
                             console.log('read')
@@ -269,6 +272,14 @@ Page({
                                 serviceId,
                                 characteristicId,
                             )
+                            // wx.readBLECharacteristicValue({
+                            //     deviceId,
+                            //     serviceId,
+                            //     characteristicId,
+                            //     success (res) {
+                            //       console.log('readBLECharacteristicValue 2222222222222222:', {res})
+                            //     }
+                            // })
                         //   this.setData({
                         //     canWrite: true
                         //   })
@@ -384,14 +395,9 @@ Page({
         serviceId: string,
         characteristicId: string,
     ) {
-        // 向蓝牙设备发送一个0x00的16进制数据
-        // let buffer = new ArrayBuffer(1)
-        // let dataView = new DataView(buffer)
-        // dataView.setUint8(0, Math.random() * 255 | 0)
-        const buffer = stringToArrayBuffer('5559011E000071E9')
+        const buffer = string2Buffer('5559011E000071E9')
         console.log('发送协议码', {
             buffer,
-            value: arrayBufferToString(buffer),
         })
         try {
             await writeBLECharacteristicValue(
@@ -399,6 +405,11 @@ Page({
                 serviceId,
                 characteristicId,
                 buffer
+            )
+            await readBLECharacteristicValue(
+                deviceId,
+                serviceId,
+                characteristicId
             )
         } catch (err) {
             // console.log({err}, '蓝牙连接失败')

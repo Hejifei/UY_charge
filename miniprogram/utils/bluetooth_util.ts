@@ -1,5 +1,5 @@
 import Toast from '@vant/weapp/toast/toast';
-import { arrayBufferToString } from './util';
+import { ab2hex, arrayBufferToString, uint8Array2Str, } from './util';
 
 // documents: https://juejin.cn/post/6854573218788261902
 // 注意事项:
@@ -71,7 +71,7 @@ export const getBluetoothAdapterState = () => {
 
 //  蓝牙设备搜索初始化
 export const startBluetoothDevicesDiscovery = () => {
-    console.log('蓝牙设备搜索初始化 startBluetoothDevicesDiscovery ')
+    // console.log('蓝牙设备搜索初始化 startBluetoothDevicesDiscovery ')
     return new Promise((resolve, reject) => {
         wx.startBluetoothDevicesDiscovery({
             allowDuplicatesKey: true,
@@ -231,8 +231,11 @@ export const onBLECharacteristicValueChange = () => {
         wx.onBLECharacteristicValueChange(res => {
             console.log({
                 res,
-                value: arrayBufferToString(res.value),
-            }, '接收蓝牙设备的推送 onBLECharacteristicValueChange')
+                // value: hexToString(arrayBufferToString(res.value))
+                // value: arrayBufferToString(res.value),
+                value2: ab2hex(res.value),
+                // uint8Array2Str: uint8Array2Str(res.value)
+            }, '收到数据 onBLECharacteristicValueChange')
             resolve(res)
         })
     }) as Promise<WechatMiniprogram.OnBLECharacteristicValueChangeListenerResult>
@@ -258,6 +261,29 @@ export const writeBLECharacteristicValue = (
             },
             fail(error) {
                 console.log({error}, '蓝牙写失败')
+                reject(error)
+            }
+        })
+    }) as Promise<WechatMiniprogram.BluetoothError>
+}
+
+//  读数据
+export const readBLECharacteristicValue = (
+    deviceId: string,
+    serviceId: string,
+    characteristicId: string,
+) => {
+    return new Promise((resolve, reject) => {
+        wx.readBLECharacteristicValue({
+            deviceId, //蓝牙设备id
+            serviceId, //蓝牙特征值服务id
+            characteristicId, //蓝牙特征值写的uuid
+            success (res) {
+                console.log('蓝牙读成功', {res})
+                resolve(res)
+            },
+            fail(error) {
+                console.log({error}, '蓝牙读失败')
                 reject(error)
             }
         })
