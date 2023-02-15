@@ -156,3 +156,33 @@ export const intTobytes = (n: number) => {
 }
 // intTobytes(10) // [0, 10]
 
+const stringToHex = (str: string) => {
+  var val="";
+  for(var i = 0; i < str.length; i++){
+    if(val == "")
+      val = str.charCodeAt(i).toString(16);
+    else {
+      val += "," + str.charCodeAt(i).toString(16);
+    }
+  }
+  return val;
+}
+
+const hexToString = (str: string) => {
+
+  var val="";
+  
+  let arr = str.split(",");
+  
+  for(var i = 0; i < arr.length; i++){
+  
+    // val += arr[i].fromCharCode(i);
+    // val += String.fromCharCode(arr[i]);
+    var tmp = "0x" + arr[i * 2] + arr[i * 2 + 1]
+    var charValue = String.fromCharCode(tmp);
+    val += charValue
+  }
+  
+  return val;
+  
+}
