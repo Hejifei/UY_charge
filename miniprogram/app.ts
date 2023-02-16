@@ -5,12 +5,14 @@ import { bluetoothInit, getBluetoothAdapterState } from './utils/bluetooth_util'
 import { Request } from './utils/request'
 import Toast from '@vant/weapp/toast/toast';
 import { ab2hex, setUserInfo, setUserToken } from './utils/util'
+import {setChargerInfo} from './store/actions/protocolInfo'
 import {
     add,
     minus,
     asyncAdd,
     setNumHandleInitValue,
   } from './store/actions/numHandle';
+import { analyzeProtocolCodeMessage, parseProtocolCodeToChargerInfo } from './utils/protocol_util'
 let { Page, Component } = Provider(store, action)
 
 
@@ -26,10 +28,10 @@ App<IAppOption>({
         characteristicId: undefined,
     },
     onLaunch() {
-        setNumHandleInitValue(999)
-        setTimeout(() => {
-            setNumHandleInitValue(666)
-        }, 2000);
+        // setNumHandleInitValue(999)
+        // setTimeout(() => {
+        //     setNumHandleInitValue(666)
+        // }, 2000);
         // 展示本地存储能力
         // const logs = wx.getStorageSync('logs') || []
         // logs.unshift(Date.now())
@@ -141,14 +143,20 @@ App<IAppOption>({
             })
           }
         listenConnection();
-        wx.onBLECharacteristicValueChange(res => {
-            console.log({
-                res,
-                // value: hexToString(arrayBufferToString(res.value))
-                // value: arrayBufferToString(res.value),
-                value2: ab2hex(res.value),
-                // uint8Array2Str: uint8Array2Str(res.value)
-            }, '收到数据 onBLECharacteristicValueChange -------')
-        })
+        // wx.onBLECharacteristicValueChange(res => {
+        //     const value = ab2hex(res.value)
+        //     console.log({
+        //         res,
+        //         value,
+        //     }, '收到数据 onBLECharacteristicValueChange -------')
+        //     if (value.startsWith('5559011e0000')) {
+        //         const baseInfoResponseData =  analyzeProtocolCodeMessage(value, '011e0000')
+        //         const chargerInfo = parseProtocolCodeToChargerInfo(baseInfoResponseData)
+        //         console.log({
+        //             chargerInfo,
+        //         })
+        //         setChargerInfo(chargerInfo)
+        //     }
+        // })
     },
 })

@@ -5,7 +5,7 @@
         <di class="headerTitle" style="top: {{titlePositionTop + 30}}px;">
             <image slot="icon" src="../../assets/imgs/fan.png" mode="aspectFit" />
             <!-- X3 -->
-            {{protocolInfo.chargerInfo.fanLevel || '--'}}
+            {{chargerInfo.fanLevel || '--'}}
         </di>
         <!-- <circle-progress
 
@@ -17,7 +17,7 @@
             <f2 onRender="{{onRenderChart}}" />
         </view>
     </div>
-    <view>{{numHandle.count}}</view>
+    <!-- <view>{{numHandle.count}}</view> -->
     <!-- <svg width="420px" height="316px" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <defs>
             <linearGradient id="strokeGradient">
@@ -39,7 +39,7 @@
     <div class="infoWrapper">
         <div class="title">
             常规信息
-            <div class="titleRight">固件版本号: {{protocolInfo.chargerInfo.firmwareVersion || '--'}}</div>
+            <div class="titleRight">固件版本号: {{chargerInfo.firmwareVersion || '--'}}</div>
         </div>
         <div class="baseInfoContent">
             <div class="infoItem">
@@ -49,7 +49,7 @@
                 </div>
                 <div class="resultWrapper">
                     <!-- 充电模式 -->
-                    {{protocolInfo.chargerInfo.chargingMode || '--'}}
+                    {{chargerInfo.chargingMode}}
                     <div class="unitWrapper"></div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="resultWrapper">
                     <!-- 360 -->
-                    {{protocolInfo.chargerInfo.chargingTiming || '--'}}
+                    {{chargerInfo.chargingTiming}}
                     <div class="unitWrapper">min</div>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="resultWrapper">
                     <!-- 120 -->
-                    {{protocolInfo.chargerInfo.timingRemaining || '--'}}
+                    {{chargerInfo.timingRemaining}}
                     <div class="unitWrapper">min</div>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                 </div>
                 <div class="resultWrapper">
                     <!-- 520 -->
-                    {{protocolInfo.chargerInfo.chargingCapacity || '--'}}
+                    {{chargerInfo.chargingCapacity}}
                     <div class="unitWrapper">AH</div>
                 </div>
             </div>
@@ -93,7 +93,7 @@
                 </div>
                 <div class="resultWrapper">
                     <!-- 4.8 -->
-                    {{protocolInfo.chargerInfo.batteryVoltage || '--'}}
+                    {{chargerInfo.batteryVoltage || '--'}}
                     <div class="unitWrapper">V</div>
                 </div>
             </div>
@@ -104,7 +104,7 @@
                 </div>
                 <div class="resultWrapper">
                     <!-- 42 -->
-                    {{protocolInfo.chargerInfo.chargerTemperature || '--'}}
+                    {{chargerInfo.chargerTemperature || '--'}}
                     <div class="unitWrapper">°C</div>
                 </div>
             </div>

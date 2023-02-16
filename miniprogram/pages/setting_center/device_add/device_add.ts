@@ -252,14 +252,14 @@ Page({
                             //     serviceId,
                             //     characteristicId,
                             // }, '可写')
-                            setTimeout(() => {
-                                writeAndReadBLECharacteristicValue(
-                                    deviceId,
-                                    serviceId,
-                                    characteristicId,
-                                    '5559011E000071E9'
-                                )
-                            }, 10000);
+                            // setTimeout(() => {
+                            //     writeAndReadBLECharacteristicValue(
+                            //         deviceId,
+                            //         serviceId,
+                            //         characteristicId,
+                            //         '5559011E000071E9'
+                            //     )
+                            // }, 10000);
                         }
                       }
                 }
