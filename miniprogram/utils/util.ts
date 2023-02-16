@@ -1,4 +1,4 @@
-import {REQUEST_URL} from '../common/index'
+import {LOCAL_STORAGE_KEY_HISTORY_DEVICES, REQUEST_URL} from '../common/index'
 
 export const formatTime = (date: Date) => {
   const year = date.getFullYear()
@@ -245,4 +245,33 @@ export const string2Buffer = (str: string) => {
     return str;
   }
   
+
+export const getHistoryDevices: () => Promise<IHistoryDeviceItem[]> = () => {
+    return new Promise((resolve, reject) => {
+        wx.getStorage({
+            key: LOCAL_STORAGE_KEY_HISTORY_DEVICES,
+            success (res) {
+                // console.log({res}, 'getHistoryDevices')
+                resolve(res.data || [])
+            },
+            fail(res) {
+                console.log({res}, 'getHistoryDevices err')
+                resolve([])
+            }
+        })
+    })
+}
+
+export const setHistoryDevices = (deviceList: IHistoryDeviceItem[]) => {
+    return new Promise((resolve, reject) => {
+        wx.setStorage({
+            key: LOCAL_STORAGE_KEY_HISTORY_DEVICES,
+            data: deviceList,
+            success (res) {
+                console.log({res}, 'setHistoryDevices')
+                resolve(res)
+            }
+        })
+    })
+}
 

@@ -62,3 +62,16 @@ interface IParamSettingDefaultValue {
     output_voltage_default: string
     output_voltage_ranage: string
 }
+
+interface IHistoryDeviceItem {
+    name: string
+    deviceId: string
+    notify?: {
+        serviceId: string
+        characteristicId: string
+    }
+    write?: {
+        serviceId: string
+        characteristicId: string
+    }
+}

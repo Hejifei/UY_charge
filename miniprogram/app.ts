@@ -1,7 +1,7 @@
 import store from './store/index'
 import action from './store/actions/index'
 import Provider from './weapp-redux/provider/index'
-import { bluetoothInit } from './utils/bluetooth_util'
+import { bluetoothInit, getBluetoothAdapterState } from './utils/bluetooth_util'
 import { Request } from './utils/request'
 import Toast from '@vant/weapp/toast/toast';
 import { ab2hex, setUserInfo, setUserToken } from './utils/util'
@@ -84,14 +84,19 @@ App<IAppOption>({
             },
         })
         
+        getBluetoothAdapterState().then(res => {
+            console.log('蓝牙可用')
+        }).catch((res) => {
+            console.log('蓝牙不可用')
+        })
 
         bluetoothInit().then(res => {
-            console.log('蓝牙初始化成功!')
+            // console.log('蓝牙初始化成功!')
             // console.log({
             //     success:res
             // })
         }).catch((res) => {
-            console.log(res);
+            console.log({res}, '蓝牙初始化异常!');
         })
 
         const listenConnection = () => {

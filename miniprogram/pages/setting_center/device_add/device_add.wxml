@@ -38,7 +38,6 @@
             wx:for-index="idx"
             wx:for-item="item"
             wx:key="deviceId"
-            data-id="{{item.deviceId}}"
             data-device-id="{{item.deviceId}}"
             data-name="{{item.name || item.localName}}"
             bindtap="createBLEConnection"

@@ -17,14 +17,16 @@ Page({
     userInfo: app.globalData.userInfo,
     isDebugModel: app.globalData.isDebugModel || false,
     nickName: '',
+    connected: '',   //  已连蓝牙的id
   },
   onLoad() {
   },
-  onReady() {
+  onShow() {
     
     this.setData({
         userInfo: app.globalData.userInfo,
         isDebugModel: app.globalData.isDebugModel || false,
+        connected: app.globalData.deviceId || '',
     })
     console.log({
       userInfo: this.data.userInfo,
@@ -43,23 +45,7 @@ Page({
             })
         }
     })
-
-    // bluetoothInit().then(res => {
-    //     Toast.success('蓝牙初始化成功!')
-    //     console.log({
-    //         success:res
-    //     })
-    // }).catch((res) => {
-    //     Toast.fail(res.errMsg);
-    //     console.log({
-    //         fail:res
-    //     })
-    // })
-    getBluetoothAdapterState().then(res => {
-        console.log('蓝牙可用')
-    }).catch((res) => {
-        console.log('蓝牙不可用')
-    })
+    
   },
   handleDebugCodeModalVisible() {
     this.setData({ isDebugModeVisible: true });

@@ -28,8 +28,8 @@
     <van-cell class="cellWrapper" is-link url="/pages/setting_center/device_manage/device_manage">
       <image slot="icon" class="iconImg" src="../../assets/imgs/setting_center/icon_device_manage.png" />
       <view slot="title" class="van-cell-text">设备管理</view>
-      <!-- <div class="connectedText">已连接</div> -->
-      <div>未连接</div>
+      <div wx:if="{{connected}}" class="connectedText">已连接</div>
+      <div wx:else>未连接</div>
     </van-cell>
     <van-cell class="cellWrapper" is-link bindtap="handleDebugCodeModalVisible">
       <image slot="icon" class="iconImg" src="../../assets/imgs/setting_center/icon_debug_mode.png" />

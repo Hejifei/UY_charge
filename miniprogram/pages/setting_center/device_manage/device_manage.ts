@@ -1,11 +1,21 @@
 import { Request } from '../../../utils/request'
-// const app = getApp<IAppOption>()
+import {getHistoryDevices} from '../../../utils/util'
+import {
+    createBLEConnection,
+    getBLEDeviceServices,
+    getBLEDeviceCharacteristics,
+    notifyBLECharacteristicValueChange,
+    writeAndReadBLECharacteristicValue,
+    closeBLEConnection,
+} from '../../../utils/bluetooth_util'
+import Toast from '@vant/weapp/toast/toast';
+const app = getApp<IAppOption>()
 
 Page({
   data: {
     barhHeight: 0,
     titlePositionTop: 0,
-    connected: 1,   //  已连蓝牙的id
+    connected: '',   //  已连蓝牙的id
     historyDeviceList: [
         // {
         //     id: 1,
@@ -31,7 +41,7 @@ Page({
   },
   onLoad() {
   },
-  onReady() {
+  onShow() {
     const that = this
     wx.getSystemInfo({
         success(res) {
@@ -46,6 +56,23 @@ Page({
             })
         }
     })
+    this.setData({
+        connected: app.globalData.deviceId || '',
+    })
+    this.getDeviceList()
+  },
+  async getDeviceList() {
+    try {
+        const data = await getHistoryDevices()
+        console.log({
+            deviceList: data,
+        })
+        this.setData({
+            historyDeviceList: data,
+        })
+    } catch (err) {
+        console.log({err})
+    }
   },
   //  记录设备连接记录
   uploadConnectRecord(title: string) {
@@ -65,20 +92,69 @@ Page({
     if (!this.data.connected) {
         return
     }
-      console.log('断开连接')
-    this.setData({
-        connected: 0,
-    })
+    console.log('断开连接')
+    this.closeBLEConnection()
   },
-  changeBluetoothConnect(event: any) {
-    const {id} = event.target.dataset
+  closeBLEConnection() {
+    const deviceId = this.data.connected
+    getApp().globalData.connected = false 
+    getApp().globalData.deviceName = undefined
+    getApp().globalData.deviceId = undefined
+    getApp().globalData.serviceId = undefined
+    getApp().globalData.characteristicId = undefined
+    this.setData({
+        connected: '',
+    })
+    Toast.success('蓝牙已断开!');
+    closeBLEConnection(deviceId)
+  },
+  async createBLEConnection(e: any) {
+    // console.log('建立蓝牙连接')
+    const ds = e.currentTarget.dataset
+    const deviceId = ds.deviceId
+    const name = ds.name
+    const id = ds.deviceId
+    console.log({
+        e,
+        id,
+        connected: this.data.connected,
+        if: id === this.data.connected,
+        text: id === this.data.connected ? '断开连接' : '建立连接',
+
+    })
     if (id === this.data.connected) {
+        this.closeBLEConnection()
         return
     }
-    this.setData({
-        connected: id,
-    })
-  },
+    const deviceInfo = this.data.historyDeviceList.filter(item => item.deviceId === deviceId)[0] as IHistoryDeviceItem
+    try {
+        await createBLEConnection(deviceId)
+        if (deviceInfo.notify) {
+            await notifyBLECharacteristicValueChange(
+                deviceId,
+                deviceInfo.notify.serviceId,
+                deviceInfo.notify.characteristicId,
+            )
+        }
+        if (deviceInfo.write) {
+            getApp().globalData.connected = true 
+            getApp().globalData.deviceName = name
+            getApp().globalData.deviceId = deviceId
+            getApp().globalData.serviceId = deviceInfo.write.serviceId
+            getApp().globalData.characteristicId = deviceInfo.write.characteristicId
+        }
+        this.setData({
+            connected: deviceId,
+        })
+        this.uploadConnectRecord(deviceId)
+        Toast.success('设备连接成功!');
+    } catch (err) {
+        // console.log({err}, '蓝牙连接失败')
+        Toast.fail(err.errMsg);
+    }
+
+    // stopBluetoothDevicesDiscovery()
+},
   backPageToSettingCenter() {
     wx.redirectTo({
         url: '/pages/setting_center/setting_center'

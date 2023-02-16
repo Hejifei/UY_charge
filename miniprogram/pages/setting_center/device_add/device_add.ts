@@ -1,4 +1,5 @@
-import { inArray,} from '../../../utils/util'
+import { getHistoryDevices, inArray, setHistoryDevices,} from '../../../utils/util'
+import { Request } from '../../../utils/request'
 import {
     bluetoothInit,
     getBluetoothAdapterState,
@@ -45,7 +46,7 @@ Page({
     },
     onReady() {
         this.setData({
-            connected: app.globalData.isDebugModel || false,
+            connected: app.globalData.deviceId || false,
             name: app.globalData.deviceName,
         })
         const that = this
@@ -81,15 +82,6 @@ Page({
         //       // })
         //     }
         //   })
-    },
-    changeBluetoothConnect(event: any) {
-        const { id } = event.target.dataset
-        if (id === this.data.connected) {
-            return
-        }
-        this.setData({
-            connected: id,
-        })
     },
     async openBluetoothAdapter() {
         const that = this
@@ -140,7 +132,7 @@ Page({
             // console.log({res,}, 'getBluetoothDevices')
             res.devices
                 .filter(({name, connectable}) => {
-                    return name.startsWith('UY')
+                    // return name.startsWith('UY')
                     // TODO
                     return name.startsWith('UY') && connectable
                 })
@@ -178,26 +170,34 @@ Page({
         }
     },
     async createBLEConnection(e: any) {
-        console.log('建立蓝牙连接')
+        // console.log('建立蓝牙连接')
         const ds = e.currentTarget.dataset
         const deviceId = ds.deviceId
         const name = ds.name
-        const { id } = e.target.dataset
-        console.log({
-            e,
-            id,
-            connected: this.data.connected,
-        })
+        const id = ds.deviceId
+        // console.log({
+        //     e,
+        //     id,
+        //     connected: this.data.connected,
+        // })
         if (id === this.data.connected) {
-            closeBLEConnection(deviceId)
             getApp().globalData.connected = false 
+            getApp().globalData.deviceName = undefined
             getApp().globalData.deviceId = undefined
             getApp().globalData.serviceId = undefined
             getApp().globalData.characteristicId = undefined
             this.setData({
                 connected: false,
+                name: '',
             })
+            Toast.success('蓝牙已断开!');
+            await closeBLEConnection(deviceId)
+            
             return
+        }
+        const deviceInfo: IHistoryDeviceItem = {
+            name,
+            deviceId,
         }
         try {
             await createBLEConnection(deviceId)
@@ -219,6 +219,10 @@ Page({
                                 serviceId,
                                 characteristicId,
                             )
+                            deviceInfo.notify = {
+                                serviceId,
+                                characteristicId,
+                            }
                             // console.log('启用蓝牙notify功能', {
                             //     deviceId, serviceId, characteristicId
                             // })
@@ -239,6 +243,10 @@ Page({
                             getApp().globalData.deviceId = deviceId
                             getApp().globalData.serviceId = serviceId
                             getApp().globalData.characteristicId = characteristicId
+                            deviceInfo.write = {
+                                serviceId,
+                                characteristicId,
+                            }
                             // console.log({
                             //     deviceId,
                             //     serviceId,
@@ -253,19 +261,24 @@ Page({
                                 )
                             }, 10000);
                         }
-                        
                       }
                 }
               }
             // console.log({
             //     services,
             // })
+            const deviceHistory = await getHistoryDevices()
+            if (!deviceHistory.filter(item => item.deviceId === deviceId).length) {
+                deviceHistory.push(deviceInfo)
+            }
+            setHistoryDevices(deviceHistory)
             this.setData({
                 connected: deviceId,
                 name,
                 deviceId,
             })
             getApp().globalData.deviceName = name
+            this.uploadConnectRecord(deviceId)
             Toast.success('设备连接成功!');
         } catch (err) {
             // console.log({err}, '蓝牙连接失败')
@@ -273,6 +286,20 @@ Page({
         }
 
         // stopBluetoothDevicesDiscovery()
+    },
+    //  记录设备连接记录
+    uploadConnectRecord(title: string) {
+        Request({
+        url: '/api/user/connect',
+        data: {
+            title,
+        },
+        method: 'POST',
+        successCallBack: (res: any) => {
+            console.log({ res }, '/api/user/connect')
+            
+        },
+        })
     },
     closeBluetoothAdapter() {
         // bluetoothClose()

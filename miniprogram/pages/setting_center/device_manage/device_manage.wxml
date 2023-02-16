@@ -31,21 +31,21 @@
     </div>
     <div class="historyListWrapper">
         <div
-            class="historyItem {{item.id === connected ? 'conndecteditem' : ''}}"
+            class="historyItem {{item.deviceId === connected ? 'conndecteditem' : ''}}"
             wx:for="{{historyDeviceList}}"
             wx:for-index="idx"
             wx:for-item="item"
-            wx:key="id"
-            data-id="{{item.id}}"
-            bindtap="changeBluetoothConnect"
+            wx:key="deviceId"
+            data-device-id="{{item.deviceId}}"
+            bindtap="createBLEConnection"
         >
             <div class="nameWrapper">
-                <image src="{{item.id === connected ? '/assets/imgs/device_manage/icon_bluetooth_connected.png' : '/assets/imgs/device_manage/icon_bluetooth_unconnect.png'}}" />
+                <image src="{{item.deviceId === connected ? '/assets/imgs/device_manage/icon_bluetooth_connected.png' : '/assets/imgs/device_manage/icon_bluetooth_unconnect.png'}}" />
                 {{item.name}}
             </div>
             <div
                 class="connectedText"
-                wx:if="{{item.id === connected}}"
+                wx:if="{{item.deviceId === connected}}"
             >已连接</div>
         </div>
         <van-empty

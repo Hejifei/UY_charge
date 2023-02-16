@@ -161,9 +161,11 @@ export const createBLEConnection = (deviceId: string) => {
 //  通过蓝牙设备Id断开与低功耗蓝牙设备的连接
 export const closeBLEConnection = (deviceId: string) => {
     return new Promise((resolve, reject) => {
+        console.log('closeBLEConnection before')
         wx.closeBLEConnection({
             deviceId,
             success(res) {
+                console.log('蓝牙已断开', {res})
                 resolve(res)
             },
             fail(error) {

@@ -50,3 +50,5 @@ export const tabbar_data_list: {
         router: '../setting_center/setting_center',
     },
 ]
+
+export const LOCAL_STORAGE_KEY_HISTORY_DEVICES = 'history_device_list'
