@@ -52,3 +52,11 @@ export const tabbar_data_list: {
 ]
 
 export const LOCAL_STORAGE_KEY_HISTORY_DEVICES = 'history_device_list'
+
+// 服务回传报文
+export const RESPONSE_MAP = {
+    '01': '成功',
+    '02': '失败',
+    '03': '写入地址无效',
+    '04': '写入数据无效',
+}

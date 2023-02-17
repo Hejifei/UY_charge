@@ -8,35 +8,35 @@
                 <div class="infoTitleWrapper">极限电压</div>
                 <image src="../../../assets/imgs/test_data/voltage.png" />
                 <div class="resultWrapper">
-                    {{testData.limitVoltage || '--'}} <div class="unitWrapper">V</div>
+                    {{testData.limitVoltage}} <div class="unitWrapper">V</div>
                 </div>
             </div>
             <div class="infoItem">
                 <div class="infoTitleWrapper">极限电流</div>
                 <image src="../../../assets/imgs/test_data/electric_current.png" />
                 <div class="resultWrapper">
-                    {{testData.limitCurrent || '--'}} <div class="unitWrapper">A</div>
+                    {{testData.limitCurrent}} <div class="unitWrapper">A</div>
                 </div>
             </div>
             <div class="infoItem">
                 <div class="infoTitleWrapper">累计开机</div>
                 <image src="../../../assets/imgs/test_data/start_up.png" />
                 <div class="resultWrapper">
-                    {{testData.countOfStartup || '--'}} <div class="unitWrapper"></div>
+                    {{testData.countOfStartup}} <div class="unitWrapper"></div>
                 </div>
             </div>
             <div class="infoItem">
                 <div class="infoTitleWrapper">累计工作</div>
                 <image src="../../../assets/imgs/test_data/count_of_work.png" />
                 <div class="resultWrapper">
-                    {{testData.countOfWork || '--'}} <div class="unitWrapper">H</div>
+                    {{testData.countOfWork}} <div class="unitWrapper">H</div>
                 </div>
             </div>
             <div class="infoItem">
                 <div class="infoTitleWrapper">故障统计</div>
                 <image src="../../../assets/imgs/test_data/count_of_fault.png" />
                 <div class="resultWrapper">
-                    {{testData.faultCount || '--'}}
+                    {{testData.faultCount}}
                 </div>
             </div>
 
@@ -44,28 +44,28 @@
                 <div class="infoTitleWrapper">累计过热</div>
                 <image src="../../../assets/imgs/test_data/count_of_too_hot.png" />
                 <div class="resultWrapper">
-                    {{testData.overheatingProtection || '--'}}
+                    {{testData.overheatingProtection}}
                 </div>
             </div>
             <div class="infoItem">
                 <div class="infoTitleWrapper">累计过压</div>
                 <image src="../../../assets/imgs/test_data/count_of_overvoltage.png" />
-                <div class="resultWrapper">{{testData.overvoltageProtection || '--'}}</div>
+                <div class="resultWrapper">{{testData.overvoltageProtection}}</div>
             </div>
             <div class="infoItem">
                 <div class="infoTitleWrapper">累计过流</div>
                 <image src="../../../assets/imgs/test_data/count_of_overcurrent.png" />
-                <div class="resultWrapper">{{testData.overcurrentProtection || '--'}}</div>
+                <div class="resultWrapper">{{testData.overcurrentProtection}}</div>
             </div>
             <div class="infoItem">
                 <div class="infoTitleWrapper">累计短路</div>
                 <image src="../../../assets/imgs/test_data/count_of_short_circuit.png" />
-                <div class="resultWrapper">{{testData.shortCircuitProtection || '--'}}</div>
+                <div class="resultWrapper">{{testData.shortCircuitProtection}}</div>
             </div>
             <div class="infoItem">
                 <div class="infoTitleWrapper">累计反馈</div>
                 <image src="../../../assets/imgs/test_data/count_of_back.png" />
-                <div class="resultWrapper">{{testData.reversePolarityProtection || '--'}}</div>
+                <div class="resultWrapper">{{testData.reversePolarityProtection}}</div>
             </div>
         </div>
     </div>

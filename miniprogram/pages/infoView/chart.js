@@ -73,10 +73,10 @@ const Gauge = withGauge(props => {
   }), jsx('text', {
     attrs: {
       x: 187.5,
-      y: 185,
+      y: 187,
       text: `${voltage}V/${current}A`,
       textAlign: 'center',
-      fontSize: 12,
+      fontSize: 10,
       fill: '#fff'
     }
   }), jsx('text', {

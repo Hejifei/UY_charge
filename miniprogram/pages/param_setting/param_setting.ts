@@ -4,14 +4,17 @@ import {
     parse10To16,
     analyzeProtocolCodeMessage,
     parseProtocolCodeToChargerInfo,
+    ab2hex,
 } from '../../utils/protocol_util'
 import { Request } from '../../utils/request'
-import {writeBLECharacteristicValue,} from '../../utils/bluetooth_util'
+import {writeAndReadBLECharacteristicValue, writeBLECharacteristicValue,} from '../../utils/bluetooth_util'
 import '../../utils/lodash_fix'
 import {
     isUndefined,
     isNull,
+    get,
 } from 'lodash'
+import { RESPONSE_MAP } from '../../common/index';
 
 const app = getApp<IAppOption>()
 
@@ -48,17 +51,86 @@ Page({
             })
         }
     })
-    //  读取充电器信息
-    const baseInfoResponseData =  analyzeProtocolCodeMessage('5559011E00000B5401000B7C0BB80B2E0BB3033700F005007000121609130100007800667FA5', '011E0000')
-    const info = parseProtocolCodeToChargerInfo(baseInfoResponseData)
-    //  @ts-ignore
-    this.setData({
-        voltage_max: info.maximumVoltage,
-        electric_current_max: info.maximumCurrent,
-        charge_time: info.chargingTiming,
-        chargeSwitch: info.chargeSwitchValue === 1,
+    wx.onBLECharacteristicValueChange(res => {
+        const value = ab2hex(res.value)
+        console.log({
+            res,
+            value,
+        }, '收到数据 onBLECharacteristicValueChange -------')
+        if (value.startsWith('5559011e0000')) {
+            //  读取充电器信息
+            const baseInfoResponseData =  analyzeProtocolCodeMessage(value, '011e0000')
+            const info = parseProtocolCodeToChargerInfo(baseInfoResponseData)
+            console.log({
+                info,
+            })
+            //  @ts-ignore
+            this.setData({
+                voltage_max: info.maximumVoltage,
+                electric_current_max: info.maximumCurrent,
+                charge_time: info.chargingTiming,
+                chargeSwitch: info.chargeSwitchValue === 1,
+            })
+        } else if (value.startsWith('55590301')) {
+            const resultCode = analyzeProtocolCodeMessage(value, '0301')
+            const tilte = '擦除' + get(RESPONSE_MAP, [resultCode])
+            wx.showToast({
+                title: tilte,
+                icon: "none",
+                duration: 3000
+            });
+        } else if (value.startsWith('55590201015b00')) {
+            wx.showToast({
+                title: '数据写入成功',
+                icon: "none",
+                duration: 3000
+            });
+            this.getBaseInfo()
+        } else if (value.startsWith('55590301010ac0')) {
+            wx.showToast({
+                title: '数据擦除成功',
+                icon: "none",
+                duration: 3000
+            });
+        } else if (value.startsWith('55590501')) {
+            const resultCode = analyzeProtocolCodeMessage(value, '0501')
+            const tilte = '曲线写入' + get(RESPONSE_MAP, [resultCode])
+            wx.showToast({
+                title: tilte,
+                icon: "none",
+                duration: 3000
+            });
+        }
     })
+    
+    this.getBaseInfo()
   },
+  async getBaseInfo() {
+    const {
+        deviceId,
+        serviceId,
+        characteristicId,
+    } = app.globalData
+    if (!deviceId || !serviceId || !characteristicId) {
+        return
+    }
+    const buffer = parseProtocolCodeMessage(
+        '01',
+        '1e',
+        '0000',
+        ''
+      )
+    try {
+        writeAndReadBLECharacteristicValue(
+            deviceId,
+            serviceId,
+            characteristicId,
+            buffer,
+        )
+    } catch (err) {
+        console.log('getBaseInfo error: ', {err})
+    }
+    },
   getConfigDefaultValue() {
     wx.showLoading({
         title: ""
@@ -93,6 +165,14 @@ Page({
     this.setData({chargeSwitch: detail});
   },
   clearElectricCurrentValue() {
+    const {
+        deviceId,
+        serviceId,
+        characteristicId,
+    } = app.globalData
+    if (!deviceId || !serviceId || !characteristicId) {
+        return
+    }
     // 擦除充电器最大电压、最大电流
     // 55 59 03 04 00 04 50 55
     const buffer = parseProtocolCodeMessage(
@@ -102,12 +182,12 @@ Page({
         ''
     )
     try {
-    // writeBLECharacteristicValue(
-    //   'deviceId': string,
-    //   serviceId: string,
-    //   characteristicId: string,
-    //   buffer: ArrayBuffer,
-    // )
+        writeAndReadBLECharacteristicValue(
+            deviceId,
+            serviceId,
+            characteristicId,
+            buffer,
+        )
     } catch (err) {
         console.log({err}, 'getBaseInfoData')
     }
@@ -115,16 +195,24 @@ Page({
   resetElectricCurrent() {
     this.clearElectricCurrentValue()
     this.setData({
-        electric_current_max: null,
+        electric_current_max: this.data.configDefault.output_current_default,
     })
   },
   resetVoltage() {
     this.clearElectricCurrentValue()
     this.setData({
-        voltage_max: null,
+        voltage_max: this.data.configDefault.output_voltage_default,
     })
   },
   clearChargeTime() {
+    const {
+        deviceId,
+        serviceId,
+        characteristicId,
+    } = app.globalData
+    if (!deviceId || !serviceId || !characteristicId) {
+        return
+    }
     // 擦除充电器定时时间
     // 55 59 03 02 00 1A 30 5C
     const buffer = parseProtocolCodeMessage(
@@ -134,12 +222,12 @@ Page({
         ''
     )
     try {
-    // writeBLECharacteristicValue(
-    //   'deviceId': string,
-    //   serviceId: string,
-    //   characteristicId: string,
-    //   buffer: ArrayBuffer,
-    // )
+        writeAndReadBLECharacteristicValue(
+            deviceId,
+            serviceId,
+            characteristicId,
+            buffer,
+        )
     } catch (err) {
         console.log({err}, 'getBaseInfoData')
     }
@@ -147,13 +235,86 @@ Page({
   resetChargeTime() {
     this.clearChargeTime()
     this.setData({
-        charge_time: null,
+        charge_time: this.data.configDefault.charging_timing_default,
     })
   },
   //    设置充电器输出电流、电压
   setChargerVoltageAndCurrent() {
     const electric_current_max = this.data.electric_current_max
     const voltage_max = this.data.voltage_max
+    const chargeSwitch = this.data.chargeSwitch
+    const {
+        deviceId,
+        serviceId,
+        characteristicId,
+    } = app.globalData
+    if (!deviceId || !serviceId || !characteristicId) {
+        return
+    }
+    const buffer = parseProtocolCodeMessage(
+        '02',
+        '06',
+        '0002',
+        parse10To16(chargeSwitch ? 1 : 2, 1) +
+        '00' +
+        parse10To16(parseVoltageOrCurrentVTo10mV(parseFloat(voltage_max)), 2) + 
+        parse10To16(parseVoltageOrCurrentVTo10mV(parseFloat(electric_current_max)), 2)
+    )
+    console.log({
+        buffer,
+    }, '保存最大输出电流、电压')
+    try {
+        writeAndReadBLECharacteristicValue(
+            deviceId,
+            serviceId,
+            characteristicId,
+            buffer,
+        )
+    } catch (err) {
+        console.log({err}, 'getBaseInfoData')
+    }
+
+    //  充电器电流、电压 写入成功
+    // '55590201015B00'
+  },
+  //    充电定时保存
+  setChargerSetTime() {
+    const charge_time = +this.data.charge_time
+    const {
+        deviceId,
+        serviceId,
+        characteristicId,
+    } = app.globalData
+    if (!deviceId || !serviceId || !characteristicId) {
+        return
+    }
+    const buffer = parseProtocolCodeMessage(
+        '02',
+        '02',
+        '001A',
+        parse10To16(charge_time, 2)
+    )
+    console.log(
+        buffer,
+        '充电定时保存'
+    )
+    try {
+        writeAndReadBLECharacteristicValue(
+            deviceId,
+            serviceId,
+            characteristicId,
+            buffer,
+        )
+    } catch (err) {
+        console.log({err}, 'getBaseInfoData')
+    }
+
+    //  充电器电流、电压 写入成功
+    // '55590201015B00'
+  },
+  handleParamSettingSave() {
+    const electric_current_max = +this.data.electric_current_max
+    const voltage_max = +this.data.voltage_max
     const chargeSwitch = this.data.chargeSwitch
     const configDefault = this.data.configDefault
     const {
@@ -168,6 +329,7 @@ Page({
         })
         return
     }
+    
     const [output_voltage_min, output_voltage_max] = output_current_ranage.split('-')
     const [output_current_min, output_current_max] = output_current_ranage.split('-')
     if (isUndefined(electric_current_max) || isNull(electric_current_max)) {
@@ -202,41 +364,7 @@ Page({
         })
         return
     }
-    const buffer = parseProtocolCodeMessage(
-        '02',
-        '06',
-        '0002',
-        parse10To16(chargeSwitch ? 1 : 2, 1) +
-        '00' +
-        parse10To16(parseVoltageOrCurrentVTo10mV(parseFloat(voltage_max)), 2) + 
-        parse10To16(parseVoltageOrCurrentVTo10mV(parseFloat(electric_current_max)), 2)
-    )
-    console.log({
-        buffer,
-      })
-    try {
-    // writeBLECharacteristicValue(
-    //   'deviceId': string,
-    //   serviceId: string,
-    //   characteristicId: string,
-    //   buffer: ArrayBuffer,
-    // )
-    } catch (err) {
-        console.log({err}, 'getBaseInfoData')
-    }
-    console.log({
-        data: this.data,
-        voltage_max,
-        electric_current_max,
-        buffer,
-    })
-
-    //  充电器电流、电压 写入成功
-    // '55590201015B00'
-  },
-  //    设置充电器输出电流、电压
-  setChargerSetTime() {
-    const charge_time = this.data.charge_time
+    const charge_time = +this.data.charge_time
     if (isUndefined(charge_time) || isNull(charge_time)) {
         wx.showToast({
             title: '请输入充电定时',
@@ -245,33 +373,6 @@ Page({
         })
         return
     }
-    
-    const buffer = parseProtocolCodeMessage(
-        '02',
-        '02',
-        '001A',
-        parse10To16(charge_time, 2)
-    )
-    try {
-    // writeBLECharacteristicValue(
-    //   'deviceId': string,
-    //   serviceId: string,
-    //   characteristicId: string,
-    //   buffer: ArrayBuffer,
-    // )
-    } catch (err) {
-        console.log({err}, 'getBaseInfoData')
-    }
-    console.log({
-        data: this.data,
-        charge_time,
-        buffer,
-    })
-
-    //  充电器电流、电压 写入成功
-    // '55590201015B00'
-  },
-  handleParamSettingSave() {
     this.setChargerVoltageAndCurrent()
     this.setChargerSetTime()
   }

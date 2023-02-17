@@ -20,7 +20,8 @@ let { Page, Component } = Provider(store, action)
 App<IAppOption>({
     globalData: {
         userInfo: undefined,
-        isDebugModel: false,
+        // isDebugModel: false,
+        isDebugModel: true,
         connected: false,
         deviceName: undefined,
         deviceId: undefined,

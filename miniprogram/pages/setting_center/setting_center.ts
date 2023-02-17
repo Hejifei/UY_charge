@@ -54,6 +54,7 @@ Page({
     this.setData({ isDebugModeVisible: false });
   },
   handleDebugCodeSave() {
+      const that = this;
       const code = this.data.debugCode
       console.log({
         debugCode: this.data.debugCode,
@@ -66,15 +67,25 @@ Page({
         },
         method: 'POST',
         successCallBack: (res: any) => {
-            console.log({ res }, '/api/user/activeCode')
-            // TODO
-            // if (true) {
-            //   getApp().globalData.isDebugModel = true
-            //   this.setData({
-            //       isDebugModel: app.globalData.isDebugModel,
-            //   })
-            // }
+            // console.log({ res }, '/api/user/activeCode')
+            getApp().globalData.isDebugModel = true
+            that.setData({
+                debugCode: '',
+                isDebugModel: app.globalData.isDebugModel,
+            })
         },
+        failCallBack: () => {
+            getApp().globalData.isDebugModel = false
+            that.setData({
+                debugCode: '',
+                isDebugModel: app.globalData.isDebugModel,
+            })
+            console.log({
+                code,
+                debugCode: this.data.debugCode,
+                data: this.data,
+            })
+        }
       })
       
   },

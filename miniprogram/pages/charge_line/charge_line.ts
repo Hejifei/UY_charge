@@ -1,10 +1,12 @@
 import {ModBusCRC16} from '../../utils/crc'
-import {writeBLECharacteristicValue,} from '../../utils/bluetooth_util'
+import {writeAndReadBLECharacteristicValue, writeBLECharacteristicValue,} from '../../utils/bluetooth_util'
 import {
   parseProtocolCodeMessage,
   analyzeProtocolCodeMessage,
   parseProtocolCodeToChargeCountData,
+  ab2hex,
 } from '../../utils/protocol_util'
+const app = getApp<IAppOption>()
 
 Page({
   data: {
@@ -130,10 +132,41 @@ Page({
   },
   onShow() {
     this.readData()
+    wx.onBLECharacteristicValueChange(res => {
+        const value = ab2hex(res.value)
+        console.log({
+            res,
+            value,
+        }, '收到数据 onBLECharacteristicValueChange -------')
+        if (value.startsWith('55590a293000')) {
+            //  读取充电器信息
+            // const baseInfoResponseData =  analyzeProtocolCodeMessage(value, '011e0000')
+            // this.renderChart(value)
+            // const info = parseProtocolCodeToChargerInfo(baseInfoResponseData)
+            // console.log({
+            //     info,
+            // })
+            // //  @ts-ignore
+            // this.setData({
+            //     voltage_max: info.maximumVoltage,
+            //     electric_current_max: info.maximumCurrent,
+            //     charge_time: info.chargingTiming,
+            //     chargeSwitch: info.chargeSwitchValue === 1,
+            // })
+        }
+    })
 
-    this.renderChart()
+    this.renderChart('1')
   },
   readData() {
+    const {
+        deviceId,
+        serviceId,
+        characteristicId,
+    } = app.globalData
+    if (!deviceId || !serviceId || !characteristicId) {
+        return
+    }
     //  读取充电统计数据
     const buffer = parseProtocolCodeMessage(
       '0A',
@@ -145,18 +178,19 @@ Page({
       buffer,
     })
     try {
-      // writeBLECharacteristicValue(
-      //   'deviceId': string,
-      //   serviceId: string,
-      //   characteristicId: string,
-      //   buffer: ArrayBuffer,
-      // )
+        writeAndReadBLECharacteristicValue(
+            deviceId,
+            serviceId,
+            characteristicId,
+            buffer,
+        )
     } catch (err) {
       console.log({err}, 'getBaseInfoData')
     }
   },
-  renderChart() {
-    const chargeCountData =  analyzeProtocolCodeMessage('55590A2930000A07D00836089C0901096109CE0A2F0A8C0AEF00000BB80BB30BB10BB50BBD0BB90BAE0BA40BA10000A399', '0A293000')
+  renderChart(value: string) {
+    const chargeCountData =  analyzeProtocolCodeMessage('0a00160018001a001c001e00200022002400260028000b000c000d000e000f00100011001200130014', '0A293000')
+    // const chargeCountData =  analyzeProtocolCodeMessage(value, '0A293000')
     const data = parseProtocolCodeToChargeCountData(chargeCountData)
     console.log({
       chargeCountData,

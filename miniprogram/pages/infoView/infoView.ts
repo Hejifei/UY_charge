@@ -1,25 +1,25 @@
 import { ab2hex, getIsDebugModel } from '../../utils/util'
-import {isNull, isUndefined} from 'lodash'
+import {isNull, isUndefined, get} from 'lodash'
 import {writeAndReadBLECharacteristicValue, writeBLECharacteristicValue,} from '../../utils/bluetooth_util'
 import Chart from './chart';
 import { createElement } from '@antv/f2';
-
-const app = getApp<IAppOption>()
-
 import {
     parseProtocolCodeMessage,
     analyzeProtocolCodeMessage,
     parseProtocolCodeToChargerInfo,
+    parseProtocolCodeToTestData,
 } from '../../utils/protocol_util'
-// const app = getApp<IAppOption>()
+import { RESPONSE_MAP } from '../../common/index';
 
-const data = {
-    voltage: 5.8,
-    current: 6,
-    chargeTime: 240,
-    percent: 0.2,
-    status: '充电中', 
-};
+const app = getApp<IAppOption>()
+
+// const data = {
+//     voltage: 5.8,
+//     current: 6,
+//     chargeTime: 240,
+//     percent: 0.2,
+//     status: '充电中', 
+// };
 
 Page({
     storeTypes: ['numHandle', 'protocolInfo'],
@@ -42,6 +42,18 @@ Page({
             batteryVoltage: '--',
             chargerTemperature: '--',
         }, 
+        testData: {
+            limitVoltage: '--',
+            limitCurrent: '--',
+            countOfStartup: '--',
+            countOfWork: '--',
+            faultCount: '--',
+            overheatingProtection: '--',
+            overvoltageProtection: '--',
+            overcurrentProtection: '--',
+            shortCircuitProtection: '--',
+            reversePolarityProtection: '--',
+        },
         onRenderChart: () => {}, 
     },
     onShow() {
@@ -62,7 +74,6 @@ Page({
                 })
             }
         })
-        this.getBaseInfoData()
 
         wx.onBLECharacteristicValueChange(res => {
             const value = ab2hex(res.value)
@@ -73,9 +84,9 @@ Page({
             if (value.startsWith('5559011e0000')) {
                 const baseInfoResponseData =  analyzeProtocolCodeMessage(value, '011e0000')
                 const chargerInfo = parseProtocolCodeToChargerInfo(baseInfoResponseData)
-                console.log({
-                    chargerInfo,
-                })
+                // console.log({
+                //     chargerInfo,
+                // })
                 // setChargerInfo(chargerInfo)
                 const {
                     chargingTime,
@@ -106,12 +117,27 @@ Page({
                         })
                     },
                 })
+            } else if (value.startsWith('555907122000')) {
+                const chargeCountData = analyzeProtocolCodeMessage(value, '07122000')
+                const data = parseProtocolCodeToTestData(chargeCountData)
+                const testData = {}
+                Object.keys(data).forEach(key => {
+                    testData[key] = this.parseValueTextShow(data[key])
+                })
+                this.setData({
+                  testData: testData,
+                })
+            } else if (value.startsWith('55590901')) {
+                const resultCode = analyzeProtocolCodeMessage(value, '0901')
+                const tilte = '清除' + get(RESPONSE_MAP, [resultCode])
+                wx.showToast({
+                    title: tilte,
+                    icon: "none",
+                    duration: 3000
+                });
             }
         })
 
-        // const baseInfoResponseData =  analyzeProtocolCodeMessage('5559011E00000B5401000B7C0BB80B2E0BB3033700F005007000121609130100007800667FA5', '011E0000')
-        // const baseInfoResponseData =  analyzeProtocolCodeMessage('5559011e00000a8901000b4003e80a890003050a01f400000000001702090000000000003c10', '011E0000')
-        // const data = parseProtocolCodeToChargerInfo(baseInfoResponseData)
         this.setData({
             isDebugModel: app.globalData.isDebugModel || false,
             chargingTime: undefined,
@@ -126,13 +152,9 @@ Page({
                 })
             },
         })
-        // console.log({
-        //     baseInfoResponseData,
-        // })
         this.getBaseInfo()
     },
     parseValueTextShow(value: any) {
-        console.log({value,})
         if (isUndefined(value) || isNull(value)) {
             return '--'
         }
@@ -147,12 +169,18 @@ Page({
         if (!deviceId || !serviceId || !characteristicId) {
             return
         }
+        const buffer = parseProtocolCodeMessage(
+            '01',
+            '1e',
+            '0000',
+            ''
+        )
         try {
             writeAndReadBLECharacteristicValue(
                 deviceId,
                 serviceId,
                 characteristicId,
-                '5559011E000071E9'
+                buffer,
             )
         } catch (err) {
             console.log('getBaseInfo error: ', {err})
@@ -163,83 +191,4 @@ Page({
             data: chartData,
           });
     },
-    async getBaseInfoData() {
-      const buffer = parseProtocolCodeMessage(
-        '01',
-        '1e',
-        '0000',
-        ''
-      )
-      console.log({
-        buffer,
-      })
-      try {
-        // writeBLECharacteristicValue(
-        //   'deviceId': string,
-        //   serviceId: string,
-        //   characteristicId: string,
-        //   buffer: ArrayBuffer,
-        // )
-      } catch (err) {
-        console.log({err}, 'getBaseInfoData')
-      }
-
-
-    }
-    // calculateXy(Q: number, r: number) {
-    //     if (Q === 0) {
-    //         return { x: r, y: 0 }
-    //     }
-    //     if (Q === 180) {
-    //         return { x: -r, y: 0 }
-    //     }
-    //     const tanQ = Math.tan((2 * Math.PI * Q) / 360) // 倾斜角度的正切值
-    //     const y = Math.abs(Math.sqrt(1 / (tanQ * tanQ + 1)) * r * tanQ) // y始终大于0，所以取绝对值。
-    //     const x = y / tanQ
-    //     return {
-    //         x,
-    //         y,
-    //     }
-    // },
-    // deawCircleProcess() {
-    //     const max = 100 // 总分
-    //     const r = 124 // 半径
-    //     const angle = 180 - (this.data.m * 180) / max // 角度
-    //     let Q = 180 // 初始角度
-        
-    //     // 添加动效
-    //     this.setData({
-    //         timer: setInterval(() => {
-    //             if (Q < angle) {
-    //                 clearInterval(this.data.timer)
-    //             }
-    //             Q -= 1
-    //             const {
-    //                 x,
-    //                 y,
-    //             } = this.calculateXy(Q, r)
-    //             this.setData({
-    //                 x,
-    //                 y,
-    //             })
-    //         }, 10)
-    //     })
-
-    //     let newPath = ""
-    //     for (let i = 0; i < 25; i++) {
-    //         const deg = i * (180 / 24)
-    //         // 刻度线外端：弧形半径为100
-    //         const x1 = this.calculateXy(deg, 100).x
-    //         const y1 = this.calculateXy(deg, 100).y
-    //         // 刻度线内端：长线弧形半径为88，长线弧形半径为80
-    //         // const calculateR = i % 4 === 0 ? 80 : 88
-    //         const calculateR = i % 4 === 0 ? 1 : 1
-    //         const x2 = this.calculateXy(deg, calculateR).x
-    //         const y2 = this.calculateXy(deg, calculateR).y
-    //         newPath += `M${x1} ${-y1} L${x2} ${-y2} `
-    //     }
-    //     this.setData({
-    //         path: newPath
-    //     })
-    // }
 })

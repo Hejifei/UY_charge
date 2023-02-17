@@ -41,6 +41,7 @@
     </van-cell>
   </van-cell-group>
 
+{{debugCode}}
   <blank height="10" />
 
   <van-dialog use-slot title="调试码" show="{{isDebugModeVisible}}" bind:close="closeDebugCodeModal" showConfirmButton="{{false}}" customStyle="border-radius: 2px;">

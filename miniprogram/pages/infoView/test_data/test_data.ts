@@ -1,68 +1,83 @@
 import {ModBusCRC16} from '../../../utils/crc'
-import {writeBLECharacteristicValue,} from '../../../utils/bluetooth_util'
+import {writeAndReadBLECharacteristicValue, writeBLECharacteristicValue,} from '../../../utils/bluetooth_util'
 import {
   parseProtocolCodeMessage,
   analyzeProtocolCodeMessage,
   parseProtocolCodeToTestData,
 } from '../../../utils/protocol_util'
+const app = getApp<IAppOption>()
+
 Component({
     properties: {
+        testData: {
+            type: Object,
+            value: undefined,
+        },
     },
     data: {
-      testData: {}
+    //   testData: {}
     },
     ready() {
-        const chargeCountData =  analyzeProtocolCodeMessage('5559071220000BB80C2401F40195000900010002000300047535', '07122000')
-        const data = parseProtocolCodeToTestData(chargeCountData)
-        this.setData({
-          testData: data,
-        })
+        // const chargeCountData =  analyzeProtocolCodeMessage('5559071220000BB80C2401F40195000900010002000300047535', '07122000')
+        // const data = parseProtocolCodeToTestData(chargeCountData)
+        // this.setData({
+        //   testData: data,
+        // })
+        this.readData()
     },
     methods: {
         readData() {
-            // '555907122000A8A2'
-            //  读取充电统计数据
+            const {
+                deviceId,
+                serviceId,
+                characteristicId,
+            } = app.globalData
+            if (!deviceId || !serviceId || !characteristicId) {
+                return
+            }
             const buffer = parseProtocolCodeMessage(
-              '07',
-              '12',
-              '2000',
-              ''
+                '07',
+                '12',
+                '2000',
+                ''
             )
-            console.log({
-              buffer,
-            })
+            //  读取充电统计数据
             try {
-              // writeBLECharacteristicValue(
-              //   'deviceId': string,
-              //   serviceId: string,
-              //   characteristicId: string,
-              //   buffer: ArrayBuffer,
-              // )
+                writeAndReadBLECharacteristicValue(
+                    deviceId,
+                    serviceId,
+                    characteristicId,
+                    buffer
+                )
             } catch (err) {
-              console.log({err}, 'getBaseInfoData')
+                console.log('getBaseInfo error: ', {err})
             }
         },
         clearData() {
-            // '5559090E20046A4F'
-            //  读取充电统计数据
+            const {
+                deviceId,
+                serviceId,
+                characteristicId,
+            } = app.globalData
+            if (!deviceId || !serviceId || !characteristicId) {
+                return
+            }
             const buffer = parseProtocolCodeMessage(
-              '09',
-              '0E',
-              '2004',
-              ''
-            )
-            console.log({
-              buffer,
-            })
+                '09',
+                '0E',
+                '2004',
+                ''
+              )
+            //  读取充电统计数据
             try {
-              // writeBLECharacteristicValue(
-              //   'deviceId': string,
-              //   serviceId: string,
-              //   characteristicId: string,
-              //   buffer: ArrayBuffer,
-              // )
+                writeAndReadBLECharacteristicValue(
+                    deviceId,
+                    serviceId,
+                    characteristicId,
+                    buffer
+                )
             } catch (err) {
-              console.log({err}, 'getBaseInfoData')
+                console.log('getBaseInfo error: ', {err})
             }
         },
     },
