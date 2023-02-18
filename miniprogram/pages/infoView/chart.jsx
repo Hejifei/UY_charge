@@ -62,7 +62,7 @@ const Gauge = withGauge((props) => {
 	    });
 	  }), jsx('text', {
         attrs: {
-            x: 187.5,
+            x: 100,
             y: 187,
             text: `${voltage}V/${current}A`,
             textAlign: 'center',
@@ -71,7 +71,7 @@ const Gauge = withGauge((props) => {
           }
       }), jsx('text', {
         attrs: {
-            x: 187.5,
+            x: 100,
             y: 110,
             // text: `${chargeTime}min`,
             text: '',
@@ -81,7 +81,7 @@ const Gauge = withGauge((props) => {
           }
       }), jsx('text', {
         attrs: {
-            x: 187.5,
+            x: 100,
             y: 130,
             text: status,
             textAlign: 'center',
@@ -95,7 +95,7 @@ export default (props) => {
   const { data } = props;
   return (
     <Gauge
-      center={{ x: 187.5, y: 120 }}
+      center={{ x: 100, y: 120 }}
       startAngle={Math.PI * 2/3}
       endAngle={Math.PI * 7/3}
       percent={data.percent}

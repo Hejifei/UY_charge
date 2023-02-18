@@ -13,9 +13,12 @@
         <view class="chargeTimeText">
             {{chargingTime}}<span>min</span>
         </view>
-        <view class="searchContainer">
-            <f2 onRender="{{onRenderChart}}" />
-        </view>
+        <div class="f2Rwapper">
+            <view class="searchContainer">
+                <f2 onRender="{{onRenderChart}}" />
+            </view>
+        </div>
+        
     </div>
     <!-- <view>{{numHandle.count}}</view> -->
     <!-- <svg width="420px" height="316px" version="1.1" xmlns="http://www.w3.org/2000/svg">

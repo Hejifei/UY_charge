@@ -145,7 +145,9 @@ Page({
                     percent: (chargingTiming - timingRemaining) / chargingTiming,
                     percentOld: chargingTime / chargingTiming,
                 })
-                setTimeout(() => {
+                that.setData({
+                    onRenderChart: () => {}
+                }, () => {
                     that.setData({
                         chargingTime: chargingTiming - timingRemaining,
                         chargerInfo: {
@@ -169,7 +171,10 @@ Page({
                             })
                         },
                     })
-                }, 1000);
+                })
+                // setTimeout(() => {
+                    
+                // }, 1000);
                 
             } else if (value.startsWith('555907122000')) {
                 const chargeCountData = analyzeProtocolCodeMessage(value, '07122000')
