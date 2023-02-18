@@ -2,10 +2,16 @@
     class="chargeLineWrapper"
     style="padding-bottom: {{barhHeight}}px;"
 >
+    
     <!-- <blank height="10" /> -->
     <div class="chartWrapper">
-        <view class="chartContainer">
+        <!-- <view class="chartContainer">
             <f2 class="f2-chart" onInit="{{onInitChart}}" />
+        </view> -->
+        <view class="chartContainer">
+            <f2
+                class="f2-chart" 
+                onRender="{{onRenderChart}}" />
         </view>
 
         <div class="actionWrapper">
@@ -16,7 +22,5 @@
             >读取数据</van-button>
         </div>
     </div>
-    <view class="f2Container">
-        <f2 onRender="{{onRenderChart}}" />
-    </view>
+    
 </view>

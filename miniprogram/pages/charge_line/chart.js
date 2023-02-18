@@ -1,49 +1,53 @@
 /** @jsx jsx */
-import { jsx, Canvas, Chart, Line, Axis, Tooltip } from '@antv/f2';
+import { jsx, Legend, Chart, Line, Axis, Tooltip, Point } from '@antv/f2';
 const scale = {
   time: {
-    type: 'timeCat',
-    mask: 'MM/DD',
-    tickCount: 3,
-    range: [0, 1]
+    // type: 'timeCat',
+    // mask: 'hh:mm',
+    // tickCount: 3,
+    // range: [0, 1],
   },
-  tem: {
-    tickCount: 5,
-    min: 0,
-    alias: '日均温度'
+  value: {
+    nice: true
+    // tickCount: 5,
+    // min: 0,
+    // alias: '日均温度',
+    // range: [0, 1],
   }
 };
+
 export default (props => {
   const {
     data
   } = props;
   return jsx(Chart, {
     data: data,
-    scale: scale,
-    time: {
-      type: 'timeCat',
-      mask: 'hh:mm'
-      // range: [0, 1],
-      // tickCount: 3,
-    },
-
-    value: {
-      max: 10,
-      min: 0
-      // tickCount: 8
-    }
+    scale: scale
   }, jsx(Axis, {
     field: "time",
     style: {
       label: {
-        align: 'between'
+        rotate: -Math.PI / 4,
+        textAlign: 'start',
+        textBaseline: 'top'
+      },
+      grid: {
+        lineWidth: 0
       }
-    }
+    },
+    grid: "line"
   }), jsx(Axis, {
-    field: "value"
+    field: "value",
+    style: {
+      grid: {
+        lineWidth: 0
+      }
+    },
+    nice: true
+    // tickCount='2'
   }), jsx(Line, {
     x: "time",
-    y: "tem",
+    y: "value",
     shape: "smooth",
     color: {
       field: 'name',
@@ -54,5 +58,34 @@ export default (props => {
         return '#ECC057';
       }
     }
-  }), jsx(Tooltip, null));
+  }), jsx(Point, {
+    x: "time",
+    y: "value",
+    color: {
+      field: 'name',
+      callback: value => {
+        if (value === "电压") {
+          return '#3AAB47';
+        }
+        return '#ECC057';
+      }
+    },
+    style: {
+      fill: '#fff',
+      lineWidth: 2,
+      stroke: ({
+        name
+      }) => {
+        if (name === "电压") {
+          return '#3AAB47';
+        }
+        return '#ECC057';
+      }
+    }
+  }), jsx(Legend, {
+    position: "top",
+    style: {
+      justifyContent: 'center'
+    }
+  }));
 });

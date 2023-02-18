@@ -10,7 +10,6 @@
   "dependencies": {
     "@antv/f2": "^4.0.41",
     "@antv/f2-wx": "^4.0.41",
-    "@antv/wx-f2": "^2.1.1",
     "@vant/weapp": "^1.10.11",
     "moment": "^2.29.4"
   },
