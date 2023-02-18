@@ -10,9 +10,6 @@
             </div>
             
         </div>
-        <!-- <circle-progress
-
-    /> -->
         <view class="chargeTimeText">
             {{chargingTime}}<span>min</span>
         </view>
