@@ -16,5 +16,7 @@
             >读取数据</van-button>
         </div>
     </div>
-    
+    <view class="f2Container">
+        <f2 onRender="{{onRenderChart}}" />
+    </view>
 </view>

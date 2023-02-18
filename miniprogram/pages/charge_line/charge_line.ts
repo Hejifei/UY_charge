@@ -5,7 +5,39 @@ import {
   parseProtocolCodeToChargeCountData,
   ab2hex,
 } from '../../utils/protocol_util'
+import Chart from './chart';
+import { createElement } from '@antv/f2';
+
 const app = getApp<IAppOption>()
+
+const data = [
+    { value: 4, name: '电压', time: '2023-01-12 11:00:00' },
+    { value: 3, name: '电压', time: '2023-01-12 11:10:00' },
+    { value: 6, name: '电压', time: '2023-01-12 11:20:00' },
+    { value: 7, name: '电压', time: '2023-01-12 11:30:00' },
+    { value: 2.3, name: '电压', time: '2023-01-12 11:40:00' },
+    { value: 6.8, name: '电压', time: '2023-01-12 11:50:00' },
+    { value: 3.5, name: '电压', time: '2023-01-12 12:00:00' },
+    { value: 3, name: '电压', time: '2023-01-12 12:10:00' },
+    { value: 6.2, name: '电压', time: '2023-01-12 12:20:00' },
+    { value: 5.3, name: '电压', time: '2023-01-12 12:30:00' },
+
+    { value: 2, name: '电流', time: '2023-01-12 11:00:00' },
+    { value: 6, name: '电流', time: '2023-01-12 11:10:00' },
+    { value: 5, name: '电流', time: '2023-01-12 11:20:00' },
+    { value: 9, name: '电流', time: '2023-01-12 11:30:00' },
+    { value: 3.3, name: '电流', time: '2023-01-12 11:40:00' },
+    { value: 4.8, name: '电流', time: '2023-01-12 11:50:00' },
+    { value: 6.5, name: '电流', time: '2023-01-12 12:00:00' },
+    { value: 7, name: '电流', time: '2023-01-12 12:10:00' },
+    { value: 8.2, name: '电流', time: '2023-01-12 12:20:00' },
+    { value: 6.3, name: '电流', time: '2023-01-12 12:30:00' },
+    { value: 62.7, name: '电流', date: '2011-10-01' },
+    { value: 58, name: '电压', date: '2011-10-02' },
+    { value: 59.9, name: '电流', date: '2011-10-02' },
+    { value: 53.3, name: '电压', date: '2011-10-03' },
+    { value: 59.1, name: '电流', date: '2011-10-03' },
+  ];
 
 Page({
   data: {
@@ -112,6 +144,11 @@ Page({
 
       // 注意：需要把chart return 出来
       return chart;
+    },
+    onRenderChart() {
+        return createElement(Chart, {
+          data: data,
+        });
     },
   },
   onLoad() {

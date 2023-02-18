@@ -3,7 +3,7 @@
     "navigationBarTitleText": "充电曲线",
     "navigationBarTextStyle": "black",
     "usingComponents": {
-        "f2": "@antv/wx-f2",
+        "f2": "@antv/f2-wx",
         "van-button": "@vant/weapp/button/index"
     }
 }
