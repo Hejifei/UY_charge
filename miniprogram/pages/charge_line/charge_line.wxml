@@ -8,7 +8,11 @@
         <!-- <view class="chartContainer">
             <f2 class="f2-chart" onInit="{{onInitChart}}" />
         </view> -->
-        <view class="chartContainer">
+        <van-empty
+            wx:if="{{isNoData}}"
+            description="暂无数据"
+        />
+        <view class="chartContainer" wx:if="{{!isNoData}}">
             <f2
                 class="f2-chart" 
                 onRender="{{onRenderChart}}" />

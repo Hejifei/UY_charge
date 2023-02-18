@@ -1,7 +1,6 @@
 export const isString = (value) => {
   return (
-    typeof value == "string" ||
-    (!isArray(value) && isObjectLike(value) && baseGetTag(value) == stringTag)
+    typeof value == "string"
   );
 };
 
@@ -14,8 +13,12 @@ export const isNull = (value) => {
 };
 
 export const get = (source, path, defaultValue = undefined) => {
+    console.log({
+        source, path, defaultValue,
+    })
     // a[3].b -> a.3.b
-    const paths = path.replace(/\[(\d+)\]/g, '.$1').split('.')
+    // const paths = path.replace(/\[(\d+)\]/g, '.$1').split('.')
+    const paths = path
     let result = source
     for (const p of paths) {
       result = Object(result)[p]

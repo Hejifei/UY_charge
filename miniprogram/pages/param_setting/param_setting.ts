@@ -5,6 +5,7 @@ import {
     analyzeProtocolCodeMessage,
     parseProtocolCodeToChargerInfo,
     ab2hex,
+    parseProtocolCodeToChargeLineSettingData,
 } from '../../utils/protocol_util'
 import { Request } from '../../utils/request'
 import {writeAndReadBLECharacteristicValue,} from '../../utils/bluetooth_util'
@@ -59,6 +60,9 @@ Page({
         if (value.startsWith('5559011e0000')) {
             //  读取充电器信息
             const baseInfoResponseData =  analyzeProtocolCodeMessage(value, '011e0000')
+            if (!baseInfoResponseData) {
+                return
+            }
             const info = parseProtocolCodeToChargerInfo(baseInfoResponseData)
             console.log({
                 info,
@@ -99,6 +103,12 @@ Page({
                 icon: "none",
                 duration: 3000
             });
+        } else if (value.startsWith('5559040b1000')) {
+            const chargeCountData = analyzeProtocolCodeMessage(value, '040B1000')
+            const data = parseProtocolCodeToChargeLineSettingData(chargeCountData)
+            this.setData({
+              chargeLineSettingDataList: data,
+            }, '充电曲线')
         }
     })
     

@@ -10,6 +10,9 @@ const Gauge = withGauge(props => {
     ticks,
     data = {}
   } = props;
+  console.log({
+    percent,
+  })
   const {
     voltage = 0,
     current = 0,
@@ -33,6 +36,7 @@ const Gauge = withGauge(props => {
       stroke: '#fff'
     }
   }), jsx("arc", {
+    key: percent,
     attrs: {
       x: x,
       y: y,
@@ -83,7 +87,7 @@ const Gauge = withGauge(props => {
     attrs: {
       x: 187.5,
       y: 110,
-      // text: `${chargeTime}min`,
+    //   text: `${chargeTime}min`,
       text: '',
       textAlign: 'center',
       fontSize: 18,

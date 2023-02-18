@@ -130,7 +130,7 @@ Page({
         url: '/api/user/perfectInformation',
         data: {
             nickname: that.data.nickName,
-            headimgurl: that.data.userInfo.headimgurl,
+            headimgurl: that.data.userInfo.headimgurl || '',
         },
         method: 'POST',
         successCallBack: (res) => {

@@ -53,7 +53,17 @@ Page({
             shortCircuitProtection: '--',
             reversePolarityProtection: '--',
         },
-        onRenderChart: () => {}, 
+        onRenderChart: () => {
+            return createElement(Chart, {
+                data: {
+                    voltage: 0,
+                    current: 0,
+                    chargeTime: 0,
+                    percent: 0,
+                    status: '--', 
+                },
+            });
+        }, 
     },
     onShow() {
         
@@ -74,6 +84,39 @@ Page({
             }
         })
 
+        this.setData({
+            isDebugModel: app.globalData.isDebugModel || false,
+            chargingTime: undefined,
+            // onRenderChart: () => {
+            //     // return this.renderChart(data)
+            //     return this.renderChart({
+            //         voltage: 1,
+            //         current: 2,
+            //         chargeTime: 1,
+            //         percent: 0.2,
+            //         status: '-2222-', 
+            //     })
+            // },
+        })
+
+        // setTimeout(() => {
+        //     console.log('renrender')
+        //     this.setData({
+        //         isDebugModel: app.globalData.isDebugModel || false,
+        //         chargingTime: undefined,
+        //         onRenderChart: () => {
+        //             // return this.renderChart(data)
+        //             return this.renderChart({
+        //                 voltage: 1,
+        //                 current: 2,
+        //                 chargeTime: 1,
+        //                 percent: 0.2,
+        //                 status: '-2222-', 
+        //             })
+        //         },
+        //     })
+        // }, 1000);
+
         wx.onBLECharacteristicValueChange(res => {
             const value = ab2hex(res.value)
             console.log({
@@ -82,10 +125,13 @@ Page({
             }, '收到数据 onBLECharacteristicValueChange -------')
             if (value.startsWith('5559011e0000')) {
                 const baseInfoResponseData =  analyzeProtocolCodeMessage(value, '011e0000')
+                if (!baseInfoResponseData) {
+                    return
+                }
                 const chargerInfo = parseProtocolCodeToChargerInfo(baseInfoResponseData)
-                // console.log({
-                //     chargerInfo,
-                // })
+                console.log({
+                    chargerInfo,
+                })
                 // setChargerInfo(chargerInfo)
                 const {
                     chargingTime,
@@ -93,29 +139,38 @@ Page({
                     outputCurrent,
                     chargingMode,
                     chargingTiming,
+                    timingRemaining,
                 } = chargerInfo
-                this.setData({
-                    chargingTime,
-                    chargerInfo: {
-                        ...chargerInfo,
-                        chargingMode: this.parseValueTextShow(chargerInfo.chargingMode),
-                        chargingTiming: this.parseValueTextShow(chargerInfo.chargingTiming),
-                        timingRemaining: this.parseValueTextShow(chargerInfo.timingRemaining),
-                        chargingCapacity: this.parseValueTextShow(chargerInfo.chargingCapacity),
-                        batteryVoltage: this.parseValueTextShow(chargerInfo.batteryVoltage),
-                        chargerTemperature: this.parseValueTextShow(chargerInfo.chargerTemperature),
-                    },
-                    onRenderChart: () => {
-                        // return this.renderChart(data)
-                        return this.renderChart({
-                            voltage: outputVoltage,
-                            current: outputCurrent,
-                            chargeTime: chargingTime,
-                            percent: chargingTime / chargingTiming,
-                            status: chargingMode, 
-                        })
-                    },
+                console.log({
+                    percent: (chargingTiming - timingRemaining) / chargingTiming,
+                    percentOld: chargingTime / chargingTiming,
                 })
+                setTimeout(() => {
+                    that.setData({
+                        chargingTime: chargingTiming - timingRemaining,
+                        chargerInfo: {
+                            ...chargerInfo,
+                            chargingMode: that.parseValueTextShow(chargerInfo.chargingMode),
+                            chargingTiming: that.parseValueTextShow(chargerInfo.chargingTiming),
+                            timingRemaining: that.parseValueTextShow(chargerInfo.timingRemaining),
+                            chargingCapacity: that.parseValueTextShow(chargerInfo.chargingCapacity),
+                            batteryVoltage: that.parseValueTextShow(chargerInfo.batteryVoltage),
+                            chargerTemperature: that.parseValueTextShow(chargerInfo.chargerTemperature),
+                        },
+                        onRenderChart: () => {
+                            // return this.renderChart(data)
+                            return that.renderChart({
+                                voltage: outputVoltage,
+                                current: outputCurrent,
+                                chargeTime: chargingTime,
+                                // percent: chargingTime / chargingTiming,
+                                percent: (chargingTiming - timingRemaining) / chargingTiming,
+                                status: chargingMode, 
+                            })
+                        },
+                    })
+                }, 1000);
+                
             } else if (value.startsWith('555907122000')) {
                 const chargeCountData = analyzeProtocolCodeMessage(value, '07122000')
                 const data = parseProtocolCodeToTestData(chargeCountData)
@@ -137,20 +192,7 @@ Page({
             }
         })
 
-        this.setData({
-            isDebugModel: app.globalData.isDebugModel || false,
-            chargingTime: undefined,
-            onRenderChart: () => {
-                // return this.renderChart(data)
-                return this.renderChart({
-                    voltage: 0,
-                    current: 0,
-                    chargeTime: '',
-                    percent: 0,
-                    status: '--', 
-                })
-            },
-        })
+        
         this.getBaseInfo()
     },
     parseValueTextShow(value: any) {

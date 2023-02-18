@@ -154,8 +154,8 @@ Page({
         .filter(({ name, connectable }) => {
           // return name.startsWith('UY')
           // TODO
-          // return name.startsWith('UY') &&
-          return connectable;
+          return name.startsWith('UY') && connectable
+        //   return connectable;
         })
         .forEach((device) => {
           if (!device.name && !device.localName) {

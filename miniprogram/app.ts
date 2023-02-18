@@ -18,15 +18,19 @@ App<IAppOption>({
     characteristicId: undefined,
   },
   onLaunch() {
+    console.log('getUserInfo before')
     wx.getUserInfo({
       success: (res) => {
+        console.log({
+            res,
+        }, 'getUserInfo')
         const { encryptedData: encrypted_data, iv } = res;
         wx.login({
           success: (res) => {
-            // console.log({
-            //     wxLoginSuccessRes: res,
-            //     if: !!res.code,
-            // })
+            console.log({
+                wxLoginSuccessRes: res,
+                if: !!res.code,
+            }, 'login success')
             if (!!res.code) {
               Request({
                 url: "/api/ssoauth/",
@@ -53,7 +57,7 @@ App<IAppOption>({
           fail: (res) => {
             console.log({
               err: res,
-            });
+            }, 'login error');
           },
         });
       },

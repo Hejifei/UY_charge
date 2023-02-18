@@ -47,6 +47,7 @@ Page({
           data: [],
         });
     },
+    isNoData: true,
   },
   onLoad() {
     // console.log(ModBusCRC16('55590A293000'))
@@ -73,8 +74,11 @@ Page({
         }, '收到数据 onBLECharacteristicValueChange -------')
         if (value.startsWith('55590a293000')) {
             //  读取充电器信息
-            // const baseInfoResponseData =  analyzeProtocolCodeMessage(value, '011e0000')
-            // this.renderChart(value)
+            const baseInfoResponseData = analyzeProtocolCodeMessage(value, '011e0000')
+            console.log({
+                baseInfoResponseData,
+            })
+            this.renderChart(baseInfoResponseData)
             // const info = parseProtocolCodeToChargerInfo(baseInfoResponseData)
             // console.log({
             //     info,
@@ -89,7 +93,7 @@ Page({
         }
     })
 
-    this.renderChart('1')
+    // this.renderChart('1')
   },
   readData() {
     wx.showToast({
@@ -129,8 +133,15 @@ Page({
   },
   renderChart(value: string) {
     // const chargeCountData =  analyzeProtocolCodeMessage('0a00160018001a001c001e00200022002400260028000b000c000d000e000f00100011001200130014', '0A293000')
-    const chargeCountData =  analyzeProtocolCodeMessage('55590A2930000A07D00836089C0901096109CE0A2F0A8C0AEF00000BB80BB30BB10BB50BBD0BB90BAE0BA40BA10000A399', '0A293000')
-    // const chargeCountData =  analyzeProtocolCodeMessage(value, '0A293000')
+    // const chargeCountData =  analyzeProtocolCodeMessage('55590A2930000A07D00836089C0901096109CE0A2F0A8C0AEF00000BB80BB30BB10BB50BBD0BB90BAE0BA40BA10000A399', '0A293000')
+    const chargeCountData =  analyzeProtocolCodeMessage(value, '0A293000')
+    const re = /^[0]*$/;
+    this.setData({
+        isNoData: re.test(chargeCountData),
+    })
+    if (re.test(chargeCountData)) {
+        return
+    }
     const data = parseProtocolCodeToChargeCountData(chargeCountData)
     console.log({
       chargeCountData,
