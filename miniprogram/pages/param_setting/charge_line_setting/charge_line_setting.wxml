@@ -64,7 +64,7 @@
             type="primary"
             size="small"
             color="#ECC057"
-            bindtap="clearChargeLine"
+            bindtap="clearChargeLineConfirm"
         >曲线重置</van-button>
     </div>
     <blank height="10" />

@@ -50,7 +50,13 @@
         <van-icon name="close" size="30px" />
       </div>
       <van-cell-group>
-        <van-field center input-align="center" model:value="{{debugCode}}" placeholder="请输入调试码" border="{{true}}" />
+        <van-field
+            center
+            input-align="center"
+            model:value="{{debugCode}}"
+            placeholder="请输入调试码"
+            border="{{true}}"
+        />
       </van-cell-group>
       <div class="actionWrapper">
         <van-button type="primary" size="small" bindtap="handleDebugCodeSave">验证</van-button>

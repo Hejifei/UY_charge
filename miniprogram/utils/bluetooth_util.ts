@@ -1,5 +1,25 @@
 import Toast from '@vant/weapp/toast/toast';
+import './lodash_fix'
+import {get} from 'lodash'
 import { ab2hex, arrayBufferToString, string2Buffer, uint8Array2Str, } from './util';
+
+
+const createBLEErrorCodeMap = {
+    '0': '正常',
+    '-1': '已连接',
+    '10000': '未初始化蓝牙适配器',
+    '10001': '当前蓝牙适配器不可用',
+    '10002': '没有找到指定设备',
+    '10003': '连接失败',
+    '10004': '没有找到指定服务',
+    '10005': '没有找到指定特征',
+    '10006': '当前连接已断开',
+    '10007': '当前特征不支持此操作',
+    '10008': '其余所有系统上报的异常',
+    '10009': 'Android 系统特有，系统版本低于 4.3 不支持 BLE',
+    '10012': '连接超时',
+    '10013': '连接 deviceId 为空或者是格式不正确',
+}
 
 // documents: https://juejin.cn/post/6854573218788261902
 // 注意事项:
@@ -151,6 +171,9 @@ export const createBLEConnection = (deviceId: string) => {
                 resolve(res)
             },
             fail(error) {
+                const {errCode, errMsg} = error
+                const errText = get(createBLEErrorCodeMap, [errCode], errMsg)
+                error.errMsg = errText
                 console.log({error}, '蓝牙连接失败')
                 reject(error)
             }
@@ -170,6 +193,9 @@ export const closeBLEConnection = (deviceId: string) => {
             },
             fail(error) {
                 console.log({error}, '蓝牙断开连接失败')
+                const {errCode, errMsg} = error
+                const errText = get(createBLEErrorCodeMap, [errCode], errMsg)
+                error.errMsg = errText
                 reject(error)
             }
         })
@@ -186,6 +212,9 @@ export const getBLEDeviceServices: (deviceId: string) => Promise<WechatMiniprogr
             },
             fail(error) {
                 console.log({error}, '蓝牙Service获取失败')
+                const {errCode, errMsg} = error
+                const errText = get(createBLEErrorCodeMap, [errCode], errMsg)
+                error.errMsg = errText
                 reject(error)
             }
         })

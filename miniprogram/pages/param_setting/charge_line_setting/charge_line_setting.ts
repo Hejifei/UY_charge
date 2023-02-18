@@ -7,6 +7,8 @@ import {
     parseProtocolCodeToChargeLineSettingData,
     parseChargeLineSettingDataToProtocolCode,
 } from '../../../utils/protocol_util'
+import Dialog from '@vant/weapp/dialog/dialog';
+
 const app = getApp<IAppOption>()
 
 Component({
@@ -53,6 +55,13 @@ Component({
             } catch (err) {
                 console.log({ err }, 'getBaseInfoData')
             }
+        },
+        clearChargeLineConfirm() {
+            Dialog.alert({
+                message: '是否确认曲线重置?',
+            }).then(() => {
+                this.clearChargeLine()
+            });
         },
         clearChargeLine() {
             const {

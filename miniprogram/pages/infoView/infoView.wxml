@@ -116,4 +116,5 @@
     <blank height="10" />
     
     <test-data wx:if="{{isDebugModel}}" testData="{{testData}}" />
+    <van-dialog id="van-dialog" />
 </view>

@@ -56,10 +56,24 @@ Page({
   handleDebugCodeSave() {
       const that = this;
       const code = this.data.debugCode
-      console.log({
-        debugCode: this.data.debugCode,
-      })
+      if (!code) {
+        wx.showToast({
+            title: '请输入验证码',
+            icon: "none",
+            mask: true,
+            duration: 2000
+        });
+        return
+      }
       this.closeDebugCodeModal()
+
+      wx.showToast({
+        title: '',
+        icon: "loading",
+        mask: true,
+        duration: 2000
+    });
+      
       Request({
         url: '/api/user/activeCode',
         data: {
@@ -80,11 +94,11 @@ Page({
                 debugCode: '',
                 isDebugModel: app.globalData.isDebugModel,
             })
-            console.log({
-                code,
-                debugCode: this.data.debugCode,
-                data: this.data,
-            })
+            // console.log({
+            //     code,
+            //     debugCode: this.data.debugCode,
+            //     data: this.data,
+            // })
         }
       })
       
@@ -96,10 +110,27 @@ Page({
     this.setData({ isNickNameChangeVisible: false });
   },
   handleNickNameChangeCodeSave() {
+    const that = this
       // console.log({
       //   nickName: this.data.nickName,
       // })
-      const that = this
+      if (!this.data.nickName) {
+        wx.showToast({
+            title: '请输入昵称',
+            icon: "none",
+            mask: true,
+            duration: 2000
+        });
+        return
+      }
+
+      wx.showToast({
+        title: '',
+        icon: "loading",
+        mask: true,
+        duration: 2000
+        });
+      
       Request({
         url: '/api/user/perfectInformation',
         data: {

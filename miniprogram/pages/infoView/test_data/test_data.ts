@@ -1,10 +1,9 @@
-import {ModBusCRC16} from '../../../utils/crc'
-import {writeAndReadBLECharacteristicValue, writeBLECharacteristicValue,} from '../../../utils/bluetooth_util'
+import {writeAndReadBLECharacteristicValue,} from '../../../utils/bluetooth_util'
 import {
   parseProtocolCodeMessage,
-  analyzeProtocolCodeMessage,
-  parseProtocolCodeToTestData,
 } from '../../../utils/protocol_util'
+import Dialog from '@vant/weapp/dialog/dialog';
+
 const app = getApp<IAppOption>()
 
 Component({
@@ -52,6 +51,13 @@ Component({
             } catch (err) {
                 console.log('getBaseInfo error: ', {err})
             }
+        },
+        clearDataConfirm() {
+            Dialog.alert({
+                message: '是否确认擦除数据?',
+            }).then(() => {
+                this.clearData()
+            })
         },
         clearData() {
             const {

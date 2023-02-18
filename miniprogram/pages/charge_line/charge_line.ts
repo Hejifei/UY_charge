@@ -189,7 +189,8 @@ Page({
     }
   },
   renderChart(value: string) {
-    const chargeCountData =  analyzeProtocolCodeMessage('0a00160018001a001c001e00200022002400260028000b000c000d000e000f00100011001200130014', '0A293000')
+    // const chargeCountData =  analyzeProtocolCodeMessage('0a00160018001a001c001e00200022002400260028000b000c000d000e000f00100011001200130014', '0A293000')
+    const chargeCountData =  analyzeProtocolCodeMessage('55590A2930000A07D00836089C0901096109CE0A2F0A8C0AEF00000BB80BB30BB10BB50BBD0BB90BAE0BA40BA10000A399', '0A293000')
     // const chargeCountData =  analyzeProtocolCodeMessage(value, '0A293000')
     const data = parseProtocolCodeToChargeCountData(chargeCountData)
     console.log({

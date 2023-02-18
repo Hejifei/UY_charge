@@ -81,4 +81,5 @@
     </div>
     <blank height="10" />
     <charge-line-setting  />
+    <van-dialog id="van-dialog" />
 </view>

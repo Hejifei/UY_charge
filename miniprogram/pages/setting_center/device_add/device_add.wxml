@@ -69,4 +69,5 @@
         >{{idx + 1}}、{{item}}</p>
     </div>
     <van-toast id="van-toast" />
+    <van-dialog id="van-dialog" />
 </view>

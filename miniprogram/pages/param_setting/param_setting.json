@@ -8,6 +8,7 @@
         "van-cell-group": "@vant/weapp/cell-group/index",
         "van-switch": "@vant/weapp/switch/index",
         "blank": "/components/blank/blank",
+        "van-dialog": "@vant/weapp/dialog/index",
         "charge-line-setting": "./charge_line_setting/charge_line_setting"
     }
 }

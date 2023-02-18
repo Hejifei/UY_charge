@@ -55,4 +55,5 @@
     </div>
   
   <!-- <blank height="10" /> -->
+  <van-dialog id="van-dialog" />
 </view>

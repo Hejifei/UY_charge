@@ -80,7 +80,7 @@
             type="primary"
             size="small"
             color="#ECC057"
-            bindtap="clearData"
+            bindtap="clearDataConfirm"
         >擦除数据</van-button>
     </div>
     <blank height="10" />
