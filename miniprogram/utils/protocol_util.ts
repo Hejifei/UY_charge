@@ -5,10 +5,9 @@ import {
   fanLevelMap,
 } from '../common/protocol_common'
 import {ModBusCRC16} from './crc'
-import './lodash_fix'
 import {
     isString,
-} from 'lodash'
+} from './lodash'
 import moment from 'moment'
 
 // 起始码、指令码、字节长度、起始地址、数据(写指令有效，读指令/擦除指令省略)、校验码组成。

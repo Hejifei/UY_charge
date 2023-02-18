@@ -1,6 +1,5 @@
 import { ab2hex } from '../../utils/util'
-import '../../utils/lodash_fix'
-import {isNull, isUndefined, get} from 'lodash'
+import {isNull, isUndefined, get} from '../../utils/lodash'
 import {writeAndReadBLECharacteristicValue,} from '../../utils/bluetooth_util'
 import Chart from './chart';
 import { createElement } from '@antv/f2';

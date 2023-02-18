@@ -1,6 +1,5 @@
 import Toast from '@vant/weapp/toast/toast';
-import './lodash_fix'
-import {get} from 'lodash'
+import {get} from './lodash'
 import { ab2hex, arrayBufferToString, string2Buffer, uint8Array2Str, } from './util';
 
 

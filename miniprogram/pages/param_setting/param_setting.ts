@@ -8,12 +8,11 @@ import {
 } from '../../utils/protocol_util'
 import { Request } from '../../utils/request'
 import {writeAndReadBLECharacteristicValue, writeBLECharacteristicValue,} from '../../utils/bluetooth_util'
-import '../../utils/lodash_fix'
 import {
     isUndefined,
     isNull,
     get,
-} from 'lodash'
+} from '../../utils/lodash'
 import { RESPONSE_MAP } from '../../common/index';
 
 const app = getApp<IAppOption>()
