@@ -89,6 +89,12 @@ Page({
     //   })
   },
   async openBluetoothAdapter() {
+    wx.showToast({
+        title: "",
+        icon: "loading",
+        mask: true,
+        duration: 2000,
+    });
     const that = this;
     const failWhenBluetootoOpenCallback = () => {
       that.startBluetoothDevicesDiscovery();

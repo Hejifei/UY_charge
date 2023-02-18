@@ -1,6 +1,7 @@
-import { ab2hex, getIsDebugModel } from '../../utils/util'
+import { ab2hex } from '../../utils/util'
+import '../../utils/lodash_fix'
 import {isNull, isUndefined, get} from 'lodash'
-import {writeAndReadBLECharacteristicValue, writeBLECharacteristicValue,} from '../../utils/bluetooth_util'
+import {writeAndReadBLECharacteristicValue,} from '../../utils/bluetooth_util'
 import Chart from './chart';
 import { createElement } from '@antv/f2';
 import {
@@ -22,7 +23,6 @@ const app = getApp<IAppOption>()
 // };
 
 Page({
-    storeTypes: ['numHandle', 'protocolInfo'],
     data: {
         barhHeight: 0,
         titlePositionTop: 0,
