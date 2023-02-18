@@ -26,6 +26,12 @@ Component({
     },
     methods: {
         readData() {
+            wx.showToast({
+                title: "",
+                icon: "loading",
+                mask: true,
+                duration: 2000,
+            });
             const {
                 deviceId,
                 serviceId,
@@ -53,11 +59,20 @@ Component({
             }
         },
         clearDataConfirm() {
-            Dialog.alert({
+            // wx.showToast({
+            //     title: "",
+            //     icon: "loading",
+            //     mask: true,
+            //     duration: 2000,
+            // });
+            Dialog.confirm({
+                title: '提示',
                 message: '是否确认擦除数据?',
             }).then(() => {
                 this.clearData()
-            })
+            }).catch(() => {
+                // on cancel
+            });
         },
         clearData() {
             const {

@@ -26,6 +26,12 @@ Component({
     },
     methods: {
         readChargeLine() {
+            wx.showToast({
+                title: "",
+                icon: "loading",
+                mask: true,
+                duration: 2000,
+            });
             const {
                 deviceId,
                 serviceId,
@@ -57,13 +63,28 @@ Component({
             }
         },
         clearChargeLineConfirm() {
-            Dialog.alert({
+            // wx.showToast({
+            //     title: "",
+            //     icon: "loading",
+            //     mask: true,
+            //     duration: 2000,
+            // });
+            Dialog.confirm({
+                title: '提示',
                 message: '是否确认曲线重置?',
             }).then(() => {
                 this.clearChargeLine()
+            }).catch(() => {
+                // on cancel
             });
         },
         clearChargeLine() {
+            wx.showToast({
+                title: "",
+                icon: "loading",
+                mask: true,
+                duration: 2000,
+            });
             const {
                 deviceId,
                 serviceId,
@@ -105,6 +126,12 @@ Component({
             })
         },
         writeChargeLine() {
+            wx.showToast({
+                title: "",
+                icon: "loading",
+                mask: true,
+                duration: 2000,
+            });
             const {
                 deviceId,
                 serviceId,

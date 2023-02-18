@@ -193,12 +193,24 @@ Page({
     }
   },
   resetElectricCurrent() {
+    wx.showToast({
+        title: "",
+        icon: "loading",
+        mask: true,
+        duration: 2000,
+    });
     this.clearElectricCurrentValue()
     this.setData({
         electric_current_max: this.data.configDefault.output_current_default,
     })
   },
   resetVoltage() {
+    wx.showToast({
+        title: "",
+        icon: "loading",
+        mask: true,
+        duration: 2000,
+    });
     this.clearElectricCurrentValue()
     this.setData({
         voltage_max: this.data.configDefault.output_voltage_default,
@@ -233,6 +245,12 @@ Page({
     }
   },
   resetChargeTime() {
+    wx.showToast({
+        title: "",
+        icon: "loading",
+        mask: true,
+        duration: 2000,
+    });
     this.clearChargeTime()
     this.setData({
         charge_time: this.data.configDefault.charging_timing_default,
@@ -373,6 +391,12 @@ Page({
         })
         return
     }
+    wx.showToast({
+        title: "",
+        icon: "loading",
+        mask: true,
+        duration: 2000,
+    });
     this.setChargerVoltageAndCurrent()
     this.setChargerSetTime()
   }

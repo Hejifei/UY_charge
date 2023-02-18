@@ -159,6 +159,12 @@ Page({
     this.renderChart('1')
   },
   readData() {
+    wx.showToast({
+        title: "",
+        icon: "loading",
+        mask: true,
+        duration: 2000,
+    });
     const {
         deviceId,
         serviceId,
