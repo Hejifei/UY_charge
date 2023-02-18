@@ -142,7 +142,6 @@ export const parseProtocolCodeToChargeCountData = (code: string) => {
     time: string
   }[] = []
   for (let i = 0; i < 10; i++) {
-    // const time = moment().subtract((9 - i) * spaceMin, 'minute').format('yy-mm-mm hh:mm:ss')
     const time = moment().subtract((9 - i) * spaceMin, 'minute').format('hh:mm')
     data.push(...[
       {

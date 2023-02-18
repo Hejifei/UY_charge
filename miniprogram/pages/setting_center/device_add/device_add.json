@@ -3,7 +3,6 @@
     "navigationBarTitleText": "添加设备",
     "navigationBarTextStyle": "black",
     "usingComponents": {
-        "van-toast": "@vant/weapp/toast/index",
         "van-empty": "@vant/weapp/empty/index",
         "blank": "/components/blank/blank",
         "van-cell": "@vant/weapp/cell/index",

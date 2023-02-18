@@ -1,6 +1,7 @@
 {
     "component": true,
     "usingComponents": {
+        "van-button": "@vant/weapp/button/index",
         "van-cell": "@vant/weapp/cell/index",
         "van-field": "@vant/weapp/field/index",
         "blank": "/components/blank/blank"

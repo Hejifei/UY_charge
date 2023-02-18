@@ -7,7 +7,7 @@ import {
     ab2hex,
 } from '../../utils/protocol_util'
 import { Request } from '../../utils/request'
-import {writeAndReadBLECharacteristicValue, writeBLECharacteristicValue,} from '../../utils/bluetooth_util'
+import {writeAndReadBLECharacteristicValue,} from '../../utils/bluetooth_util'
 import {
     isUndefined,
     isNull,

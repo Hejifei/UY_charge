@@ -4,6 +4,6 @@
     "navigationBarTextStyle": "black",
     "usingComponents": {
         "f2": "@antv/wx-f2",
-        "blank": "/components/blank/blank"
+        "van-button": "@vant/weapp/button/index"
     }
 }

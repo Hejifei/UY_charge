@@ -1,10 +1,5 @@
-import {
-    bluetoothInit,
-    getBluetoothAdapterState,
-} from '../../utils/bluetooth_util'
 import { Request } from '../../utils/request'
 import {parseApiUrl} from '../../utils/util'
-import Toast from '@vant/weapp/toast/toast';
 const app = getApp<IAppOption>()
 
 Page({

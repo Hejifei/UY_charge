@@ -2,6 +2,7 @@
     "navigationBarTitleText": "设置中心",
     "navigationStyle": "custom",
     "usingComponents": {
+        "van-button": "@vant/weapp/button/index",
         "van-icon": "@vant/weapp/icon/index",
         "van-field": "@vant/weapp/field/index",
         "van-dialog": "@vant/weapp/dialog/index",

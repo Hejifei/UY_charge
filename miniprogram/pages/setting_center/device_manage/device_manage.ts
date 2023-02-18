@@ -3,13 +3,9 @@ import { getHistoryDevices } from "../../../utils/util";
 import Dialog from "@vant/weapp/dialog/dialog";
 import {
   createBLEConnection,
-  getBLEDeviceServices,
-  getBLEDeviceCharacteristics,
   notifyBLECharacteristicValueChange,
-  writeAndReadBLECharacteristicValue,
   closeBLEConnection,
 } from "../../../utils/bluetooth_util";
-// import Toast from '@vant/weapp/toast/toast';
 const app = getApp<IAppOption>();
 
 Page({

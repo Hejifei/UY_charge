@@ -1,5 +1,4 @@
-import {ModBusCRC16} from '../../utils/crc'
-import {writeAndReadBLECharacteristicValue, writeBLECharacteristicValue,} from '../../utils/bluetooth_util'
+import {writeAndReadBLECharacteristicValue,} from '../../utils/bluetooth_util'
 import {
   parseProtocolCodeMessage,
   analyzeProtocolCodeMessage,

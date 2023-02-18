@@ -15,7 +15,6 @@ import {
   getBLEDeviceServices,
   getBLEDeviceCharacteristics,
   notifyBLECharacteristicValueChange,
-  writeAndReadBLECharacteristicValue,
   closeBLEConnection,
 } from "../../../utils/bluetooth_util";
 // import Toast from '@vant/weapp/toast/toast';

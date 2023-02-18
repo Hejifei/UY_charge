@@ -2,12 +2,8 @@
     "navigationBarTitleText": "设置中心",
     "navigationStyle": "custom",
     "usingComponents": {
-        "van-toast": "@vant/weapp/toast/index",
         "van-empty": "@vant/weapp/empty/index",
         "van-icon": "@vant/weapp/icon/index",
-        "blank": "/components/blank/blank",
-        "van-cell": "@vant/weapp/cell/index",
-        "van-dialog": "@vant/weapp/dialog/index",
-        "van-cell-group": "@vant/weapp/cell-group/index"
+        "van-dialog": "@vant/weapp/dialog/index"
     }
 }
