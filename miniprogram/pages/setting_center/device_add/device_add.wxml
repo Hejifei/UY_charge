@@ -61,12 +61,13 @@
         <div class="title">
             连接说明
         </div>
-        <p
+        <!-- <p
             wx:for="{{descList}}"
             wx:for-index="idx"
             wx:for-item="item"
             wx:key="idx"
-        >{{idx + 1}}、{{item}}</p>
+        >{{idx + 1}}、{{item}}</p> -->
+        <rich-text nodes="{{instruction}}" />
     </div>
     <van-dialog id="van-dialog" />
 </view>

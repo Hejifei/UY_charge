@@ -41,6 +41,7 @@ export const bluetoothInit = async (
                 resolve(res)
             },
             fail: (res) => {
+                console.log({res})
                 // 蓝牙开关未开启或手机不支持蓝牙时，会返回错误 (errCode=10001)
                 if (res.errCode === 10001) {
                     Toast.fail('蓝牙开关未开启或手机不支持蓝牙');
@@ -89,7 +90,18 @@ export const listenConnection = () => {
 
 //  释放蓝牙模块资源
 export const bluetoothClose = () => {
-    wx.closeBluetoothAdapter()
+    return new Promise((resolve, reject) => {
+        wx.closeBluetoothAdapter({
+            success(res) {
+                console.log({res}, 'closeBluetoothAdapter')
+                resolve(res)
+            },
+            fail(error) {
+                console.log({error}, 'closeBluetoothAdapter')
+                reject(error)
+            }
+        })
+    })
 }
 
 //  检测蓝牙是否可用
@@ -114,9 +126,14 @@ export const startBluetoothDevicesDiscovery = () => {
         wx.startBluetoothDevicesDiscovery({
             allowDuplicatesKey: true,
             success(res) {
+                console.log({res,}, 'startBluetoothDevicesDiscovery')
                 resolve(res)
             },
             fail(error) {
+                if (error.errMsg === 'startBluetoothDevicesDiscovery:fail Starting discovery failed') {
+                    error.errMsg = '扫描失败'
+                }
+                console.log({error,}, 'startBluetoothDevicesDiscovery')
                 reject(error)
             }
         })

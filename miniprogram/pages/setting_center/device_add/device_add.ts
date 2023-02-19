@@ -16,6 +16,7 @@ import {
   getBLEDeviceCharacteristics,
   notifyBLECharacteristicValueChange,
   closeBLEConnection,
+  bluetoothClose,
 } from "../../../utils/bluetooth_util";
 // import Toast from '@vant/weapp/toast/toast';
 const app = getApp<IAppOption>();
@@ -34,6 +35,7 @@ Page({
     ],
     chs: [],
     _discoveryStarted: false, //  是否开始扫描
+    instruction: '',    //  连接说明
     // deviceId: undefined, // 已连接蓝牙id
   },
   onLoad() {
@@ -68,6 +70,13 @@ Page({
       },
     });
 
+    // getBluetoothAdapterState()
+    //   .then((res) => {
+    //     console.log("蓝牙可用");
+    //   })
+    //   .catch((res) => {
+    //     console.log("蓝牙不可用");
+    //   });
     //  开始扫描
     this.openBluetoothAdapter();
 
@@ -86,6 +95,22 @@ Page({
     //       // })
     //     }
     //   })
+    this.getInitData()
+  },
+  getInitData() {
+    const that = this
+      Request({
+        url: '/api/common/aboutus',
+        data: {},
+        method: 'GET',
+        successCallBack: (res) => {
+            console.log({ res }, '关于我们')
+            const instruction = res.data.instruction
+            this.setData({
+                instruction,
+            })
+        },
+      })
   },
   async openBluetoothAdapter() {
     wx.showToast({
@@ -99,6 +124,7 @@ Page({
       that.startBluetoothDevicesDiscovery();
     };
     try {
+    //   await bluetoothClose()
       await bluetoothInit(failWhenBluetootoOpenCallback);
       that.startBluetoothDevicesDiscovery();
     } catch (err) {
@@ -114,6 +140,9 @@ Page({
   getBluetoothAdapterState() {
     const that = this;
     getBluetoothAdapterState().then((res: any) => {
+        console.log({
+            res,
+        }, 'getBluetoothAdapterState')
       if (res.discovering) {
         that.onBluetoothDeviceFound();
       } else if (res.available) {
@@ -134,6 +163,9 @@ Page({
     } catch (err) {
       // console.log({err})
       // Toast.fail(err.errMsg);
+      this.setData({
+        _discoveryStarted: false,
+      });
       wx.showToast({
         title: err.errMsg,
         icon: "error",

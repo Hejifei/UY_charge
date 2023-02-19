@@ -185,7 +185,7 @@ Page({
     // stopBluetoothDevicesDiscovery()
   },
   backPageToSettingCenter() {
-    wx.redirectTo({
+    wx.switchTab({
       url: "/pages/setting_center/setting_center",
     });
   },
