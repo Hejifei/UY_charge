@@ -82,6 +82,13 @@ Page({
                 icon: "none",
                 duration: 3000
             });
+        } else if (['555903020004b054', '5559030200063195', '55590302001a305c'].includes(value)) {
+            const tilte = '擦除成功'
+            wx.showToast({
+                title: tilte,
+                icon: "none",
+                duration: 3000
+            });
         } else if (value.startsWith('55590201015b00')) {
             wx.showToast({
                 title: '数据写入成功',
@@ -90,12 +97,14 @@ Page({
             });
             this.getBaseInfo()
         } else if (value.startsWith('55590301010ac0')) {
+            //  擦除
             wx.showToast({
                 title: '数据擦除成功',
                 icon: "none",
                 duration: 3000
             });
         } else if (value.startsWith('55590501')) {
+            // 充电曲线写入
             const resultCode = analyzeProtocolCodeMessage(value, '0501')
             const tilte = '曲线写入' + get(RESPONSE_MAP, [resultCode])
             wx.showToast({
@@ -104,11 +113,21 @@ Page({
                 duration: 3000
             });
         } else if (value.startsWith('5559040b1000')) {
+            //  充电曲线读取
             const chargeCountData = analyzeProtocolCodeMessage(value, '040B1000')
             const data = parseProtocolCodeToChargeLineSettingData(chargeCountData)
             this.setData({
               chargeLineSettingDataList: data,
-            }, '充电曲线')
+            }, '充电曲线读取')
+        } else if (value.startsWith('55590601')) {
+            // 充电曲线写入
+            const resultCode = analyzeProtocolCodeMessage(value, '0601')
+            const tilte = '曲线擦除' + get(RESPONSE_MAP, [resultCode])
+            wx.showToast({
+                title: tilte,
+                icon: "none",
+                duration: 3000
+            });
         }
     })
     
@@ -173,7 +192,7 @@ Page({
     // 需要手动对 checked 状态进行更新
     this.setData({chargeSwitch: detail});
   },
-  clearElectricCurrentValue() {
+  clearElectricCurrentValue(isVoltage: boolean) {
     const {
         deviceId,
         serviceId,
@@ -186,10 +205,11 @@ Page({
     // 55 59 03 04 00 04 50 55
     const buffer = parseProtocolCodeMessage(
         '03',
-        '04',
-        '0004',
+        '02',
+        isVoltage ? '0004' : '0006',
         ''
     )
+    console.log({buffer}, '擦除充电器最大电压、最大电流')
     try {
         writeAndReadBLECharacteristicValue(
             deviceId,
@@ -208,7 +228,7 @@ Page({
         mask: true,
         duration: 2000,
     });
-    this.clearElectricCurrentValue()
+    this.clearElectricCurrentValue(false)
     this.setData({
         electric_current_max: this.data.configDefault.output_current_default,
     })
@@ -220,7 +240,7 @@ Page({
         mask: true,
         duration: 2000,
     });
-    this.clearElectricCurrentValue()
+    this.clearElectricCurrentValue(true)
     this.setData({
         voltage_max: this.data.configDefault.output_voltage_default,
     })
@@ -242,6 +262,9 @@ Page({
         '001A',
         ''
     )
+    console.log({
+        buffer,
+    }, '擦除充电器定时时间')
     try {
         writeAndReadBLECharacteristicValue(
             deviceId,

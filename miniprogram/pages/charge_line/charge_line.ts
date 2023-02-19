@@ -74,22 +74,12 @@ Page({
         }, '收到数据 onBLECharacteristicValueChange -------')
         if (value.startsWith('55590a293000')) {
             //  读取充电器信息
-            const baseInfoResponseData = analyzeProtocolCodeMessage(value, '011e0000')
+            // todo
+            const baseInfoResponseData = analyzeProtocolCodeMessage(value, '0a293000')
             console.log({
                 baseInfoResponseData,
             })
             this.renderChart(baseInfoResponseData)
-            // const info = parseProtocolCodeToChargerInfo(baseInfoResponseData)
-            // console.log({
-            //     info,
-            // })
-            // //  @ts-ignore
-            // this.setData({
-            //     voltage_max: info.maximumVoltage,
-            //     electric_current_max: info.maximumCurrent,
-            //     charge_time: info.chargingTiming,
-            //     chargeSwitch: info.chargeSwitchValue === 1,
-            // })
         }
     })
 
@@ -134,18 +124,19 @@ Page({
   renderChart(value: string) {
     // const chargeCountData =  analyzeProtocolCodeMessage('0a00160018001a001c001e00200022002400260028000b000c000d000e000f00100011001200130014', '0A293000')
     // const chargeCountData =  analyzeProtocolCodeMessage('55590A2930000A07D00836089C0901096109CE0A2F0A8C0AEF00000BB80BB30BB10BB50BBD0BB90BAE0BA40BA10000A399', '0A293000')
-    const chargeCountData =  analyzeProtocolCodeMessage(value, '0A293000')
-    const re = /^[0]*$/;
+    // const chargeCountData =  analyzeProtocolCodeMessage(value, '0A293000')
+    // const re = /^[0]*$/;
+    // || re.test(value)
     this.setData({
-        isNoData: re.test(chargeCountData),
+        isNoData: !value,
     })
-    if (re.test(chargeCountData)) {
+    if (!value) {
         return
     }
-    const data = parseProtocolCodeToChargeCountData(chargeCountData)
+    const data = parseProtocolCodeToChargeCountData(value)
     console.log({
-      chargeCountData,
-      data,
+        value,
+        data,
     })
     this.setData({
         onRenderChart() {

@@ -12,6 +12,7 @@ App<IAppOption>({
     isDebugModel: false,
     // isDebugModel: true,
     connected: false,
+    reConnectedTimes: 0,    //  蓝牙断开重连次数
     deviceName: undefined,
     deviceId: undefined,
     serviceId: undefined,
@@ -96,12 +97,14 @@ App<IAppOption>({
         console.log("connectState", { res });
         //   this.globalData.connected = res.connected
         if (res.connected) {
+            this.globalData.reConnectedTimes = 0
           // Toast.success('连接成功!');
           // that.showToast({
           //   title: "连接成功",
           // })
         } else {
-          if (this.globalData.deviceId) {
+          if (this.globalData.deviceId && this.globalData.reConnectedTimes <= 5) {
+            this.globalData.reConnectedTimes = this.globalData.reConnectedTimes + 1
             const deviceId = this.globalData.deviceId;
             console.log({
               deviceId,
@@ -114,6 +117,23 @@ App<IAppOption>({
                 console.log("蓝牙重连成功!");
               },
             });
+          } else if (this.globalData.deviceId && this.globalData.reConnectedTimes > 5) {
+            // 重连5次仍然失败,断开连接,给出提示
+            this.globalData = {
+                ...this.globalData,
+                connected: false,
+                reConnectedTimes: 0,
+                deviceName: undefined,
+                deviceId: undefined,
+                serviceId: undefined,
+                characteristicId: undefined,
+            }
+            wx.showToast({
+                title: '蓝牙连接已断开',
+                icon: "none",
+                duration: 3000
+            });
+
           }
 
           // this.globalData = {

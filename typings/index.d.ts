@@ -5,6 +5,7 @@ interface IAppOption {
     userInfo?: WechatMiniprogram.UserInfo,
     isDebugModel?: boolean
     connected?: boolean
+    reConnectedTimes: number
     deviceName?: string
     deviceId?: string,
     serviceId?: string,

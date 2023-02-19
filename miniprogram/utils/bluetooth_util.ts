@@ -123,6 +123,7 @@ export const getBluetoothAdapterState = () => {
 export const startBluetoothDevicesDiscovery = () => {
     // console.log('蓝牙设备搜索初始化 startBluetoothDevicesDiscovery ')
     return new Promise((resolve, reject) => {
+        console.log('蓝牙搜索初始化')
         wx.startBluetoothDevicesDiscovery({
             allowDuplicatesKey: true,
             success(res) {
@@ -362,27 +363,37 @@ export const writeAndReadBLECharacteristicValue = async (
     characteristicId: string,
     value: string,
 ) => {
-    // const buffer = string2Buffer('5559011E000071E9')
-    const buffer = string2Buffer(value)
-    // console.log('发送协议码', {
-    //     buffer,
-    // })
-    try {
-        await writeBLECharacteristicValue(
-            deviceId,
-            serviceId,
-            characteristicId,
-            buffer
-        )
-        await readBLECharacteristicValue(
-            deviceId,
-            serviceId,
-            characteristicId
-        )
-    } catch (err) {
-        console.log('writeAndReadBLECharacteristicValue', {err})
-        // Toast.fail(err.errMsg);
-    }
+    return new Promise(async (resolve, reject) => {
+        // const buffer = string2Buffer('5559011E000071E9')
+        const buffer = string2Buffer(value)
+        // console.log('发送协议码', {
+        //     buffer,
+        // })
+        try {
+            await writeBLECharacteristicValue(
+                deviceId,
+                serviceId,
+                characteristicId,
+                buffer
+            )
+            await readBLECharacteristicValue(
+                deviceId,
+                serviceId,
+                characteristicId
+            )
+            resolve('')
+        } catch (err) {
+            console.log('writeAndReadBLECharacteristicValue', {err})
+            // throw new Error(err.errMsg.split(':')[1])
+            wx.showToast({
+                title: err.errMsg.split(':').splice(1).join(','),
+                icon: "none",
+                duration: 3000
+            });
+            reject(err)
+            // Toast.fail(err.errMsg);
+        }
+    })
 }
 
 

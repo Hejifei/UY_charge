@@ -16,7 +16,6 @@ import {
   getBLEDeviceCharacteristics,
   notifyBLECharacteristicValueChange,
   closeBLEConnection,
-  bluetoothClose,
 } from "../../../utils/bluetooth_util";
 // import Toast from '@vant/weapp/toast/toast';
 const app = getApp<IAppOption>();
@@ -104,7 +103,7 @@ Page({
         data: {},
         method: 'GET',
         successCallBack: (res) => {
-            console.log({ res }, '关于我们')
+            // console.log({ res }, '关于我们')
             const instruction = res.data.instruction
             this.setData({
                 instruction,
@@ -166,8 +165,9 @@ Page({
       this.setData({
         _discoveryStarted: false,
       });
+      stopBluetoothDevicesDiscovery()
       wx.showToast({
-        title: err.errMsg,
+        title: err.errMsg.split(':').splice(1).join(','),
         icon: "error",
         duration: 2000,
       });
@@ -180,6 +180,7 @@ Page({
         this.setData({
           _discoveryStarted: false,
         });
+        stopBluetoothDevicesDiscovery()
       }
       // console.log({res,}, 'getBluetoothDevices')
       res.devices
@@ -217,6 +218,7 @@ Page({
       this.setData({
         _discoveryStarted: false,
       });
+      stopBluetoothDevicesDiscovery()
       console.log({ err }, "onBluetoothDeviceFound");
       // Toast.fail(err.errMsg);
       wx.showToast({
