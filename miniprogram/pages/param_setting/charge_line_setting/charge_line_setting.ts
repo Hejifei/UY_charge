@@ -11,17 +11,33 @@ import Dialog from '@vant/weapp/dialog/dialog';
 const app = getApp<IAppOption>()
 
 Component({
+    properties: {
+        chargeLineSettingDataList: {
+            type: Array,
+            value: [],
+        },
+    },
     data: {
-        chargeLineSettingDataList: [
-            { voltage: 0, eleCurrent: 0 },
-        ]
+        // chargeLineSettingDataList: [
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        // ]
     },
     ready() {
-        const chargeCountData = analyzeProtocolCodeMessage('5559040010001ce3', '040B1000')
-        const data = parseProtocolCodeToChargeLineSettingData(chargeCountData)
-        this.setData({
-          chargeLineSettingDataList: data,
-        })
+        // const chargeCountData = analyzeProtocolCodeMessage('5559052a10000a00640064006400640064006400640064006400640064006400640064006400640064006400640064AC06', '052a1000')
+        // const data = parseProtocolCodeToChargeLineSettingData(chargeCountData)
+        // console.log({data})
+        // this.setData({
+        //   chargeLineSettingDataList: data,
+        // })
     },
     methods: {
         readChargeLine() {
@@ -136,16 +152,20 @@ Component({
                 serviceId,
                 characteristicId,
             } = app.globalData
-            if (!deviceId || !serviceId || !characteristicId) {
-                return
-            }
+            
             const dataCode = parseChargeLineSettingDataToProtocolCode(this.data.chargeLineSettingDataList)
+            console.log({
+                dataCode,
+                chargeLineSettingDataList: this.data.chargeLineSettingDataList,
+            })
             const buffer = parseProtocolCodeMessage(
                 '05',
                 parse10To16(2 + 4 * this.data.chargeLineSettingDataList.length),
                 '1000',
                 dataCode
             )
+            // buffer = '5559050B10000203E803E807D004B009C4EEDB'
+            // buffer = '5559050B100002000003E805DC0BB80B6822F8'
             console.log({
                 buffer,
             }, '充电曲线写入')
@@ -154,6 +174,9 @@ Component({
             //     buffer,
             //     chargeLineSettingDataList: this.data.chargeLineSettingDataList,
             // })
+            if (!deviceId || !serviceId || !characteristicId) {
+                return
+            }
             try {
                 writeAndReadBLECharacteristicValue(
                     deviceId,

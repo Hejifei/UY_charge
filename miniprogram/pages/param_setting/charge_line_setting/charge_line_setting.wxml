@@ -3,7 +3,6 @@
         充电曲线设置
         <span>(间隔10min)</span>
     </view>
-
     <div class="settingContent">
         <div class="settingItem">
             <div class="label">节点</div>

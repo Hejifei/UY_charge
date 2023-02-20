@@ -32,14 +32,32 @@ Page({
         output_current_ranage: '',
         output_voltage_default: '',
         output_voltage_ranage: '',
-    }
+    },
   },
   onLoad() {
   },
   onShow() {
     this.getConfigDefaultValue()
+    // const chargeCountData = analyzeProtocolCodeMessage('5559052a10000a00640000000000c8012c00000000019001f400000000025802bc00000000032003200000000003e8B267', '052a1000')
+    // const data = parseProtocolCodeToChargeLineSettingData(chargeCountData)
+    // console.log({data})
+    // this.setData({
+    //     chargeLineSettingDataList: data,
+    // })
     this.setData({
         isDebugModel: app.globalData.isDebugModel || false,
+        // chargeLineSettingDataList: [
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage: 0, eleCurrent: 0 },
+        // ]
     })
     const that = this
     wx.getSystemInfo({
@@ -120,7 +138,7 @@ Page({
               chargeLineSettingDataList: data,
             }, '充电曲线读取')
         } else if (value.startsWith('55590601')) {
-            // 充电曲线写入
+            // 充电曲线擦除
             const resultCode = analyzeProtocolCodeMessage(value, '0601')
             const tilte = '曲线擦除' + get(RESPONSE_MAP, [resultCode])
             wx.showToast({

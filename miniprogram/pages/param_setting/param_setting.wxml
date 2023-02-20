@@ -80,6 +80,6 @@
         </div>
     </div>
     <blank height="10" />
-    <charge-line-setting  />
+    <charge-line-setting wx:if="{{isDebugModel}}" chargeLineSettingDataList="{{chargeLineSettingDataList}}"  />
     <van-dialog id="van-dialog" />
 </view>
