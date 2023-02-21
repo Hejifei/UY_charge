@@ -5,9 +5,9 @@
     </view>
     <div class="settingContent">
         <div class="settingItem">
-            <div class="label">节点</div>
+            <div class="label" bindtap="handleDomClick">节点</div>
             <div class="voltageTitle">电压<span class="unit">(V)</span></div>
-            <div class="electricCurrentTitle">节点<span class="unit">(A)</span></div>
+            <div class="electricCurrentTitle">电流<span class="unit">(A)</span></div>
         </div>
         <van-cell-group
             class="settingItem"
@@ -21,10 +21,21 @@
             <div class="voltageInput">
                 <van-field
                     center
-                    data-name="voltage"
+                    data-name="voltage_min"
                     data-index="{{idx}}"
-                    type="number"
-                    value="{{item.voltage}}"
+                    type="digit"
+                    value="{{item.voltage_min}}"
+                    placeholder=""
+                    border="{{ false }}"
+                    bind:change="onInputChange"
+                />
+                -
+                <van-field
+                    center
+                    data-name="voltage_max"
+                    data-index="{{idx}}"
+                    type="digit"
+                    value="{{item.voltage_max}}"
                     placeholder=""
                     border="{{ false }}"
                     bind:change="onInputChange"
@@ -35,7 +46,7 @@
                     center
                     data-name="eleCurrent"
                     data-index="{{idx}}"
-                    type="number"
+                    type="digit"
                     value="{{ item.eleCurrent }}"
                     placeholder=""
                     border="{{ false }}"

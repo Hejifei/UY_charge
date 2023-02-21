@@ -80,6 +80,11 @@
         </div>
     </div>
     <blank height="10" />
-    <charge-line-setting wx:if="{{isDebugModel}}" chargeLineSettingDataList="{{chargeLineSettingDataList}}"  />
+    <charge-line-setting
+        wx:if="{{isDebugModel}}"
+        voltage_range_max="{{voltage_max}}"
+        current_range_max="{{electric_current_max}}"
+        chargeLineSettingDataList="{{chargeLineSettingDataList}}"
+    />
     <van-dialog id="van-dialog" />
 </view>

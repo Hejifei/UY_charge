@@ -7,6 +7,8 @@ import {
     parseChargeLineSettingDataToProtocolCode,
 } from '../../../utils/protocol_util'
 import Dialog from '@vant/weapp/dialog/dialog';
+import moment from 'moment'
+import { isNull, isUndefined } from '../../../utils/lodash';
 
 const app = getApp<IAppOption>()
 
@@ -16,20 +18,15 @@ Component({
             type: Array,
             value: [],
         },
+        voltage_range_max: {
+            type: Number,
+        },
+        current_range_max: {
+            type: Number,
+        },
     },
     data: {
-        // chargeLineSettingDataList: [
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        // ]
+        lastTapTime: 0,
     },
     ready() {
         // const chargeCountData = analyzeProtocolCodeMessage('5559052a10000a00640064006400640064006400640064006400640064006400640064006400640064006400640064AC06', '052a1000')
@@ -38,6 +35,7 @@ Component({
         // this.setData({
         //   chargeLineSettingDataList: data,
         // })
+        this.readChargeLine()
     },
     methods: {
         readChargeLine() {
@@ -132,10 +130,15 @@ Component({
         },
         onInputChange(event) {
             const { index, name } = event.currentTarget.dataset
-            const value = event.detail
+            const value = event.detail.toString().match(/^\d*(\.?\d{0,2})/g)[0] || null
             const chargeLineSettingDataList = this.data.chargeLineSettingDataList
             //    @ts-ignore
             chargeLineSettingDataList[index][name] = value
+            if (name === 'voltage_min' && index > 0) {
+                chargeLineSettingDataList[index - 1]['voltage_max'] = value
+            } else if (name === 'voltage_max' && index < (chargeLineSettingDataList.length - 1)) {
+                chargeLineSettingDataList[index + 1]['voltage_min'] = value
+            }
             this.setData({
                 chargeLineSettingDataList: [...chargeLineSettingDataList]
             })
@@ -147,6 +150,61 @@ Component({
                 mask: true,
                 duration: 2000,
             });
+            let {current_range_max, voltage_range_max, chargeLineSettingDataList} = this.data
+            // console.log({
+            //     current_range_max,
+            //     voltage_range_max,
+            //     chargeLineSettingDataList,
+            // })
+            if (!current_range_max || !voltage_range_max) {
+                wx.showToast({
+                    title: '请优先设置最大输出电流、最大输出电压!',
+                    icon: "none",
+                    duration: 2000
+                });
+                return
+            }
+            current_range_max = parseFloat(current_range_max)
+            voltage_range_max = parseFloat(voltage_range_max)
+            let errorText = ''
+            for (let i = 0; i < chargeLineSettingDataList.length; i++) {
+                let {voltage_min, voltage_max, eleCurrent} = chargeLineSettingDataList[i]
+                if (isNull(voltage_min) || isUndefined(voltage_min)) {
+                    errorText = `节点${i + 1}: 无效的起始电压值`
+                    break
+                }
+                if (isNull(voltage_max) || isUndefined(voltage_max)) {
+                    errorText = `节点${i + 1}: 无效的结束电压值`
+                    break
+                }
+                if (isNull(eleCurrent) || isUndefined(eleCurrent)) {
+                    errorText = `节点${i + 1}: 无效的电流值`
+                    break
+                }
+                voltage_min = parseFloat(voltage_min)
+                voltage_max = parseFloat(voltage_max)
+                if (voltage_min > voltage_max) {
+                    errorText = `节点${i + 1}: 起始电压不能大于结束电压`
+                    break
+                }
+                if (voltage_min > voltage_range_max || voltage_max > voltage_range_max) {
+                    errorText = `节点${i + 1}: 起始电压或结束电压不能大于最大输出电压`
+                    break
+                }
+                if (eleCurrent > current_range_max ) {
+                    errorText = `节点${i + 1}: 电流不能大于最大输出电流`
+                    break
+                }
+            }
+            if (errorText) {
+                wx.showToast({
+                    title: errorText,
+                    icon: "none",
+                    duration: 2000
+                });
+                return
+            }
+
             const {
                 deviceId,
                 serviceId,
@@ -160,7 +218,7 @@ Component({
             })
             const buffer = parseProtocolCodeMessage(
                 '05',
-                parse10To16(2 + 4 * this.data.chargeLineSettingDataList.length),
+                parse10To16(1 + 2 + 4 * this.data.chargeLineSettingDataList.length),
                 '1000',
                 dataCode
             )
@@ -187,6 +245,37 @@ Component({
             } catch (err) {
                 console.log({ err }, 'getBaseInfoData')
             }
+        },
+        handleLineDataAdd () {
+            const chargeLineSettingDataList = this.data.chargeLineSettingDataList
+            const newLineData = {
+                voltage_min: chargeLineSettingDataList.length === 0 ? null : chargeLineSettingDataList[chargeLineSettingDataList.length - 1].voltage_max,
+                voltage_max: null,
+                eleCurrent: null,
+            }
+            this.setData({
+                chargeLineSettingDataList: [
+                    ...chargeLineSettingDataList,
+                    newLineData,
+                ]
+            })
+        },
+        handleDomClick(e){
+            const lastTapTime = this.data.lastTapTime
+            // let currentTime = e.timeStamp
+            let currentTime = moment().valueOf()
+            if (currentTime - lastTapTime < 800) {
+                //执行双击操作
+                this.handleLineDataAdd()
+                this.setData({
+                    lastTapTime: 0,
+                })
+                return
+            }
+            //更新点击时间
+            this.setData({
+                lastTapTime: currentTime,
+            })
         }
     }
 

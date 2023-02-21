@@ -52,7 +52,8 @@ interface ITestData {
 }
 
 interface IChargeLineSettingItem {
-    voltage: number
+    voltage_min: number
+    voltage_max: number
     eleCurrent: number
 }
 

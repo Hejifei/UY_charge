@@ -47,16 +47,17 @@ Page({
     this.setData({
         isDebugModel: app.globalData.isDebugModel || false,
         // chargeLineSettingDataList: [
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
-        //     { voltage: 0, eleCurrent: 0 },
+        //     { voltage_min: 1, eleCurrent: 1, voltage_max: 10 },
+        //     { voltage_min: 10, eleCurrent: 5, voltage_max: 20 },
+        //     // { voltage: 1, eleCurrent: 1 },
+        //     // { voltage: 1, eleCurrent: 1 },
+        //     // { voltage: 1, eleCurrent: 1 },
+        //     // { voltage: 1, eleCurrent: 1 },
+        //     // { voltage: 1, eleCurrent: 1 },
+        //     // { voltage: 1, eleCurrent: 1 },
+        //     // { voltage: 1, eleCurrent: 1 },
+        //     // { voltage: 1, eleCurrent: 1 },
+        //     // { voltage: 1, eleCurrent: 1 },
         // ]
     })
     const that = this
@@ -114,7 +115,7 @@ Page({
                 duration: 3000
             });
             this.getBaseInfo()
-        } else if (value.startsWith('55590301010ac0')) {
+        } else if (value.startsWith('55590301010ac0') || value.startsWith('555906ff10002d6b')) {
             //  擦除
             wx.showToast({
                 title: '数据擦除成功',
@@ -130,13 +131,16 @@ Page({
                 icon: "none",
                 duration: 3000
             });
-        } else if (value.startsWith('5559040b1000')) {
+        } else if (value.startsWith('555904')) {
             //  充电曲线读取
             const chargeCountData = analyzeProtocolCodeMessage(value, '040B1000')
             const data = parseProtocolCodeToChargeLineSettingData(chargeCountData)
+            console.log({
+                data,
+            }, '充电曲线读取')
             this.setData({
               chargeLineSettingDataList: data,
-            }, '充电曲线读取')
+            })
         } else if (value.startsWith('55590601')) {
             // 充电曲线擦除
             const resultCode = analyzeProtocolCodeMessage(value, '0601')

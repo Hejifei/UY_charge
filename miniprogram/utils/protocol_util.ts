@@ -210,12 +210,16 @@ export const parseProtocolCodeToTestData = (code: string) => {
 export const parseProtocolCodeToChargeLineSettingData = (code: string) => {
     const length = parse16To10(code.substr(0, 2))
     const settingDataList: IChargeLineSettingItem[] = []
+    let voltage_min = parseVoltageOrCurrent10mVToV(parse16To10(code.substr(2, 4)))
     for (let i = 0; i < length; i++) {
-        const startIndex = 2 + 8 * i
+        const startIndex = 6 + 8 * i
+        const voltage_max = parseVoltageOrCurrent10mVToV(parse16To10(code.substr(startIndex + 4, 2 * 2)))
         settingDataList.push({
-            voltage: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(startIndex, 2 * 2))),
-            eleCurrent: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(startIndex + 4, 2 * 2))),
+            voltage_min,
+            eleCurrent: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(startIndex, 2 * 2))),
+            voltage_max,
         })
+        voltage_min = voltage_max
     }
     // console.log({
     //     length,
@@ -228,13 +232,17 @@ export const parseProtocolCodeToChargeLineSettingData = (code: string) => {
 //  充电曲线设置转换
 export const parseChargeLineSettingDataToProtocolCode = (settingDataList: IChargeLineSettingItem[]) => {
     let code = parse10To16(settingDataList.length)
-    settingDataList.forEach(data => {
+    settingDataList.forEach((data, idx) => {
         const {
-            voltage,
+            voltage_min,
+            voltage_max,
             eleCurrent,
         } = data
-        code = code + parse10To16(parseVoltageOrCurrentVTo10mV(voltage), 2)
+        if (idx === 0) {
+            code = code + parse10To16(parseVoltageOrCurrentVTo10mV(voltage_min), 2)
+        }
         code = code + parse10To16(parseVoltageOrCurrentVTo10mV(eleCurrent), 2)
+        code = code + parse10To16(parseVoltageOrCurrentVTo10mV(voltage_max), 2)
     })
     console.log({
         code,
