@@ -158,7 +158,7 @@ Page({
     
     this.getBaseInfo()
 
-    if (!this.data.connected) {
+    if (!app.globalData.connected) {
         Dialog.alert({
             title: '设备连接',
             message: '暂无设备连接,请连接设备',
