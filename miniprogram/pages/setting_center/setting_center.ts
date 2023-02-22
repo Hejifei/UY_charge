@@ -42,6 +42,11 @@ Page({
     })
     
   },
+  onChooseAvatar(e) {
+    const {avatarUrl} = e.detail
+    console.log({e, avatarUrl})
+    this.upload_file(avatarUrl)
+  },
   handleDebugCodeModalVisible() {
     this.setData({ isDebugModeVisible: true });
   },

@@ -114,7 +114,13 @@
         </div>
     </div>
     <blank height="10" />
-    
-    <test-data wx:if="{{isDebugModel}}" testData="{{testData}}" />
+    <div class="goToConnectWrapper" wx:if="{{!connected}}">
+        <van-button
+            type="primary"
+            bindtap="goToConnectDevice"
+            style="width: 100%;"
+        >连接设备</van-button>
+    </div>
+    <test-data wx:if="{{isDebugModel && connected}}" testData="{{testData}}" />
     <van-dialog id="van-dialog" />
 </view>

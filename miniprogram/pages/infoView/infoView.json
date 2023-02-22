@@ -5,6 +5,7 @@
         "blank": "/components/blank/blank",
         "test-data": "./test_data/test_data",
         "van-dialog": "@vant/weapp/dialog/index",
+        "van-button": "@vant/weapp/button/index",
         "f2": "@antv/f2-wx"
     }
 }

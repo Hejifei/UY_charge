@@ -185,9 +185,10 @@ Page({
     // stopBluetoothDevicesDiscovery()
   },
   backPageToSettingCenter() {
-    wx.switchTab({
-      url: "/pages/setting_center/setting_center",
-    });
+    // wx.switchTab({
+    //   url: "/pages/setting_center/setting_center",
+    // });
+    wx.navigateBack()
   },
   changePageToAddDevice() {
     wx.navigateTo({

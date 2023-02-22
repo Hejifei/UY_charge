@@ -27,6 +27,7 @@ Page({
         titlePositionTop: 0,
         chargingTime: 0,
         isDebugModel: app.globalData.isDebugModel || false,
+        connected: false, //  是否连接蓝牙
         // n: 1.5,     // 不规则三角形放大比例
         // m: 90,      // 得分
         // path: '',   // 表盘刻度线路径
@@ -86,6 +87,7 @@ Page({
 
         this.setData({
             isDebugModel: app.globalData.isDebugModel || false,
+            connected: app.globalData.connected || false,
             chargingTime: undefined,
             // onRenderChart: () => {
             //     // return this.renderChart(data)
@@ -237,4 +239,9 @@ Page({
             data: chartData,
           });
     },
+    goToConnectDevice() {
+        wx.navigateTo({
+            url: '/pages/setting_center/device_manage/device_manage',
+        })
+    }
 })
