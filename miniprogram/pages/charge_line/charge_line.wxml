@@ -26,5 +26,5 @@
             >读取数据</van-button>
         </div>
     </div>
-    
+    <van-dialog id="van-dialog" />
 </view>

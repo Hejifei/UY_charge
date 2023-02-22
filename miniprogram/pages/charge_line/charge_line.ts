@@ -7,6 +7,7 @@ import {
 } from '../../utils/protocol_util'
 import Chart from './chart';
 import { createElement } from '@antv/f2';
+import Dialog from '@vant/weapp/dialog/dialog';
 
 const app = getApp<IAppOption>()
 
@@ -42,6 +43,7 @@ const app = getApp<IAppOption>()
 Page({
   data: {
     barhHeight: 0,
+    connected: false, //  是否连接蓝牙
     onRenderChart() {
         return createElement(Chart, {
           data: [],
@@ -82,8 +84,23 @@ Page({
             this.renderChart(baseInfoResponseData)
         }
     })
-
-    // this.renderChart('1')
+    this.setData({
+        connected: app.globalData.connected || false,
+    })
+    if (!this.data.connected) {
+        Dialog.alert({
+            title: '设备连接',
+            message: '暂无设备连接,请连接设备',
+            // theme: 'round-button',
+            confirmButtonText: '连接设备',
+            confirmButtonColor: 'green',
+          }).then(() => {
+            // on close
+            wx.navigateTo({
+                url: '/pages/setting_center/device_manage/device_manage',
+            })
+          });
+    }
   },
   readData() {
     wx.showToast({
