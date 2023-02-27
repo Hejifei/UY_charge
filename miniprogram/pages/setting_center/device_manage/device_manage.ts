@@ -165,7 +165,7 @@ Page({
       this.setData({
         connected: deviceId,
       });
-      this.uploadConnectRecord(deviceId);
+      this.uploadConnectRecord(name);
       // Toast.success('设备连接成功!');
       wx.showToast({
         title: "设备连接成功!",
