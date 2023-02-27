@@ -200,13 +200,21 @@ Page({
     }
     },
   getConfigDefaultValue() {
+    const {
+      deviceName,
+    } = app.globalData
+    if (!deviceName) {
+      return
+    }
     wx.showLoading({
         title: ""
     });
     try {
         Request({
             url: '/api/common/config',
-            data: {},
+            data: {
+              equ_no: deviceName,
+            },
             method: 'GET',
             successCallBack: (res: {data: IParamSettingDefaultValue}) => {
                 // console.log({ res }, '/api/common/config')
