@@ -38,7 +38,7 @@ export const chargeModeMap: Record<string, string> = {
 
 //  风扇档位
 export const fanLevelMap: Record<string, string> = {
-    '0': '风扇初始化',
+    '0': '初始化',
     //   '1':	'1档',
     //   '2':	'2档',
     //   '3':	'3档',
