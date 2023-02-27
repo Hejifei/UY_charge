@@ -37,6 +37,7 @@
             wx:for-item="item"
             wx:key="deviceId"
             data-device-id="{{item.deviceId}}"
+            data-name="{{item.name}}"
             bindtap="createBLEConnection"
         >
             <div class="nameWrapper">
