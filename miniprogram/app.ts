@@ -45,6 +45,8 @@ App<IAppOption>({
                   // console.log({ res }, '/api/ssoauth/')
                   // setUserInfo(res.data)
                   this.globalData.userInfo = res.data;
+                    //   group_id 1 普通用户 2 管理员
+                  this.globalData.isDebugModel = res.data.group_id === 2
                   // console.log({
                   //   res: res.data,
                   //   globaluserInfo: this.globalData.userInfo

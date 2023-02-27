@@ -15,12 +15,14 @@ import {
     get,
 } from '../../utils/lodash'
 import { RESPONSE_MAP } from '../../common/index';
+import Dialog from '@vant/weapp/dialog/dialog';
 
 const app = getApp<IAppOption>()
 
 Page({
   data: {
     barhHeight: 0,
+    connected: false, //  是否连接蓝牙
     chargeSwitch: false,    //  充电开关
     electric_current_max: '', //  最大输出电流
     voltage_max: '',  //  最大输出电压
@@ -46,6 +48,7 @@ Page({
     // })
     this.setData({
         isDebugModel: app.globalData.isDebugModel || false,
+        connected: app.globalData.connected || false,
         // chargeLineSettingDataList: [
         //     { voltage_min: 1, eleCurrent: 1, voltage_max: 10 },
         //     { voltage_min: 10, eleCurrent: 5, voltage_max: 20 },
@@ -154,6 +157,21 @@ Page({
     })
     
     this.getBaseInfo()
+
+    if (!app.globalData.connected) {
+        Dialog.alert({
+            title: '设备连接',
+            message: '暂无设备连接,请连接设备',
+            // theme: 'round-button',
+            confirmButtonText: '连接设备',
+            confirmButtonColor: 'green',
+          }).then(() => {
+            // on close
+            wx.navigateTo({
+                url: '/pages/setting_center/device_manage/device_manage',
+            })
+          });
+    }
   },
   async getBaseInfo() {
     const {
