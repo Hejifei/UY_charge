@@ -24,6 +24,7 @@ Page({
     barhHeight: 0,
     connected: false, //  是否连接蓝牙
     chargeSwitch: false,    //  充电开关
+    chargeFullEndSwitch: false, //  充满关断
     electric_current_max: '', //  最大输出电流
     voltage_max: '',  //  最大输出电压
     charge_time: '',  //  充电定时
@@ -89,12 +90,14 @@ Page({
             console.log({
                 info,
             })
+            const chargeSwitchInfo = this.parseCodeValueToChargeSwitchValue(info.chargeSwitchValue)
             //  @ts-ignore
             this.setData({
                 voltage_max: info.maximumVoltage,
                 electric_current_max: info.maximumCurrent,
                 charge_time: info.chargingTiming,
-                chargeSwitch: info.chargeSwitchValue === 1,
+                // chargeSwitch: info.chargeSwitchValue === 1,
+                ...chargeSwitchInfo,
             })
         } else if (value.startsWith('55590301')) {
             const resultCode = analyzeProtocolCodeMessage(value, '0301')
@@ -173,6 +176,41 @@ Page({
           });
     }
   },
+  parseChargeSwitchValueToCode() {
+    const {
+        chargeSwitch,
+        chargeFullEndSwitch,
+    } = this.data
+    let codeValue = 1
+    //  充电开关 开 充满关断 开 对应指令 01
+    //  充电开关 关 充满关断 开 对应指令 02
+    //  充电开关 开 充满关断 关 对应指令 03
+    //  充电开关 关 充满关断 关 对应指令 04
+    if (chargeSwitch && chargeFullEndSwitch) {
+        codeValue = 1;
+    } else if (!chargeSwitch && chargeFullEndSwitch) {
+        codeValue = 2;
+    } else if (chargeSwitch && !chargeFullEndSwitch) {
+        codeValue = 3;
+    } else if (!chargeSwitch && !chargeFullEndSwitch) {
+        codeValue = 4;
+    }
+    return codeValue
+  },
+  parseCodeValueToChargeSwitchValue(value: number) {
+    let chargeSwitch = false
+    let chargeFullEndSwitch = false
+    if ([1, 3].includes(value)) {
+        chargeSwitch = true
+    }
+    if ([1, 2].includes(value)) {
+        chargeFullEndSwitch = true
+    }
+    return {
+        chargeSwitch,
+        chargeFullEndSwitch,
+    }
+  },
   async getBaseInfo() {
     const {
         deviceId,
@@ -239,6 +277,10 @@ Page({
   onChargeSwitchChange({ detail }: {detail: boolean}) {
     // 需要手动对 checked 状态进行更新
     this.setData({chargeSwitch: detail});
+  },
+  onChargeFullEndSwitchChange({ detail }: {detail: boolean}) {
+    // 需要手动对 checked 状态进行更新
+    this.setData({chargeFullEndSwitch: detail});
   },
   clearElectricCurrentValue(isVoltage: boolean) {
     const {
@@ -338,9 +380,10 @@ Page({
   },
   //    设置充电器输出电流、电压
   setChargerVoltageAndCurrent() {
-    const electric_current_max = this.data.electric_current_max
-    const voltage_max = this.data.voltage_max
-    const chargeSwitch = this.data.chargeSwitch
+    // const electric_current_max = this.data.electric_current_max
+    // const voltage_max = this.data.voltage_max
+    // const chargeSwitch = this.data.chargeSwitch
+    const chargeSwitch = this.parseChargeSwitchValueToCode();
     const {
         deviceId,
         serviceId,
@@ -349,18 +392,27 @@ Page({
     if (!deviceId || !serviceId || !characteristicId) {
         return
     }
+    // const buffer = parseProtocolCodeMessage(
+    //     '02',
+    //     '06',
+    //     '0002',
+    //     parse10To16(chargeSwitch ? 1 : 2, 1) +
+    //     '00' +
+    //     parse10To16(parseVoltageOrCurrentVTo10mV(parseFloat(voltage_max)), 2) + 
+    //     parse10To16(parseVoltageOrCurrentVTo10mV(parseFloat(electric_current_max)), 2)
+    // )
+    // console.log({
+    //     buffer,
+    // }, '保存最大输出电流、电压')
     const buffer = parseProtocolCodeMessage(
         '02',
-        '06',
+        '01',
         '0002',
-        parse10To16(chargeSwitch ? 1 : 2, 1) +
-        '00' +
-        parse10To16(parseVoltageOrCurrentVTo10mV(parseFloat(voltage_max)), 2) + 
-        parse10To16(parseVoltageOrCurrentVTo10mV(parseFloat(electric_current_max)), 2)
+        parse10To16(chargeSwitch ? 1 : 2, 1)
     )
     console.log({
         buffer,
-    }, '保存最大输出电流、电压')
+    }, '保存开关')
     try {
         writeAndReadBLECharacteristicValue(
             deviceId,
@@ -415,53 +467,53 @@ Page({
     const voltage_max = +this.data.voltage_max
     const chargeSwitch = this.data.chargeSwitch
     const configDefault = this.data.configDefault
-    const {
-        output_voltage_ranage,
-        output_current_ranage,
-    } = configDefault
-    if (!output_voltage_ranage || !output_current_ranage) {
-        wx.showToast({
-            title: '请配置最大输出电流或输出电压数据范围',
-            icon: "none",
-            duration: 3000
-        })
-        return
-    }
+    // const {
+    //     output_voltage_ranage,
+    //     output_current_ranage,
+    // } = configDefault
+    // if (!output_voltage_ranage || !output_current_ranage) {
+    //     wx.showToast({
+    //         title: '请配置最大输出电流或输出电压数据范围',
+    //         icon: "none",
+    //         duration: 3000
+    //     })
+    //     return
+    // }
     
-    const [output_voltage_min, output_voltage_max] = output_current_ranage.split('-')
-    const [output_current_min, output_current_max] = output_current_ranage.split('-')
-    if (isUndefined(electric_current_max) || isNull(electric_current_max)) {
-        wx.showToast({
-            title: '请输入最大输出电流',
-            icon: "none",
-            duration: 3000
-        })
-        return
-    }
-    if (electric_current_max < output_current_min || electric_current_max > output_current_max) {
-        wx.showToast({
-            title: `请确保最大输出电流在${output_current_min}-${output_current_max}之间`,
-            icon: "none",
-            duration: 3000
-        })
-        return
-    }
-    if (isUndefined(voltage_max) || isNull(voltage_max)) {
-        wx.showToast({
-            title: '请输入最大输出电压',
-            icon: "none",
-            duration: 3000
-        })
-        return
-    }
-    if (voltage_max < output_voltage_min || voltage_max > output_voltage_max) {
-        wx.showToast({
-            title: `请确保最大输出电压在${output_voltage_min}-${output_voltage_max}之间`,
-            icon: "none",
-            duration: 3000
-        })
-        return
-    }
+    // const [output_voltage_min, output_voltage_max] = output_current_ranage.split('-')
+    // const [output_current_min, output_current_max] = output_current_ranage.split('-')
+    // if (isUndefined(electric_current_max) || isNull(electric_current_max)) {
+    //     wx.showToast({
+    //         title: '请输入最大输出电流',
+    //         icon: "none",
+    //         duration: 3000
+    //     })
+    //     return
+    // }
+    // if (electric_current_max < output_current_min || electric_current_max > output_current_max) {
+    //     wx.showToast({
+    //         title: `请确保最大输出电流在${output_current_min}-${output_current_max}之间`,
+    //         icon: "none",
+    //         duration: 3000
+    //     })
+    //     return
+    // }
+    // if (isUndefined(voltage_max) || isNull(voltage_max)) {
+    //     wx.showToast({
+    //         title: '请输入最大输出电压',
+    //         icon: "none",
+    //         duration: 3000
+    //     })
+    //     return
+    // }
+    // if (voltage_max < output_voltage_min || voltage_max > output_voltage_max) {
+    //     wx.showToast({
+    //         title: `请确保最大输出电压在${output_voltage_min}-${output_voltage_max}之间`,
+    //         icon: "none",
+    //         duration: 3000
+    //     })
+    //     return
+    // }
     const charge_time = +this.data.charge_time
     if (isUndefined(charge_time) || isNull(charge_time)) {
         wx.showToast({

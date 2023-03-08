@@ -48,7 +48,7 @@
             <div class="infoItem">
                 <div class="infoTitleWrapper">
                     <image src="../../assets/imgs/base_info_icons/work_model.png" />
-                    启动模式
+                    充电模式
                 </div>
                 <div class="resultWrapper">
                     <!-- 充电模式 -->
@@ -81,7 +81,7 @@
             <div class="infoItem">
                 <div class="infoTitleWrapper">
                     <image src="../../assets/imgs/base_info_icons/battery_capacity.png" />
-                    电池容量
+                    充电容量
                 </div>
                 <div class="resultWrapper">
                     <!-- 520 -->

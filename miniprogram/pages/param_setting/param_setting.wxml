@@ -12,7 +12,14 @@
                     bind:change="onChargeSwitchChange"
                 />
             </van-cell>
-            <van-field
+            <van-cell title="充满关断" center border="{{ false }}">
+                <van-switch
+                    slot="right-icon"
+                    checked="{{chargeFullEndSwitch}}"
+                    bind:change="onChargeFullEndSwitchChange"
+                />
+            </van-cell>
+            <!-- <van-field
                 model:value="{{electric_current_max}}"
                 center
                 clearable
@@ -49,7 +56,7 @@
                     color="#ECC057"
                     bindtap="resetVoltage">
                 </van-button>
-            </van-field>
+            </van-field> -->
             <van-field
                 model:value="{{charge_time}}"
                 center
@@ -80,8 +87,8 @@
         </div>
     </div>
     <blank height="10" />
+    <!-- wx:if="{{isDebugModel}}" -->
     <charge-line-setting
-        wx:if="{{isDebugModel}}"
         voltage_range_max="{{voltage_max}}"
         current_range_max="{{electric_current_max}}"
         chargeLineSettingDataList="{{chargeLineSettingDataList}}"

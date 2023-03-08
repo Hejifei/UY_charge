@@ -156,14 +156,14 @@ Component({
             //     voltage_range_max,
             //     chargeLineSettingDataList,
             // })
-            if (!current_range_max || !voltage_range_max) {
-                wx.showToast({
-                    title: '请优先设置最大输出电流、最大输出电压!',
-                    icon: "none",
-                    duration: 2000
-                });
-                return
-            }
+            // if (!current_range_max || !voltage_range_max) {
+            //     wx.showToast({
+            //         title: '请优先设置最大输出电流、最大输出电压!',
+            //         icon: "none",
+            //         duration: 2000
+            //     });
+            //     return
+            // }
             current_range_max = parseFloat(current_range_max)
             voltage_range_max = parseFloat(voltage_range_max)
             let errorText = ''
@@ -188,11 +188,11 @@ Component({
                     break
                 }
                 if (voltage_min > voltage_range_max || voltage_max > voltage_range_max) {
-                    errorText = `节点${i + 1}: 起始电压或结束电压不能大于最大输出电压`
+                    errorText = `节点${i + 1}: 起始电压或结束电压不能大于最大输出电压 ${voltage_range_max}`
                     break
                 }
                 if (eleCurrent > current_range_max ) {
-                    errorText = `节点${i + 1}: 电流不能大于最大输出电流`
+                    errorText = `节点${i + 1}: 电流不能大于最大输出电流 ${current_range_max}`
                     break
                 }
             }

@@ -63,7 +63,7 @@
                 <div class="resultWrapper">{{testData.shortCircuitProtection}}</div>
             </div>
             <div class="infoItem">
-                <div class="infoTitleWrapper">累计反馈</div>
+                <div class="infoTitleWrapper">累计反接</div>
                 <image src="../../../assets/imgs/test_data/count_of_back.png" />
                 <div class="resultWrapper">{{testData.reversePolarityProtection}}</div>
             </div>
