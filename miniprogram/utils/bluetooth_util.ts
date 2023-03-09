@@ -44,7 +44,12 @@ export const bluetoothInit = async (
                 console.log({res})
                 // 蓝牙开关未开启或手机不支持蓝牙时，会返回错误 (errCode=10001)
                 if (res.errCode === 10001) {
-                    Toast.fail('蓝牙开关未开启或手机不支持蓝牙');
+                    // Toast.fail('蓝牙开关未开启或手机不支持蓝牙');
+                    wx.showToast({
+                        title: '未开启或手机不支持蓝牙',
+                        icon: "error",
+                        duration: 2000,
+                    });
                     // wx.onBluetoothAdapterStateChange 监听手机蓝牙状态的改变，也可以调用蓝牙模块的所有API。开发者在开发中应该考虑兼容用户在使用小程序过程中打开/关闭蓝牙开关的情况，并给出必要的提示，提高可用性。
                     wx.onBluetoothAdapterStateChange(function (res) {
                         console.log('onBluetoothAdapterStateChange', res)
@@ -55,7 +60,7 @@ export const bluetoothInit = async (
                         // 开始搜寻附近的蓝牙外围设备
                         // that.startBluetoothDevicesDiscovery()
                         if (failWhenBluetootoOpenCallback) {
-                            failWhenBluetootoOpenCallback()
+                            // failWhenBluetootoOpenCallback()
                         }
                     })
                 } else if (res.errMsg === 'openBluetoothAdapter:fail already opened') {
@@ -74,12 +79,14 @@ export const listenConnection = () => {
     wx.onBLEConnectionStateChange(function(res) {
       console.log("connectState", res);
       if (res.connected) {
-        Toast.success('连接成功!');
+        // Toast.success('连接成功!');
+        console.log('连接成功')
         // that.showToast({
         //   title: "连接成功",
         // })
       } else {
-        Toast.fail('连接断开')
+        console.log('连接断开')
+        // Toast.fail('连接断开')
         // that.showToast({
         //   title: "连接断开",
         // })
