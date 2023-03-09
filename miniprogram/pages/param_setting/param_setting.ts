@@ -389,9 +389,6 @@ Page({
         serviceId,
         characteristicId,
     } = app.globalData
-    if (!deviceId || !serviceId || !characteristicId) {
-        return
-    }
     // const buffer = parseProtocolCodeMessage(
     //     '02',
     //     '06',
@@ -408,11 +405,14 @@ Page({
         '02',
         '01',
         '0002',
-        parse10To16(chargeSwitch ? 1 : 2, 1)
+        parse10To16(chargeSwitch, 1)
     )
     console.log({
         buffer,
     }, '保存开关')
+    if (!deviceId || !serviceId || !characteristicId) {
+        return
+    }
     try {
         writeAndReadBLECharacteristicValue(
             deviceId,
