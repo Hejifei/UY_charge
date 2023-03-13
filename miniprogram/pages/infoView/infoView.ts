@@ -223,6 +223,9 @@ Page({
             '0000',
             ''
         )
+        console.log({
+            buffer,
+        }, '获取常规信息')
         try {
             writeAndReadBLECharacteristicValue(
                 deviceId,

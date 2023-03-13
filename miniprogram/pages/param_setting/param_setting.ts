@@ -64,6 +64,10 @@ Page({
         //     // { voltage: 1, eleCurrent: 1 },
         // ]
     })
+    console.log({
+        connected: app.globalData.connected,
+        dataconnected: this.data.connected,
+    }, 'onShow')
     const that = this
     wx.getSystemInfo({
         success(res) {

@@ -149,6 +149,14 @@ Page({
         const deviceInfo = this.data.historyDeviceList.filter(
             (item) => item.deviceId === deviceId
         )[0] as IHistoryDeviceItem;
+        if (!deviceInfo) {
+            wx.showToast({
+                title: '无可连接设备',
+                icon: "error",
+                duration: 2000,
+            });
+            return
+        }
         try {
             await createBLEConnection(deviceId);
             if (deviceInfo.notify) {
@@ -158,14 +166,14 @@ Page({
                     deviceInfo.notify.characteristicId
                 );
             }
-            if (deviceInfo.write) {
-                getApp().globalData.connected = true;
-                getApp().globalData.deviceName = name;
-                getApp().globalData.deviceId = deviceId;
-                getApp().globalData.serviceId = deviceInfo.write.serviceId;
-                getApp().globalData.characteristicId =
-                    deviceInfo.write.characteristicId;
-            }
+            // if (deviceInfo.write) {
+            getApp().globalData.connected = true;
+            getApp().globalData.deviceName = name;
+            getApp().globalData.deviceId = deviceId;
+            getApp().globalData.serviceId = deviceInfo.write.serviceId;
+            getApp().globalData.characteristicId =
+                deviceInfo.write.characteristicId;
+            // }
             this.setData({
                 connected: deviceId,
             });
