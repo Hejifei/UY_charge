@@ -4,6 +4,7 @@
         "van-button": "@vant/weapp/button/index",
         "van-cell": "@vant/weapp/cell/index",
         "van-field": "@vant/weapp/field/index",
+        "van-dialog": "@vant/weapp/dialog/index",
         "blank": "/components/blank/blank"
     }
 }

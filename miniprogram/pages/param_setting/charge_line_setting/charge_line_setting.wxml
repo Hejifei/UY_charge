@@ -1,7 +1,7 @@
 <view class="chargeLineSettingWrapper">
     <view class="titleWrapper">
         充电曲线设置
-        <span>(间隔10min)</span>
+        <!-- <span>(间隔10min)</span> -->
     </view>
     <div class="settingContent">
         <div class="settingItem">
@@ -17,7 +17,13 @@
             wx:for-item="item"
             wx:key="idx"
         >
-            <div class="label">节点{{idx + 1}}</div>
+            <div
+                class="label"
+                data-index="{{idx}}"
+                bindtap="handleDomDeleteClick"
+            >
+                节点{{idx + 1}}
+            </div>
             <div class="voltageInput">
                 <van-field
                     center
@@ -78,4 +84,6 @@
         >曲线重置</van-button>
     </div>
     <blank height="10" />
+
+    <van-dialog id="van-dialog" />
 </view>

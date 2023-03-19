@@ -27,6 +27,8 @@ Component({
     },
     data: {
         lastTapTime: 0,
+        deleteLastTapIndex: undefined,
+        deleteLastTapTime: 0,
     },
     ready() {
         // const chargeCountData = analyzeProtocolCodeMessage('5559052a10000a00640064006400640064006400640064006400640064006400640064006400640064006400640064AC06', '052a1000')
@@ -275,6 +277,62 @@ Component({
             //更新点击时间
             this.setData({
                 lastTapTime: currentTime,
+            })
+        },
+        handleLineDataDelete(index: number) {
+            const chargeLineSettingDataList = this.data.chargeLineSettingDataList
+            const chargeLineSettingDataListNew = [...chargeLineSettingDataList]
+            if (index === 0 && chargeLineSettingDataList.length > 1) {
+                const nextChargeLineData = chargeLineSettingDataList[index + 1]
+                chargeLineSettingDataListNew[index + 1] = {
+                    ...nextChargeLineData,
+                    voltage_min: chargeLineSettingDataListNew[0].voltage_min,
+                    eleCurrent: chargeLineSettingDataListNew[0].eleCurrent,
+                }
+            } else if (index && index < (chargeLineSettingDataList.length - 1)) {
+                const beforeData = chargeLineSettingDataList[index - 1]
+                chargeLineSettingDataListNew[index + 1] = {
+                    ...chargeLineSettingDataList[index + 1],
+                    voltage_min: beforeData.voltage_max,
+                }
+            }
+            chargeLineSettingDataListNew.splice(index, 1)
+            this.setData({
+                chargeLineSettingDataList: chargeLineSettingDataListNew
+            })
+        },
+        handleDomDeleteClick(e) {
+            const index = e.target.dataset.index;
+            const {
+                deleteLastTapTime,
+                deleteLastTapIndex,
+            } = this.data
+            let currentTime = moment().valueOf()
+            if ((currentTime - deleteLastTapTime < 800) && index === deleteLastTapIndex) {
+                //执行双击操作
+                // this.handleLineDataAdd()
+                
+                Dialog.confirm({
+                    title: "操作",
+                    message: `是否确认删除 节点${index + 1}`,
+                })
+                .then(() => {
+                    this.handleLineDataDelete(index)
+                this.setData({
+                    deleteLastTapIndex: undefined,
+                    deleteLastTapTime: 0,
+                })
+                })
+                .catch(() => {
+                    // console.log('error')
+                    // on cancel
+                });
+                return
+            }
+            //更新点击时间
+            this.setData({
+                deleteLastTapTime: currentTime,
+                deleteLastTapIndex: index,
             })
         }
     }
