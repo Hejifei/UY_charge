@@ -65,6 +65,7 @@ Page({
                 },
             });
         }, 
+        intervalRef: undefined,
     },
     onShow() {
         
@@ -201,6 +202,15 @@ Page({
 
         
         this.getBaseInfo()
+        this.intervalRef = setInterval(() => {
+            this.getBaseInfo()
+        }, 1000 * 3)
+    },
+    onHide() {
+        clearInterval(this.intervalRef)
+    },
+    onUnload() {
+        clearInterval(this.intervalRef)
     },
     parseValueTextShow(value: any) {
         if (isUndefined(value) || isNull(value)) {
