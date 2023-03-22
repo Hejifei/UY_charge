@@ -5,6 +5,8 @@ import {
     createBLEConnection,
     notifyBLECharacteristicValueChange,
     closeBLEConnection,
+    getBLEDeviceServices,
+    getBLEDeviceCharacteristics,
 } from "../../../utils/bluetooth_util";
 const app = getApp<IAppOption>();
 
@@ -159,6 +161,19 @@ Page({
         }
         try {
             await createBLEConnection(deviceId);
+            const { services } = await getBLEDeviceServices(deviceId);
+            for (let i = services.length - 1; i >= 0; i--) {
+                if (services[i].isPrimary) {
+                  const serviceId = services[i].uuid;
+                  await getBLEDeviceCharacteristics(
+                    deviceId,
+                    serviceId
+                  );
+                }
+              }
+            console.log({
+                deviceInfo,
+            })
             if (deviceInfo.notify) {
                 await notifyBLECharacteristicValueChange(
                     deviceId,
