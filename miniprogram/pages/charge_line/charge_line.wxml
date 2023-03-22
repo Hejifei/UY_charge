@@ -27,4 +27,14 @@
         </div>
     </div>
     <van-dialog id="van-dialog" />
+    <van-dialog
+        message='暂无设备连接,请连接设备'
+        title="设备连接"
+        show="{{ !connected }}"
+        bind:close="changePageToDeviceManage"
+        confirmButtonText="连接设备"
+        confirmButtonColor='green'
+        >
+        暂无设备连接,请连接设备
+    </van-dialog>
 </view>

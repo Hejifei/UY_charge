@@ -165,20 +165,30 @@ Page({
     
     this.getBaseInfo()
 
-    if (!app.globalData.connected) {
-        Dialog.alert({
-            title: '设备连接',
-            message: '暂无设备连接,请连接设备',
-            // theme: 'round-button',
-            confirmButtonText: '连接设备',
-            confirmButtonColor: 'green',
-          }).then(() => {
-            // on close
-            wx.navigateTo({
-                url: '/pages/setting_center/device_manage/device_manage',
-            })
-          });
-    }
+    console.log({
+        app,
+        globalData: app.globalData,
+        connected: app.globalData.connected,
+    })
+    // if (!app.globalData.connected) {
+    //     Dialog.alert({
+    //         title: '设备连接',
+    //         message: '暂无设备连接,请连接设备',
+    //         // theme: 'round-button',
+    //         confirmButtonText: '连接设备',
+    //         confirmButtonColor: 'green',
+    //       }).then(() => {
+    //         // on close
+    //         wx.navigateTo({
+    //             url: '/pages/setting_center/device_manage/device_manage',
+    //         })
+    //       });
+    // }
+  },
+  changePageToDeviceManage() {
+    wx.navigateTo({
+        url: '/pages/setting_center/device_manage/device_manage',
+    })
   },
   parseChargeSwitchValueToCode() {
     const {
