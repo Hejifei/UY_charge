@@ -204,7 +204,7 @@ Page({
         this.getBaseInfo()
         this.intervalRef = setInterval(() => {
             this.getBaseInfo()
-        }, 1000 * 3)
+        }, 1000 * 10)
     },
     onHide() {
         clearInterval(this.intervalRef)

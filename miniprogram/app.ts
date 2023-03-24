@@ -105,21 +105,21 @@ App<IAppOption>({
           //   title: "连接成功",
           // })
         } else {
-          if (this.globalData.deviceId && this.globalData.reConnectedTimes <= 5) {
-            this.globalData.reConnectedTimes = this.globalData.reConnectedTimes + 1
-            const deviceId = this.globalData.deviceId;
-            console.log({
-              deviceId,
-            });
-            // bluetoothInit()
-            wx.createBLEConnection({
-              deviceId,
-              success(res) {
-                //   console.log(res)
-                console.log("蓝牙重连成功!");
-              },
-            });
-          } else if (this.globalData.deviceId && this.globalData.reConnectedTimes > 5) {
+        //   if (this.globalData.deviceId && this.globalData.reConnectedTimes <= 5) {
+        //     this.globalData.reConnectedTimes = this.globalData.reConnectedTimes + 1
+        //     const deviceId = this.globalData.deviceId;
+        //     console.log({
+        //       deviceId,
+        //     });
+        //     // bluetoothInit()
+        //     wx.createBLEConnection({
+        //       deviceId,
+        //       success(res) {
+        //         //   console.log(res)
+        //         console.log("蓝牙重连成功!");
+        //       },
+        //     });
+        //   } else if (this.globalData.deviceId && this.globalData.reConnectedTimes > 5) {
             // 重连5次仍然失败,断开连接,给出提示
             this.globalData = {
                 ...this.globalData,
@@ -136,19 +136,7 @@ App<IAppOption>({
                 duration: 3000
             });
 
-          }
-
-          // this.globalData = {
-          //     ...this.globalData,
-          //     deviceName: undefined,
-          //     deviceId: undefined,
-          //     serviceId: undefined,
-          //     characteristicId: undefined,
-          // }
-          // Toast.fail('连接断开')
-          // that.showToast({
-          //   title: "连接断开",
-          // })
+        //   }
         }
       });
     };

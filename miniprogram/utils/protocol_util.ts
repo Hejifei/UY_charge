@@ -134,15 +134,18 @@ export const parseProtocolCodeToChargerInfo = (code: string) => {
 }
 
 //  充电曲线
-export const parseProtocolCodeToChargeCountData = (code: string) => {
+export const parseProtocolCodeToChargeCountData = (
+    code: string,
+    countOfData: number,
+) => {
   const spaceMin = parse16To10(code.substr(0, 2 * 1))
   const data: {
     value: number
     name: string
     time: string
   }[] = []
-  for (let i = 0; i < 10; i++) {
-    const time = moment().subtract((9 - i) * spaceMin, 'minute').format('hh:mm')
+  for (let i = 0; i < countOfData; i++) {
+    const time = moment().subtract((countOfData - 1 - i) * spaceMin, 'minute').format('hh:mm')
     data.push(...[
       {
         value: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(2 + 4 * i, 2 * 2))),
@@ -150,7 +153,7 @@ export const parseProtocolCodeToChargeCountData = (code: string) => {
         time,
       },
       {
-        value: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(42 + 4 * i, 2 * 2))),
+        value: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(2 + countOfData * 4 + 4 * i, 2 * 2))),
         name: '电流',
         time,
       }

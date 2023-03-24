@@ -30,25 +30,44 @@
         </div>
     </div>
     <div class="historyListWrapper">
-        <div
-            class="historyItem {{item.deviceId === connected ? 'conndecteditem' : ''}}"
+        <van-swipe-cell
+            right-width="{{ 65 }}"
             wx:for="{{historyDeviceList}}"
             wx:for-index="idx"
             wx:for-item="item"
             wx:key="deviceId"
-            data-device-id="{{item.deviceId}}"
-            data-name="{{item.name}}"
-            bindtap="createBLEConnection"
         >
-            <div class="nameWrapper">
-                <image src="{{item.deviceId === connected ? '/assets/imgs/device_manage/icon_bluetooth_connected.png' : '/assets/imgs/device_manage/icon_bluetooth_unconnect.png'}}" />
-                {{item.name}}
-            </div>
-            <div
-                class="connectedText"
-                wx:if="{{item.deviceId === connected}}"
-            >已连接</div>
-        </div>
+            <van-cell-group>
+                <!-- <van-cell title="单元格" value="内容" /> -->
+                <div
+                    class="historyItem {{item.deviceId === connected ? 'conndecteditem' : ''}}"
+                    
+                    data-device-id="{{item.deviceId}}"
+                    data-name="{{item.name}}"
+                    bindtap="createBLEConnection"
+                >
+                    <div class="nameWrapper">
+                        <image src="{{item.deviceId === connected ? '/assets/imgs/device_manage/icon_bluetooth_connected.png' : '/assets/imgs/device_manage/icon_bluetooth_unconnect.png'}}" />
+                        {{item.name}}
+                    </div>
+                    <div
+                        class="connectedText"
+                        wx:if="{{item.deviceId === connected}}"
+                    >已连接</div>
+                </div>
+            </van-cell-group>
+            <view slot="right">
+                <van-button
+                    type="danger"
+                    size="large"
+                    custom-style="width: 65px;"
+                    data-device-id="{{item.deviceId}}"
+                    data-name="{{item.name}}"
+                    bindtap="removeDevice"
+                >删除</van-button>
+            </view>
+        </van-swipe-cell>
+        
         <van-empty
             wx:if="{{historyDeviceList.length === 0}}"
             description="暂无历史设备"

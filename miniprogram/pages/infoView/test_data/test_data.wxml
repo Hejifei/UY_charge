@@ -22,7 +22,7 @@
                 <div class="infoTitleWrapper">累计开机</div>
                 <image src="../../../assets/imgs/test_data/start_up.png" />
                 <div class="resultWrapper">
-                    {{testData.countOfStartup}} <div class="unitWrapper"></div>
+                    {{testData.countOfStartup}} <div class="unitWrapper">H</div>
                 </div>
             </div>
             <div class="infoItem">

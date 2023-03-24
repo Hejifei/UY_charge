@@ -4,6 +4,7 @@ import {
   analyzeProtocolCodeMessage,
   parseProtocolCodeToChargeCountData,
   ab2hex,
+  parse16To10,
 } from '../../utils/protocol_util'
 import Chart from './chart';
 import { createElement } from '@antv/f2';
@@ -49,6 +50,7 @@ Page({
           data: [],
         });
     },
+    noDataText: '暂无数据',
     isNoData: true,
   },
   onLoad() {
@@ -74,14 +76,20 @@ Page({
             res,
             value,
         }, '收到数据 onBLECharacteristicValueChange -------')
-        if (value.startsWith('55590a293000')) {
+        if (value.startsWith('55590a013000')) {
+            this.setData({
+                noDataText: '无充电记录数据',
+            })
+        } else if (value.startsWith('55590a')) {
             //  读取充电器信息
             // todo
             const baseInfoResponseData = analyzeProtocolCodeMessage(value, '0a293000')
-            console.log({
-                baseInfoResponseData,
+            const dataLength = parse16To10(value.substring(6, 8))
+            const countOfData = (dataLength - 1) / 4;
+            this.setData({
+                noDataText: '暂无数据'
             })
-            this.renderChart(baseInfoResponseData)
+            this.renderChart(baseInfoResponseData, countOfData)
         }
     })
     this.setData({
@@ -102,6 +110,15 @@ Page({
     //         })
     //       });
     // }
+
+    // const value = '55590A09300005055D055F01F001F3D027'
+    // const baseInfoResponseData = analyzeProtocolCodeMessage(value, '0A093000')
+    // const dataLength = parse16To10(value.substring(6, 8))
+    // const countOfData = (dataLength - 1) / 4;
+    // this.setData({
+    //     noDataText: '暂无数据'
+    // })
+    // this.renderChart(baseInfoResponseData, countOfData)
   },
   changePageToDeviceManage() {
     wx.navigateTo({
@@ -126,7 +143,7 @@ Page({
     //  读取充电统计数据
     const buffer = parseProtocolCodeMessage(
       '0A',
-      '29',
+      'ff',
       '3000',
       ''
     )
@@ -144,7 +161,7 @@ Page({
       console.log({err}, 'getBaseInfoData')
     }
   },
-  renderChart(value: string) {
+  renderChart(value: string, countOfData: number) {
     // const chargeCountData =  analyzeProtocolCodeMessage('0a00160018001a001c001e00200022002400260028000b000c000d000e000f00100011001200130014', '0A293000')
     // const chargeCountData =  analyzeProtocolCodeMessage('55590A2930000A07D00836089C0901096109CE0A2F0A8C0AEF00000BB80BB30BB10BB50BBD0BB90BAE0BA40BA10000A399', '0A293000')
     // const chargeCountData =  analyzeProtocolCodeMessage(value, '0A293000')
@@ -156,7 +173,7 @@ Page({
     if (!value) {
         return
     }
-    const data = parseProtocolCodeToChargeCountData(value)
+    const data = parseProtocolCodeToChargeCountData(value, countOfData)
     console.log({
         value,
         data,

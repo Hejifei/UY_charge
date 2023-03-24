@@ -10,7 +10,7 @@
         </view> -->
         <van-empty
             wx:if="{{isNoData}}"
-            description="暂无数据"
+            description="{{noDataText}}"
         />
         <view class="chartContainer" wx:if="{{!isNoData}}">
             <f2

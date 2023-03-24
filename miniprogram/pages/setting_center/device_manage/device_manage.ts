@@ -1,5 +1,5 @@
 import { Request } from "../../../utils/request";
-import { getHistoryDevices } from "../../../utils/util";
+import { getHistoryDevices, setHistoryDevices } from "../../../utils/util";
 import Dialog from "@vant/weapp/dialog/dialog";
 import {
     createBLEConnection,
@@ -8,6 +8,7 @@ import {
     getBLEDeviceServices,
     getBLEDeviceCharacteristics,
 } from "../../../utils/bluetooth_util";
+import { isUndefined } from "miniprogram/utils/lodash";
 const app = getApp<IAppOption>();
 
 Page({
@@ -224,4 +225,42 @@ Page({
             url: "/pages/setting_center/device_add/device_add",
         });
     },
+    removeDevice(e: any) {
+        const ds = e.currentTarget.dataset;
+        const deviceId = ds.deviceId;
+        const name = ds.name;
+
+        Dialog.confirm({
+            title: "删除设备?",
+            message: "此操作将删除以下设备: " + name,
+        })
+        .then(async () => {
+            console.log('delete')
+            const deviceHistory = await getHistoryDevices();
+            let index = -1;
+            deviceHistory.forEach((item, idx) => {
+                if (item.deviceId === deviceId) {
+                    index = idx
+                }
+            })
+            if (index !== -1) {
+                deviceHistory.splice(index, 1)
+            }
+
+            // if (!deviceHistory.filter((item) => item.deviceId === deviceId).length) {
+            //     deviceHistory.push(deviceInfo);
+            // }
+            setHistoryDevices(deviceHistory);
+            this.getDeviceList();
+            wx.showToast({
+                title: "设备已删除!",
+                icon: "success",
+                duration: 2000,
+            });
+        })
+        .catch(() => {
+            // console.log('error')
+            // on cancel
+        });
+    }
 });
