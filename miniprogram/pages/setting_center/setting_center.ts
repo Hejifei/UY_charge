@@ -1,3 +1,4 @@
+import Dialog from "@vant/weapp/dialog/dialog";
 import { Request } from '../../utils/request'
 import {parseApiUrl} from '../../utils/util'
 const app = getApp<IAppOption>()
@@ -48,6 +49,30 @@ Page({
     this.upload_file(avatarUrl)
   },
   handleDebugCodeModalVisible() {
+      if (this.data.isDebugModel) {
+          
+        Dialog.confirm({
+            title: "退出调试模式?",
+            message: "是否确认退出调试模式?",
+        })
+        .then(async () => {
+            getApp().globalData.isDebugModel = false
+            this.setData({
+                debugCode: '',
+                isDebugModel: app.globalData.isDebugModel,
+            })
+            wx.showToast({
+                title: "退出调试模式成功!",
+                icon: "success",
+                duration: 2000,
+            });
+        })
+        .catch(() => {
+            // console.log('error')
+            // on cancel
+        });
+        return
+      }
     this.setData({ isDebugModeVisible: true });
   },
   closeDebugCodeModal() {

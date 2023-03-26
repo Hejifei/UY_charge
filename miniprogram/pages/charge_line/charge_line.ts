@@ -119,6 +119,7 @@ Page({
     //     noDataText: '暂无数据'
     // })
     // this.renderChart(baseInfoResponseData, countOfData)
+    
   },
   changePageToDeviceManage() {
     wx.navigateTo({

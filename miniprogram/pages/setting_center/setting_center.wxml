@@ -76,4 +76,6 @@
             </div>
         </div>
     </van-dialog>
+
+    <van-dialog id="van-dialog" />
 </view>
