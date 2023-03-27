@@ -2,6 +2,7 @@ import {
   bluetoothInit,
   getBluetoothAdapterState,
 } from "./utils/bluetooth_util";
+import {checkWechatVersion} from './utils/checkVersion'
 import { Request } from "./utils/request";
 import { setUserToken } from "./utils/util";
 
@@ -156,5 +157,7 @@ App<IAppOption>({
     //         setChargerInfo(chargerInfo)
     //     }
     // })
+
+    checkWechatVersion()
   },
 });

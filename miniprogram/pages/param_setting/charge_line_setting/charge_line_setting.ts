@@ -223,7 +223,7 @@ Component({
                 parse10To16(1 + 2 + 4 * this.data.chargeLineSettingDataList.length),
                 '1000',
                 dataCode
-            )
+            ).toUpperCase()
             // buffer = '5559050B10000203E803E807D004B009C4EEDB'
             // buffer = '5559050B100002000003E805DC0BB80B6822F8'
             console.log({

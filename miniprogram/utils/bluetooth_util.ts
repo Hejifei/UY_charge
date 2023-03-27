@@ -364,6 +364,18 @@ export const readBLECharacteristicValue = (
     }) as Promise<WechatMiniprogram.BluetoothError>
 }
 
+const split_array = (
+    arr: any,
+    len: number,
+) => {
+    var a_len = arr.byteLength;
+    var result = [];
+    for (var i = 0; i < a_len; i += len) {
+        result.push(arr.slice(i, i + len));
+    }
+    return result;
+}
+
 export const writeAndReadBLECharacteristicValue = async (
     deviceId: string,
     serviceId: string,
@@ -373,16 +385,56 @@ export const writeAndReadBLECharacteristicValue = async (
     return new Promise(async (resolve, reject) => {
         // const buffer = string2Buffer('5559011E000071E9')
         const buffer = string2Buffer(value)
-        // console.log('发送协议码', {
-        //     buffer,
-        // })
+        console.log('发送协议码', {
+            buffer,
+        })
         try {
-            await writeBLECharacteristicValue(
-                deviceId,
-                serviceId,
-                characteristicId,
-                buffer
-            )
+            if (buffer.byteLength > 20) {
+                var result = split_array(buffer, 20);
+                console.log('分包后的数组', result, new Date());
+                // writeData(result[0]); //写入第一条数据
+                await writeBLECharacteristicValue(
+                    deviceId,
+                    serviceId,
+                    characteristicId,
+                    result[0]
+                )
+                // await readBLECharacteristicValue(
+                //     deviceId,
+                //     serviceId,
+                //     characteristicId
+                // )
+                // setTimeout(() => {
+                //     writeData(result[1]); //写入第二条数据
+                // }, 5)
+                
+                await new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                      resolve("");
+                    }, 500);
+                });
+                console.log(new Date())
+                await writeBLECharacteristicValue(
+                    deviceId,
+                    serviceId,
+                    characteristicId,
+                    result[1]
+                )
+            } else {
+                console.log('小于20字节写入数据');
+                await writeBLECharacteristicValue(
+                    deviceId,
+                    serviceId,
+                    characteristicId,
+                    buffer
+                )
+            }
+            // await writeBLECharacteristicValue(
+            //     deviceId,
+            //     serviceId,
+            //     characteristicId,
+            //     buffer
+            // )
             await readBLECharacteristicValue(
                 deviceId,
                 serviceId,

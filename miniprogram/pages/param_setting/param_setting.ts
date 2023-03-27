@@ -15,14 +15,13 @@ import {
     get,
 } from '../../utils/lodash'
 import { RESPONSE_MAP } from '../../common/index';
-import Dialog from '@vant/weapp/dialog/dialog';
 
 const app = getApp<IAppOption>()
 
 Page({
   data: {
     barhHeight: 0,
-    connected: false, //  是否连接蓝牙
+    connected: app.globalData.connected || false, //  是否连接蓝牙
     chargeSwitch: false,    //  充电开关
     chargeFullEndSwitch: false, //  充满关断
     electric_current_max: '', //  最大输出电流
