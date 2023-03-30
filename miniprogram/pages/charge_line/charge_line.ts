@@ -44,7 +44,7 @@ const app = getApp<IAppOption>()
 Page({
   data: {
     barhHeight: 0,
-    connected: false, //  是否连接蓝牙
+    connected: app.globalData.connected || false, //  是否连接蓝牙
     onRenderChart() {
         return createElement(Chart, {
           data: [],
@@ -69,6 +69,9 @@ Page({
     })
   },
   onShow() {
+    this.setData({
+        connected: app.globalData.connected || false,
+    })
     this.readData()
     wx.onBLECharacteristicValueChange(res => {
         const value = ab2hex(res.value)
@@ -92,9 +95,7 @@ Page({
             this.renderChart(baseInfoResponseData, countOfData)
         }
     })
-    this.setData({
-        connected: app.globalData.connected || false,
-    })
+    
 
     // if (!app.globalData.connected) {
     //     Dialog.alert({
