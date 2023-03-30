@@ -21,59 +21,61 @@ App<IAppOption>({
   },
   onLaunch() {
     console.log('getUserInfo before')
-    wx.getUserInfo({
-      success: (res) => {
-        console.log({
-            res,
-        }, 'getUserInfo')
-        const { encryptedData: encrypted_data, iv } = res;
-        wx.login({
-          success: (res) => {
-            console.log({
-                wxLoginSuccessRes: res,
-                if: !!res.code,
-            }, 'login success')
-            if (!!res.code) {
-              Request({
-                url: "/api/ssoauth/",
-                data: {
-                  encrypted_data,
-                  code: res.code,
-                  iv,
+    wx.login({
+        success: (res) => {
+          console.log({
+              wxLoginSuccessRes: res,
+              if: !!res.code,
+          }, 'login success')
+          wx.getUserInfo({
+            success: (getUserInfores) => {
+              console.log({
+                getUserInfores,
+              }, 'getUserInfo')
+              const { encryptedData: encrypted_data, iv } = getUserInfores;
+              if (!!res.code) {
+                Request({
+                  url: "/api/ssoauth/",
+                  data: {
+                    encrypted_data,
+                    code: res.code,
+                    iv,
+                  },
+                  method: "POST",
+                  successCallBack: (fetchLoginres) => {
+                    // console.log({ res }, '/api/ssoauth/')
+                    // setUserInfo(res.data)
+                    this.globalData.userInfo = fetchLoginres.data;
+                      //   group_id 1 普通用户 2 管理员
+                  //   this.globalData.isDebugModel = res.data.group_id === 2
+                    // console.log({
+                    //   res: res.data,
+                    //   globaluserInfo: this.globalData.userInfo
+                    // })
+                    setUserToken(fetchLoginres.data.token);
+                  },
+                });
+              }
+              // 发送 res.code 到后台换取 openId, sessionKey, unionId
+            },
+            fail: (res) => {
+              console.log(
+                {
+                  getUserInfoFail: res,
                 },
-                method: "POST",
-                successCallBack: (res) => {
-                  // console.log({ res }, '/api/ssoauth/')
-                  // setUserInfo(res.data)
-                  this.globalData.userInfo = res.data;
-                    //   group_id 1 普通用户 2 管理员
-                //   this.globalData.isDebugModel = res.data.group_id === 2
-                  // console.log({
-                  //   res: res.data,
-                  //   globaluserInfo: this.globalData.userInfo
-                  // })
-                  setUserToken(res.data.token);
-                },
-              });
-            }
-            // 发送 res.code 到后台换取 openId, sessionKey, unionId
-          },
-          fail: (res) => {
-            console.log({
-              err: res,
-            }, 'login error');
-          },
-        });
-      },
-      fail: (res) => {
-        console.log(
-          {
-            getUserInfoFail: res,
-          },
-          "获取用户信息失败"
-        );
-      },
-    });
+                "获取用户信息失败"
+              );
+            },
+          });
+          
+        },
+        fail: (res) => {
+          console.log({
+            err: res,
+          }, 'login error');
+        },
+      });
+    
 
     getBluetoothAdapterState()
       .then((res) => {

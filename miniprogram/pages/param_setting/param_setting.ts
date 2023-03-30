@@ -527,6 +527,14 @@ Page({
         })
         return
     }
+    if (charge_time >= 65535) {
+        wx.showToast({
+            title: '数值有效范围: 0 ~ 65534',
+            icon: "none",
+            duration: 3000
+        })
+        return
+    }
     wx.showToast({
         title: "",
         icon: "loading",

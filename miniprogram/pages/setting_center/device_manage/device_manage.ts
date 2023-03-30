@@ -229,6 +229,14 @@ Page({
         const ds = e.currentTarget.dataset;
         const deviceId = ds.deviceId;
         const name = ds.name;
+        if (this.data.connected === deviceId) {
+            wx.showToast({
+                title: "连接中的设备禁止删除!",
+                icon: "error",
+                duration: 2000,
+            });
+            return
+        }
 
         Dialog.confirm({
             title: "删除设备?",
