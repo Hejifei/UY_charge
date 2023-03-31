@@ -49,8 +49,8 @@ export const fanLevelMap: Record<string, string> = {
     '3': 'X3',
     '4': 'X4',
     '5': 'X5',
-    'FE': '风扇关闭',
-    'FF': '无风扇',
+    'fe': '风扇关闭',
+    'ff': '无风扇',
 }
 
 //  服务回传报文

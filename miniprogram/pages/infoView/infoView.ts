@@ -197,6 +197,9 @@ Page({
                     icon: "none",
                     duration: 3000
                 });
+                if (resultCode === '01') {
+                    this.readTestData()
+                }
             }
         })
 
@@ -205,6 +208,39 @@ Page({
         this.intervalRef = setInterval(() => {
             this.getBaseInfo()
         }, 1000 * 5)
+    },
+    readTestData() {
+        wx.showToast({
+            title: "",
+            icon: "loading",
+            mask: true,
+            duration: 2000,
+        });
+        const {
+            deviceId,
+            serviceId,
+            characteristicId,
+        } = app.globalData
+        if (!deviceId || !serviceId || !characteristicId) {
+            return
+        }
+        const buffer = parseProtocolCodeMessage(
+            '07',
+            '12',
+            '2000',
+            ''
+        )
+        //  读取充电统计数据
+        try {
+            writeAndReadBLECharacteristicValue(
+                deviceId,
+                serviceId,
+                characteristicId,
+                buffer
+            )
+        } catch (err) {
+            console.log('getBaseInfo error: ', {err})
+        }
     },
     onHide() {
         clearInterval(this.intervalRef)

@@ -259,7 +259,9 @@ Page({
             //     deviceHistory.push(deviceInfo);
             // }
             setHistoryDevices(deviceHistory);
-            this.getDeviceList();
+            setTimeout(() => {
+                this.getDeviceList();
+            }, 100);
             wx.showToast({
                 title: "设备已删除!",
                 icon: "success",

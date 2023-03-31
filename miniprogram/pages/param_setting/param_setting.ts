@@ -63,6 +63,10 @@ Page({
         //     // { voltage: 1, eleCurrent: 1 },
         // ]
     })
+    console.log({
+        isDebugModel: app.globalData.isDebugModel || false,
+        connected: app.globalData.connected || false,
+    }, '参数设置')
     const that = this
     wx.getSystemInfo({
         success(res) {

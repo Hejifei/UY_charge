@@ -72,6 +72,9 @@ Page({
     this.setData({
         connected: app.globalData.connected || false,
     })
+    console.log({
+        connected: app.globalData.connected || false,
+    }, '充电曲线 弹窗显示')
     this.readData()
     wx.onBLECharacteristicValueChange(res => {
         const value = ab2hex(res.value)
