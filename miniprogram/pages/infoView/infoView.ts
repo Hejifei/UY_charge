@@ -190,13 +190,17 @@ Page({
                   testData: testData,
                 })
             } else if (value.startsWith('55590901')) {
+                
                 const resultCode = analyzeProtocolCodeMessage(value, '0901')
+                console.log({value, resultCode}, '擦除的返回值')
                 const tilte = '清除' + get(RESPONSE_MAP, [resultCode])
-                wx.showToast({
-                    title: tilte,
-                    icon: "none",
-                    duration: 3000
-                });
+                setTimeout(() => {
+                    wx.showToast({
+                        title: tilte,
+                        icon: "none",
+                        duration: 3000
+                    });
+                }, 100);
                 if (resultCode === '01') {
                     this.readTestData()
                 }
@@ -205,6 +209,7 @@ Page({
 
         
         this.getBaseInfo()
+        this.readTestData()
         this.intervalRef = setInterval(() => {
             this.getBaseInfo()
         }, 1000 * 5)
@@ -230,6 +235,9 @@ Page({
             '2000',
             ''
         )
+        console.log({
+            buffer,
+        }, '读取测试数据')
         //  读取充电统计数据
         try {
             writeAndReadBLECharacteristicValue(

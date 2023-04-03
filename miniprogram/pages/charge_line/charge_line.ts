@@ -8,7 +8,7 @@ import {
 } from '../../utils/protocol_util'
 import Chart from './chart';
 import { createElement } from '@antv/f2';
-import Dialog from '@vant/weapp/dialog/dialog';
+// import Dialog from '@vant/weapp/dialog/dialog';
 
 const app = getApp<IAppOption>()
 

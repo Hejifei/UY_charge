@@ -26,7 +26,7 @@
             >读取数据</van-button>
         </div>
     </div>
-    <van-dialog id="van-dialog" />
+    <!-- <van-dialog id="van-dialog" /> -->
     <van-dialog
         v-if="{{!connected}}"
         message='暂无设备连接,请连接设备'

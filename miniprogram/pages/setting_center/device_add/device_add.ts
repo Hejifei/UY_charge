@@ -16,6 +16,7 @@ import {
   getBLEDeviceCharacteristics,
   notifyBLECharacteristicValueChange,
   closeBLEConnection,
+  writeAndReadBLECharacteristicValue,
 } from "../../../utils/bluetooth_util";
 // import Toast from '@vant/weapp/toast/toast';
 const app = getApp<IAppOption>();
@@ -185,6 +186,7 @@ Page({
         // })
         res.devices
         .filter(({ name, connectable }) => {
+            return true
           return name.startsWith('UY')
           // TODO
         //   return name.startsWith('UY') && connectable
@@ -356,7 +358,7 @@ Page({
           for (let j = 0; j < characteristics.length; j++) {
             let item = characteristics[j];
             const characteristicId = item.uuid;
-            if (item.properties.notify || item.properties.indicate) {
+            if ((item.properties.notify || item.properties.indicate) && characteristicId.toLocaleLowerCase() === '0000ae02-0000-1000-8000-00805f9b34fb') {
               await notifyBLECharacteristicValueChange(
                 deviceId,
                 serviceId,
@@ -429,6 +431,38 @@ Page({
         icon: "success",
         duration: 2000,
       });
+
+      if (true) {
+        setTimeout(() => {
+            const {
+            deviceId,
+            serviceId,
+            characteristicId,
+        } = app.globalData
+        const value = '电视机'
+        // var gb2312 = TextCodec("GB2312","long",value)
+        // console.log({
+        //     value,
+        //     gb2312,
+        // })
+        // const buffer = `${parse10To16(valueLength)}06${gb2312}CRC_HCRC_L`
+        // const buffer = 'gb2312'
+        const buffer = '0501032050'
+        console.log('write before, 写的参数', {
+            str: buffer,
+            deviceId,
+            serviceId,
+            characteristicId,
+        })
+        writeAndReadBLECharacteristicValue(
+            deviceId,
+            serviceId,
+            characteristicId,
+            buffer,
+        )
+        console.log('write after')
+        }, 2000);
+      }
     } catch (err) {
       // console.log({err}, '蓝牙连接失败')
       // Toast.fail(err.errMsg);
