@@ -93,7 +93,7 @@
         current_range_max="{{electric_current_max}}"
         chargeLineSettingDataList="{{chargeLineSettingDataList}}"
     />
-    <!-- <van-dialog id="van-dialog" /> -->
+    <van-dialog id="van-dialog" />
     <span style="display: none;">
         {{connected ? "yse" : "no"}}
     </span>

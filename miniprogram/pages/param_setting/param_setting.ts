@@ -131,6 +131,7 @@ Page({
                 icon: "none",
                 duration: 3000
             });
+            this.readChargeLine()
         } else if (value.startsWith('55590501')) {
             // 充电曲线写入
             const resultCode = analyzeProtocolCodeMessage(value, '0501')
@@ -179,6 +180,43 @@ Page({
     //       });
     // }
   },
+  readChargeLine() {
+    wx.showToast({
+        title: "",
+        icon: "loading",
+        mask: true,
+        duration: 2000,
+    });
+    const {
+        deviceId,
+        serviceId,
+        characteristicId,
+    } = app.globalData
+    if (!deviceId || !serviceId || !characteristicId) {
+        return
+    }
+    // '555904FF10002CD3'
+    //  充电曲线读取
+    const buffer = parseProtocolCodeMessage(
+        '04',
+        'FF',
+        '1000',
+        ''
+    )
+    console.log({
+        buffer,
+    }, '充电曲线读取')
+    try {
+        writeAndReadBLECharacteristicValue(
+            deviceId,
+            serviceId,
+            characteristicId,
+            buffer,
+        )
+    } catch (err) {
+        console.log({ err }, 'getBaseInfoData')
+    }
+    },
   changePageToDeviceManage() {
     wx.navigateTo({
         url: '/pages/setting_center/device_manage/device_manage',
