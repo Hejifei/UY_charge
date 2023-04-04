@@ -27,7 +27,7 @@
         </div>
     </div>
     <!-- <van-dialog id="van-dialog" /> -->
-    <van-dialog
+    <!-- <van-dialog
         v-if="{{!connected}}"
         message='暂无设备连接,请连接设备'
         title="设备连接"
@@ -37,5 +37,5 @@
         confirmButtonColor='green'
         >
         暂无设备连接,请连接设备
-    </van-dialog>
+    </van-dialog> -->
 </view>
