@@ -6,6 +6,7 @@
         "f2": "@antv/f2-wx",
         "van-empty": "@vant/weapp/empty/index",
         "van-dialog": "@vant/weapp/dialog/index",
-        "van-button": "@vant/weapp/button/index"
+        "van-button": "@vant/weapp/button/index",
+        "no_connected_modal": "/components/no_connected_modal/no_connected_modal"
     }
 }

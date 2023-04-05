@@ -10,6 +10,7 @@
         "van-switch": "@vant/weapp/switch/index",
         "blank": "/components/blank/blank",
         "van-dialog": "@vant/weapp/dialog/index",
-        "charge-line-setting": "./charge_line_setting/charge_line_setting"
+        "charge-line-setting": "./charge_line_setting/charge_line_setting",
+        "no_connected_modal": "/components/no_connected_modal/no_connected_modal"
     }
 }

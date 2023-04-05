@@ -1,0 +1,13 @@
+<div class="noConnectedWrapper">
+    <div class="centerWrapper">
+        <div class="header">设备连接</div>
+        <div class="body">
+            <div class="tipText">
+                暂无设备连接,请连接设备~
+            </div>
+            <div class="connectBtn" bindtap="changePageToDeviceManage">
+                连接设备
+            </div>
+        </div>
+    </div>
+</div>

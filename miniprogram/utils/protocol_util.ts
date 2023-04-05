@@ -145,7 +145,7 @@ export const parseProtocolCodeToChargeCountData = (
     time: string
   }[] = []
   for (let i = 0; i < countOfData; i++) {
-    const time = moment().subtract((countOfData - 1 - i) * spaceMin, 'minute').format('hh:mm')
+    const time = moment().subtract((countOfData - 1 - i) * spaceMin, 'minute').format('HH:mm')
     data.push(...[
       {
         value: parseVoltageOrCurrent10mVToV(parse16To10(code.substr(2 + 4 * i, 2 * 2))),
@@ -161,7 +161,8 @@ export const parseProtocolCodeToChargeCountData = (
   }
 //   console.log({
 //     data,
-//   })
+//     code,
+//   }, '参数设置')
   return data
 }
 

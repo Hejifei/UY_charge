@@ -38,4 +38,5 @@
         >
         暂无设备连接,请连接设备
     </van-dialog> -->
+    <no_connected_modal wx:if="{{!connected}}" />
 </view>
