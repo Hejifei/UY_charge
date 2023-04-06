@@ -45,7 +45,7 @@ Component({
                 title: "",
                 icon: "loading",
                 mask: true,
-                duration: 2000,
+                duration: 500,
             });
             const {
                 deviceId,
@@ -98,7 +98,7 @@ Component({
                 title: "",
                 icon: "loading",
                 mask: true,
-                duration: 2000,
+                duration: 500,
             });
             const {
                 deviceId,
@@ -150,7 +150,7 @@ Component({
                 title: "",
                 icon: "loading",
                 mask: true,
-                duration: 2000,
+                duration: 500,
             });
             let {current_range_max, voltage_range_max, chargeLineSettingDataList} = this.data
             // console.log({

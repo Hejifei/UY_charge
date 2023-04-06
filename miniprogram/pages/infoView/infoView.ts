@@ -163,14 +163,15 @@ Page({
                             chargerTemperature: that.parseValueTextShow(chargerInfo.chargerTemperature),
                         },
                         onRenderChart: () => {
+                            const percent = (chargingTiming - timingRemaining) / chargingTiming
                             // return this.renderChart(data)
                             return that.renderChart({
                                 voltage: outputVoltage,
                                 current: outputCurrent,
                                 chargeTime: chargingTime,
                                 // percent: chargingTime / chargingTiming,
-                                percent: (chargingTiming - timingRemaining) / chargingTiming,
-                                status: chargingMode, 
+                                percent,
+                                status: (chargingTiming && percent === 1) ? '充电完成' : chargingMode, 
                             })
                         },
                     })
@@ -219,7 +220,7 @@ Page({
             title: "",
             icon: "loading",
             mask: true,
-            duration: 2000,
+            duration: 500,
         });
         const {
             deviceId,

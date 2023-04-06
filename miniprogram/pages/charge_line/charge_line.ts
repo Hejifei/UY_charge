@@ -134,7 +134,7 @@ Page({
         title: "",
         icon: "loading",
         mask: true,
-        duration: 2000,
+        duration: 500,
     });
     const {
         deviceId,
