@@ -92,7 +92,7 @@ Page({
             const info = parseProtocolCodeToChargerInfo(baseInfoResponseData)
             console.log({
                 info,
-            })
+            }, '获取基础信息')
             const chargeSwitchInfo = this.parseCodeValueToChargeSwitchValue(info.chargeSwitchValue)
             //  @ts-ignore
             this.setData({
@@ -272,6 +272,9 @@ Page({
         '0000',
         ''
       )
+    console.log({
+        buffer,
+    }, '获取基础信息')
     try {
         writeAndReadBLECharacteristicValue(
             deviceId,

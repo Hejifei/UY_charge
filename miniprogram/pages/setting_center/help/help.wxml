@@ -1,0 +1,5 @@
+<view
+    class="aboutUsWrapper"
+>
+  <rich-text nodes="{{content}}" />
+</view>

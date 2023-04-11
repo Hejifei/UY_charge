@@ -11,7 +11,9 @@
             
         </div>
         <view class="chargeTimeText">
-            {{chargingTime}}<span>min</span>
+            <!-- {{chargingTime}}<span>min</span> -->
+            <!-- {{voltage}}<span>V</span>/{{current}}<span>A</span> -->
+            <span>{{voltage}}V/{{current}}A</span>
         </view>
         <div class="f2Rwapper">
             <view class="searchContainer">

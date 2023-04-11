@@ -57,6 +57,6 @@ export const LOCAL_STORAGE_KEY_HISTORY_DEVICES = 'history_device_list'
 export const RESPONSE_MAP = {
     '01': '成功',
     '02': '失败',
-    '03': '写入地址无效',
-    '04': '写入数据无效',
+    '03': '地址无效',
+    '04': '数据无效',
 }

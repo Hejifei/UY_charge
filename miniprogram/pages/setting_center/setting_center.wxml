@@ -45,6 +45,9 @@
         <van-cell is-link title="关于我们" class="cellWrapper" link-type="navigateTo" url="/pages/setting_center/about_us/about_us">
             <image slot="icon" class="iconImg" src="../../assets/imgs/setting_center/icon_about_us.png" />
         </van-cell>
+        <van-cell is-link title="帮助" class="cellWrapper" link-type="navigateTo" url="/pages/setting_center/help/help">
+            <image slot="icon" class="iconImg" src="../../assets/imgs/setting_center/icon_about_us.png" />
+        </van-cell>
     </van-cell-group>
 
     <blank height="10" />

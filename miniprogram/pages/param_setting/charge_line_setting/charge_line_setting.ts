@@ -37,7 +37,9 @@ Component({
         // this.setData({
         //   chargeLineSettingDataList: data,
         // })
-        this.readChargeLine()
+        setTimeout(() => {
+            this.readChargeLine()
+        }, 500);
     },
     methods: {
         readChargeLine() {

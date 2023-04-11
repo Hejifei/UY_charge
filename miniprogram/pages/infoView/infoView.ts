@@ -42,6 +42,8 @@ Page({
             batteryVoltage: '--',
             chargerTemperature: '--',
         }, 
+        voltage: 0,
+        current: 0,
         testData: {
             limitVoltage: '--',
             limitCurrent: '--',
@@ -162,6 +164,8 @@ Page({
                             batteryVoltage: that.parseValueTextShow(chargerInfo.batteryVoltage),
                             chargerTemperature: that.parseValueTextShow(chargerInfo.chargerTemperature),
                         },
+                        voltage: outputVoltage,
+                        current: outputCurrent,
                         onRenderChart: () => {
                             const percent = (chargingTiming - timingRemaining) / chargingTiming
                             // return this.renderChart(data)
