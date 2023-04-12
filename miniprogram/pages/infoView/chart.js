@@ -97,7 +97,7 @@ const Gauge = withGauge(props => {
   }), jsx('text', {
     attrs: {
       x: 100,
-      y: 130,
+      y: 145,
       text: status,
       textAlign: 'center',
       fontSize: 16,

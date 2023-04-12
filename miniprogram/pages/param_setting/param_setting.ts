@@ -102,6 +102,7 @@ Page({
                 // chargeSwitch: info.chargeSwitchValue === 1,
                 ...chargeSwitchInfo,
             })
+            this.readChargeLine()
         } else if (value.startsWith('55590301')) {
             const resultCode = analyzeProtocolCodeMessage(value, '0301')
             const tilte = '擦除' + get(RESPONSE_MAP, [resultCode])
@@ -185,7 +186,7 @@ Page({
         title: "",
         icon: "loading",
         mask: true,
-        duration: 2000,
+        duration: 1000,
     });
     const {
         deviceId,
@@ -365,7 +366,7 @@ Page({
         title: "",
         icon: "loading",
         mask: true,
-        duration: 2000,
+        duration: 1000,
     });
     this.clearElectricCurrentValue(false)
     this.setData({
@@ -377,7 +378,7 @@ Page({
         title: "",
         icon: "loading",
         mask: true,
-        duration: 2000,
+        duration: 1000,
     });
     this.clearElectricCurrentValue(true)
     this.setData({
@@ -420,7 +421,7 @@ Page({
         title: "",
         icon: "loading",
         mask: true,
-        duration: 2000,
+        duration: 1000,
     });
     this.clearChargeTime()
     this.setData({
@@ -584,7 +585,7 @@ Page({
         title: "",
         icon: "loading",
         mask: true,
-        duration: 2000,
+        duration: 1000,
     });
     this.setChargerVoltageAndCurrent()
     this.setChargerSetTime()
