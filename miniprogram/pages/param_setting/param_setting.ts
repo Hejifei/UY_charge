@@ -84,6 +84,11 @@ Page({
             value,
         }, '收到数据 onBLECharacteristicValueChange -------')
         if (value.startsWith('5559011e0000')) {
+            if (value === '5559011e000071e9') {
+                this.getBaseInfo()
+                console.log('啊啊啊啊啊,获取基础信息失败,再次获取基础信息!!!!')
+                return
+            }
             //  读取充电器信息
             const baseInfoResponseData =  analyzeProtocolCodeMessage(value, '011e0000')
             if (!baseInfoResponseData) {
@@ -164,7 +169,9 @@ Page({
         }
     })
     
-    this.getBaseInfo()
+    setTimeout(() => {
+        this.getBaseInfo()
+    }, 50);
 
     // if (!app.globalData.connected) {
     //     Dialog.alert({
