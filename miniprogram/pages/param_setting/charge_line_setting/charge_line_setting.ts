@@ -160,14 +160,14 @@ Component({
             //     voltage_range_max,
             //     chargeLineSettingDataList,
             // })
-            // if (!current_range_max || !voltage_range_max) {
-            //     wx.showToast({
-            //         title: '请优先设置最大输出电流、最大输出电压!',
-            //         icon: "none",
-            //         duration: 2000
-            //     });
-            //     return
-            // }
+            if (!current_range_max || !voltage_range_max) {
+                wx.showToast({
+                    title: '暂未读取到最大输出电流、最大输出电压, 请稍后再试!',
+                    icon: "none",
+                    duration: 2000
+                });
+                return
+            }
             current_range_max = parseFloat(current_range_max)
             voltage_range_max = parseFloat(voltage_range_max)
             let errorText = ''

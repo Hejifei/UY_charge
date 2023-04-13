@@ -169,9 +169,7 @@ Page({
         }
     })
     
-    setTimeout(() => {
-        this.getBaseInfo()
-    }, 50);
+    this.getBaseInfo()
 
     // if (!app.globalData.connected) {
     //     Dialog.alert({
@@ -274,6 +272,9 @@ Page({
     if (!deviceId || !serviceId || !characteristicId) {
         return
     }
+    wx.showLoading({
+        title: ""
+    });
     const buffer = parseProtocolCodeMessage(
         '01',
         '1e',
@@ -290,8 +291,15 @@ Page({
             characteristicId,
             buffer,
         )
+        // todo
+        setTimeout(() => {
+            wx.hideLoading();
+        }, 2000);
     } catch (err) {
         console.log('getBaseInfo error: ', {err})
+        setTimeout(() => {
+            wx.hideLoading();
+        }, 2000);
     }
     },
   getConfigDefaultValue() {
